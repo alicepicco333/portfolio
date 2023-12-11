@@ -185,6 +185,7 @@ a {
 }
 
 .containerpre {
+    width: 100%;
     position: relative;
     margin: 10% 10% 10% 10%;
     display: flex;
