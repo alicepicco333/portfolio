@@ -177,7 +177,6 @@ a {
 
 
 .container {
-    height: 100vh;
     position: relative;
     margin: auto;
     display: flex;
