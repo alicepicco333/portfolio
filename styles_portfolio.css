@@ -186,8 +186,7 @@ a {
 
 .containerpre {
     position: relative;
-    bottom: 10vh;
-    margin: auto;
+    margin: 10% 10% 10% 10%;
     display: flex;
     align-items: center;
     justify-content: center;
