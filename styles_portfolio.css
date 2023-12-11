@@ -1,0 +1,378 @@
+nav {
+    z-index:10000;
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    height: 8vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgb(205, 204, 204);
+    color: #000000;
+    padding: 0;
+}
+
+.footer {
+  left: 0;
+  display: flex;
+  justify-content: left;
+  background-color: rgb(205, 204, 204);
+  position: fixed;
+  bottom: 0;
+  height: 5vh;
+  width: 100vw;
+}
+
+
+
+/*home e logo */
+.logo {
+    user-select: none;
+      position: relative;
+      top: -2vh;
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+  font-size: 100px;
+  letter-spacing: -0.6px;
+  word-spacing: -0.4px;
+  line-height: 1;
+  color: #000000;
+  font-weight: 1000;
+  
+  }
+
+
+/* navbar buttons */
+
+
+.about {
+position: relative;
+margin: auto;
+top:auto;
+left: auto;
+text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+font-size: 14px;
+letter-spacing: -0.6px;
+word-spacing: -0.4px;
+color: #000000;
+font-weight: 700;
+}
+
+.academicprojects {
+    position: relative;
+    margin: auto;
+    top: auto;
+    left: auto;
+    font-family: Arial, Helvetica, sans-serif;
+font-size: 14px;
+letter-spacing: -0.6px;
+word-spacing: -0.4px;
+color: #000000;
+font-weight: 700;
+}
+
+.animation {
+    position: relative;
+    margin: auto;
+    top: auto;
+    left: auto;
+    font-family: Arial, Helvetica, sans-serif;
+font-size: 14px;
+letter-spacing: -0.6px;
+word-spacing: -0.4px;
+color: #000000;
+font-weight: 700;
+}
+
+.illgraphic {
+    position: relative;
+    margin: auto;
+    top: auto;
+    left: auto;
+    font-family: Arial, Helvetica, sans-serif;
+font-size: 14px;
+letter-spacing: -0.6px;
+word-spacing: -0.4px;
+color: #000000;
+font-weight: 700;
+}
+
+.AR {
+    position: relative;
+    margin: auto;
+    top: auto;
+    left: auto;
+    font-family: Arial, Helvetica, sans-serif;
+font-size: 14px;
+letter-spacing: -0.6px;
+word-spacing: -0.4px;
+color: #000000;
+font-weight: 700;
+}
+
+.other {
+    position: relative;
+    margin: auto;
+    top: auto;
+    left: auto;
+    font-family: Arial, Helvetica, sans-serif;
+font-size: 14px;
+letter-spacing: -0.6px;
+word-spacing: -0.4px;
+color: #000000;
+font-weight: 700;
+}
+
+/* navbar pills */
+
+.nav-pills {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .pill {
+    padding: auto;
+    margin: auto;
+    margin-left: 7%;
+    justify-content: center;
+    justify-items: center;
+    border-radius: 20px;
+    background-color: #ff00a2;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pill:hover {
+    background-color: #70ff45;
+  }
+
+/*link behaviour
+
+/* Unvisited Link */
+a {
+    color: rgb(0, 0, 0);
+    text-decoration: none; /* Remove underline */
+  }
+  
+  /* Visited Link */
+  a:visited {
+    color: rgb(0, 0, 0);
+  }
+  
+  /* Hovered Link */
+  a:hover {
+    color: rgb(255, 0, 140);
+    text-decoration: none; /* Underline on hover */
+  }
+
+
+  
+  /* Active Link (while being clicked) */
+  a:active {
+    color: rgb(255, 0, 140);
+    text-decoration: none;
+  }
+
+
+.container {
+    position: relative;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/*text */
+
+h1 {
+  user-select: none;
+    position: relative;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+font-size: 3em;
+letter-spacing: -0.6px;
+word-spacing: -0.4px;
+line-height: 1;
+color: #000000;
+font-weight: 1000;;
+}
+
+.verde {
+  user-select: none;
+    position: relative;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+font-size: 3em;
+letter-spacing: -0.6px;
+word-spacing: -0.4px;
+line-height: 1;
+color: #000000;
+font-weight: 1000;
+background-color: #70ff45;
+}
+
+
+h2 {
+  user-select: none;
+    position: relative;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+font-size: 15px;
+color: #000000;
+font-weight: 600;
+
+}
+
+.paragraph {
+  user-select: none;
+    position: relative;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+font-size: 15px;
+color: #000000;
+
+}
+
+.paragraph_left {
+  user-select: none;
+    position: relative;
+    margin-top: 50%;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+font-size: 15px;
+color: #000000;
+
+}
+
+.containerabt {
+  position: relative;
+  padding: 20%, 20%, 20%, 20% ;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width:60%;
+  position: relative;
+  padding: 20%, 20%, 20%, 20% ;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/*ascii*/
+
+pre {
+    user-select: none;
+  
+  }
+
+
+
+/*about page and other pages i guess*/
+/*about*/
+
+.container_about  {
+  position: relative;
+  display: flex;
+}
+
+.text_column   {
+  float:left;
+  width: 20%;
+  padding: 5%;
+}
+
+.image_column  {
+  float: right;
+padding: 5%;
+}
+
+.mixed  {
+  float: right;
+  width:40%;
+padding: 5%;
+margin-top: 3%;
+align-items: center;
+}
+
+.banner  {
+  margin-left: 0%;
+width: 100%;
+}
+
+.container_about:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.imageabout  {
+  user-select: none;
+    position: relative;
+height: 80vh;
+
+}
+
+.paragraph {
+  user-select: none;
+    position: relative;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+font-size: 15px;
+color: #000000;
+
+}
+
+.paragraph_left {
+  user-select: none;
+    position: relative;
+    margin-top: 50%;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+font-size: 15px;
+color: #000000;
+
+}
+
+/*grids*/
+
+.gridparent {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0; /* Optional: Set background color */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 800px; /* Set a maximum width for the grid */
+}
+
+.grid-item {
+  width: 100%;
+  height: 100%;
+  background-color: #ddd; /* Optional: Set a background color for the grid items */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
