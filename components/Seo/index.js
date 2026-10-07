@@ -3,7 +3,7 @@ import Head from "next/head";
 
 // Title, description and link-preview tags (Open Graph, Twitter) for a page.
 // Previews need absolute URLs, so they point at the published site.
-export const SITE = "https://alicepicco333.github.io/react-portfolio-template";
+export const SITE = "https://alicepicco333.github.io/portfolio";
 
 // search results show about 155 characters: cut longer descriptions at a word
 const trim = (t = "") => (t.length <= 155 ? t : `${t.slice(0, 152).replace(/\s+\S*$/, "")}...`);
