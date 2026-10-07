@@ -68,11 +68,11 @@ const Media = ({ project, className = "", stillOnly = false }) => {
   );
 };
 
-// who made it, at a glance: solo, or the team size (and a solo rework when there is one)
+// who made it, at a glance: solo, or the team size
 const teamOf = (p) => {
   if (!Array.isArray(p.collaborators)) return null;
   if (!p.collaborators.length) return "Solo";
-  return `Team of ${p.collaborators.length + 1}${p.reworkNote ? ", reworked solo" : ""}`;
+  return `Team of ${p.collaborators.length + 1}`;
 };
 
 // Selected work as an index of works: each title at display size between ink rules. On wide screens the
