@@ -615,7 +615,7 @@
       "id": "12",
       "title": "The Meme Ontology",
       "description": "An OWL 2 knowledge graph of 5,000 internet memes, grounded in bibliographic and iconological theory, with interactive visualizations, a SPARQL explorer and the full thesis online.",
-      "introText": "MEMO is an ontology of internet memes, from my master's research Towards an Ontology of Memes (supervisor Fabio Vitali), which I began as a visiting research fellow at the Institute of Network Cultures in Amsterdam, for its Viral Image Cultures project.",
+      "introText": "MEMO is an ontology of internet memes, from my master's research Towards an Ontology of Memes (supervisor Fabio Vitali), which I began as a research intern at the Institute of Network Cultures in Amsterdam, for its Viral Image Cultures project.",
       "gridImages": [
         {
           "src": "/images/projects/12-g1.jpg",
@@ -655,7 +655,7 @@
       "highlightCaption": "Home page: the project title above a wall of memes from the Know Your Meme sample, which can be rearranged by year, colour or format. Hovering a tile shows its RDF.",
       "date": "2026-06-01",
       "dateLabel": "2026",
-      "context": "Master's thesis (supervisor Fabio Vitali), MA Digital Humanities and Digital Knowledge, University of Bologna; begun as a visiting research fellowship at the Institute of Network Cultures (Viral Image Cultures)",
+      "context": "Master's thesis (supervisor Fabio Vitali), MA Digital Humanities and Digital Knowledge, University of Bologna; begun as a research internship at the Institute of Network Cultures (Viral Image Cultures)",
       "collaborators": [],
       "accent": "#3a3733",
       "summary": {
@@ -696,7 +696,7 @@
           },
           {
             "label": "Context",
-            "value": "Master's thesis, MA Digital Humanities and Digital Knowledge, University of Bologna (supervisor Fabio Vitali; co-supervisors Tommaso Campagna, Carlo Teo Pedretti); begun as a visiting research fellowship at the Institute of Network Cultures, Amsterdam"
+            "value": "Master's thesis, MA Digital Humanities and Digital Knowledge, University of Bologna (supervisor Fabio Vitali; co-supervisors Tommaso Campagna, Carlo Teo Pedretti); begun as a research internship at the Institute of Network Cultures, Amsterdam"
           },
           {
             "label": "Timeline",
@@ -2812,9 +2812,9 @@
         "id": "3",
         "dates": "Mar 2024 - Jun 2024",
         "type": "Full-time",
-        "position": "Visiting Research Fellow at the Institute of Network Cultures",
+        "position": "Research Intern at the Institute of Network Cultures",
         "bullets": "Practice-based research in digital culture and cultural analytics in Amsterdam. For the Viral Image Cultures project I developed an ontology of internet memes and designed and built an interactive interface to explore the dataset and the ontology.",
-        "short": "Research fellow · INC",
+        "short": "Research intern · INC",
         "org": "Institute of Network Cultures",
         "skills": [
           "cult",
@@ -3036,7 +3036,7 @@
     "lead": "I design for information that’s complicated or easy to misread, so people can understand it, trust it and check it themselves.",
     "paragraphs": [
       "That shapes how I work. Research comes first, from a background in cultural anthropology and digital humanities: interviews, usability tests, fieldwork and data analysis. I show the evidence behind what an interface claims: its sources, its data, how far to trust a result. And I test whether it worked, with people and with the data: in my Unobravo redesign, the usability score rose from 75 to 91.25 in a four-person summative test.",
-      "I've worked as a UX researcher and designer at BrainBite, an AI tutoring platform for children, on support for neurodiverse learners; done practice-based research as a visiting research fellow at the Institute of Network Cultures; and taken part in The Hmm's Voices of Makers program with DEN. My projects deal with museum collections, archives, public data and online therapy, and I care that the result is inclusive, well evidenced and easy to use."
+      "I've worked as a UX researcher and designer at BrainBite, an AI tutoring platform for children, on support for neurodiverse learners; done practice-based research as a research intern at the Institute of Network Cultures; and taken part in The Hmm's Voices of Makers program with DEN. My projects deal with museum collections, archives, public data and online therapy, and I care that the result is inclusive, well evidenced and easy to use."
     ],
     "practice": [
       {
@@ -3074,7 +3074,7 @@
         "from": 2024,
         "to": 2025,
         "title": "Research in practice",
-        "text": "A research fellowship at the Institute of Network Cultures and The Hmm’s Voices of Makers program, with live coding on the side.",
+        "text": "A research internship at the Institute of Network Cultures and The Hmm’s Voices of Makers program, with live coding on the side.",
         "short": "Research"
       },
       {

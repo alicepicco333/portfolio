@@ -385,7 +385,7 @@ const SkillMap = ({ projects }) => {
               if (e.key === "Escape") setPinned(null);
             }}
           >
-            <svg viewBox={heroMode === "band" ? `0 0 ${G.W} ${G.H}` : `0 ${TOP} ${G.W} ${SH}`} className="absolute inset-0 h-full w-full" role="group" aria-label="Skills, linked where they feed into each other. Select one to see its tools and projects.">
+            <svg viewBox={heroMode === "band" ? `0 0 ${G.W} ${G.H}` : `0 ${TOP} ${G.W} ${SH}`} className="absolute inset-0 h-full w-full overflow-visible" role="group" aria-label="Skills, linked where they feed into each other. Select one to see its tools and projects.">
               <defs>
               </defs>
               <g aria-hidden="true">
