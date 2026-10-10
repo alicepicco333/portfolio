@@ -8,7 +8,7 @@ const Button = ({ children, type, onClick, classes }) => {
       <button
         onClick={onClick}
         type="button"
-        className={`text-sm tablet:text-base px-4 py-1 laptop:px-6 laptop:py-2 m-1 laptop:m-2 rounded-3xl font-bold transition-all duration-300 ease-out first:ml-0 hover:scale-105 active:scale-100 link bg-black text-white hover:bg-[#B6F5C6] hover:text-[#4A4A4A] ${classes}`}
+        className={`text-sm tablet:text-base px-4 py-1 laptop:px-6 laptop:py-2 m-1 laptop:m-2 rounded-3xl border border-[#2B2118] font-bold transition-all duration-300 ease-out first:ml-0 hover:scale-105 active:scale-100 link bg-[#2B2118] text-[#FFC1CF] hover:bg-[#A8C69F] hover:text-[#2B2118] ${classes}`}
       >
         {children}
       </button>
@@ -18,7 +18,7 @@ const Button = ({ children, type, onClick, classes }) => {
     <button
       onClick={onClick}
       type="button"
-      className={`text-sm tablet:text-base px-4 py-1 laptop:px-6 laptop:py-2 m-1 laptop:m-2 rounded-3xl flex items-center font-bold transition-all ease-out duration-300 hover:scale-105 active:scale-100 tablet:first:ml-0 hover:bg-[#B6F5C6] hover:text-[#4A4A4A] ${classes} link`}
+      className={`text-sm tablet:text-base px-4 py-1 laptop:px-6 laptop:py-2 m-1 laptop:m-2 rounded-3xl border border-[#2B2118] flex items-center font-bold transition-all ease-out duration-300 hover:scale-105 active:scale-100 tablet:first:ml-0 text-[#2B2118] hover:bg-[#A8C69F] hover:text-[#2B2118] ${classes} link`}
     >
       {children}
     </button>

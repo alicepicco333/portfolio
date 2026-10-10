@@ -1,156 +1,99 @@
-  // ...existing code...
-
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React from "react";
 import Head from "next/head";
-import Header from "../components/Header";
-import Socials from "../components/Socials";
-import Footer from "../components/Footer";
+import Seo from "../components/Seo";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { gsap } from "gsap";
+import { motionOn } from "../utils/motion";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import SkillMap from "../components/SkillMap";
+import WorkExplorer from "../components/WorkExplorer";
+import InProgress from "../components/InProgress";
+import Journey from "../components/Journey";
 import portfolioData from "../data/portfolio.json";
-import WorkCard from "../components/WorkCard";
-import HeroGraph from "../components/HeroGraph";
-import ScrambleText from "../components/ScrambleText";
+import { useIsomorphicLayoutEffect, byDateDesc } from "../utils";
 
-const scrollWithOffset = (el, offset = -80) => {
-  const y = el.getBoundingClientRect().top + window.scrollY + offset;
-  window.scrollTo({ top: y, behavior: "smooth" });
-};
+// Finished work is shown in the work views; work in progress gets its own section.
+const FINISHED = ["Design", "Research", "Live Coding"];
 
 const Home = () => {
-  const workRef = useRef(null);
-  const headerRefs = useRef([]);
-  const router = useRouter();
-  const [selectedCategory, setSelectedCategory] = useState("Design and Development");
-  const [heroHovered, setHeroHovered] = useState(false);
+  const { about } = portfolioData;
+  const projects = [...portfolioData.projects].sort(byDateDesc);
+  const finished = projects.filter((p) => FINISHED.includes(p.category));
+  const wip = projects.filter((p) => p.category === "Work in Progress");
 
-  const handleWorkScroll = () => {
-    if (workRef.current) scrollWithOffset(workRef.current);
-  };
 
-  const handleAboutScroll = () => {
-    const about = document.getElementById("about-section");
-    if (about) scrollWithOffset(about);
-  };
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(headerRefs.current, {
-        opacity: 0,
-        y: 40,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power3.out",
+  useIsomorphicLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      if (!motionOn()) return;
+      gsap.utils.toArray(".fu-reveal").forEach((el) => {
+        if (el.querySelector(".fu-section-title") || el.classList.contains("fu-section-title")) return;
+        gsap.from(el, { opacity: 0, y: 24, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%", once: true } });
       });
-    });
-    return () => ctx.revert();
-  }, [router.asPath]);
+      // the big section titles rise out of their own baseline as the section arrives
+      gsap.utils.toArray(".fu-section-title").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { clipPath: "inset(0 0 100% 0)", y: "0.35em" },
+          { clipPath: "inset(0 0 -20% 0)", y: 0, duration: 0.9, ease: "expo.out", clearProps: "clipPath,transform", scrollTrigger: { trigger: el, start: "top 90%", once: true } }
+        );
+      });
 
-  const allCategories = [...new Set(portfolioData.projects.map((p) => p.category))];
-  const filteredProjects = portfolioData.projects.filter((p) => p.category === selectedCategory);
+    });
+    // the map, the work views and images change the page height after load: keep triggers in step
+    let timer;
+    const observer = new ResizeObserver(() => {
+      clearTimeout(timer);
+      timer = setTimeout(() => ScrollTrigger.refresh(), 150);
+    });
+    observer.observe(document.body);
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+      mm.revert();
+    };
+  }, []);
 
   return (
-    <div className={`relative min-h-screen overflow-x-hidden ${portfolioData.showCursor ? "cursor-" : ""}`}>
+    <div id="top" className="min-h-screen bg-bone text-ink">
+      <Seo title="Alice Picco, HCI researcher & designer" description={about.lead} />
       <Head>
-        <title>Alice Picco</title>
-        <meta name="description" content="Portfolio website of Alice Picco" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="theme-color" content="#D5D6DB" />
       </Head>
 
-      <Header handleWorkScroll={handleWorkScroll} handleAboutScroll={handleAboutScroll} />
+      <Header />
 
-      <main className="px-6 py-16 mx-auto max-w-7xl">
-        <section 
-          className="mb-16 text-center relative min-h-[650px]"
-          onMouseEnter={() => setHeroHovered(true)}
-          onMouseLeave={() => setHeroHovered(false)}
-        >
-          <HeroGraph hovered={heroHovered} />
-          <div 
-            className={`relative transition-all duration-300 ${heroHovered ? 'blur-sm z-0' : 'z-10'}`}
-          >
-            <h1
-              ref={(el) => (headerRefs.current[0] = el)}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold mb-5"
-            >
-              {portfolioData.headerTaglineOne}
-            </h1>
-            <h1
-              ref={(el) => (headerRefs.current[1] = el)}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold mb-5"
-            >
-              I'm <ScrambleText text="Alice" delay={400} />,
-            </h1>
-            <h1
-              ref={(el) => (headerRefs.current[2] = el)}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold mb-5"
-            >
-              {portfolioData.headerTaglineThree}
-            </h1>
-            <h1
-              ref={(el) => (headerRefs.current[3] = el)}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold mb-5"
-            >
-              based in <ScrambleText text="Amsterdam" delay={800} />.
-            </h1>
-            <p className="text-md mt-8 text-gray-600 dark:text-gray-300">{portfolioData.email}</p>
-          </div>
-          <div className="mt-[7.5rem] relative z-20">
-            <Socials />
+      <main id="main-content" tabIndex={-1}>
+        <h1 className="sr-only">Alice Picco, HCI researcher and designer</h1>
+        <SkillMap projects={finished} />
+        <WorkExplorer projects={finished} />
+        <InProgress projects={wip} />
+
+        <section id="about" aria-labelledby="about-title" className="scroll-mt-16 bg-olive px-4 py-16 text-white fu-gutter tablet:py-24">
+          <div className="grid gap-x-8 gap-y-10 laptop:grid-cols-4">
+            <h2 id="about-title" className="fu-reveal fu-section-title">About</h2>
+            <div className="flex flex-col gap-10 laptop:col-span-3">
+              <p className="fu-reveal max-w-[980px] text-[28px] font-medium leading-[1.2] tracking-[-0.01em] tablet:text-phi2">{about.lead}</p>
+              <div className="fu-reveal grid max-w-[980px] gap-6 text-[18px] leading-relaxed tablet:grid-cols-2">
+                {about.paragraphs.map((text) => (
+                  <p key={text.slice(0, 20)}>{text}</p>
+                ))}
+              </div>
+              <div className="fu-reveal grid max-w-[980px] gap-6 tablet:grid-cols-3" role="group" aria-label="How I work">
+                {about.practice.map((p) => (
+                  <div key={p.title} className="flex flex-col gap-2">
+                    <span className="font-mono text-[14px] uppercase tracking-[0.12em]">{p.title}</span>
+                    <span className="text-[18px] leading-snug">{p.items}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
-
-        <section ref={workRef} className="mb-20 mt-10">
-          <h2 className="text-2xl font-semibold text-center mb-6">Work</h2>
-
-          <div className="flex flex-wrap justify-center gap-4 mb-8 max-w-4xl mx-auto">
-            {allCategories.map((category) => (
-              <label
-                key={category}
-                className={`cursor-pointer px-4 py-2 rounded-full border text-sm transition ${
-                  selectedCategory === category
-                    ? "bg-gray-200 text-black border-black"
-                    : "bg-white text-black border-black"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="category"
-                  value={category}
-                  className="hidden"
-                  checked={selectedCategory === category}
-                  onChange={() => setSelectedCategory(category)}
-                />
-                {category}
-              </label>
-            ))}
-          </div>
-
-          {/* Container matching chip width */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto">
-            {filteredProjects.map((project) => (
-              <Link
-                key={project.id}
-                href={`/projects/${project.id}`}
-              >
-                <WorkCard
-                  img={project.imageSrc}
-                  name={project.title}
-                  description={project.description}
-                  tags={project.tags}
-                />
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <section id="about-section" className="mb-20">
-          <h2 className="text-2xl font-semibold text-center">About</h2>
-          <p className="mt-4 text-lg text-justify text-gray-700 dark:text-gray-300">{portfolioData.aboutpara}</p>
-        </section>
-
-        <p className="text-center text-lg text-gray-600 dark:text-gray-300 mt-10">{portfolioData.email}</p>
+        <Journey projects={projects.filter((p) => FINISHED.includes(p.category) || p.category === "Work in Progress")} />
       </main>
 
       <Footer />

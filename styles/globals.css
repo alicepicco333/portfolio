@@ -1,45 +1,289 @@
-@import url("https://fonts.googleapis.com/css2?family=Hind:wght@400;500;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* Type: Inter Tight (text) and JetBrains Mono (labels, data), loaded in _document.js */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0vw;
-  font-family: "Space Mono", monospace;
-  font-weight: 400;
-  font-style: normal;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+/* Grey and blue. Tokens are "r g b" triplets; Tailwind reads them in tailwind.config.js.
+   Names are kept from the earlier system: bone = page grey, paper = card surface, olive = the blue
+   accent (project pages override it with the project's own colour via projectStyle). */
+:root {
+  --bone: 213 214 219;
+  --paper: 236 237 240;
+  --ink: 14 14 16;
+  --olive: 26 26 255; /* #1A1AFF: 5.5:1 on the grey */
+  --khaki: 194 197 207;
+  --concrete: 165 166 174;
+  --graphite: 85 85 94; /* 5.1:1 on the grey */
+  --field-grey: 85 85 94;
+  --pink: 194 197 207;
+  --lilac: 194 197 207;
+  --mint: 194 197 207;
+  --signal: 26 26 255;
 }
 
-@keyframes scroll {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+html {
+  scroll-behavior: smooth;
 }
 
-.animate-scroll {
-  display: inline-block;
-  white-space: nowrap;
-  animation: scroll 25s linear infinite;
-}
-
-
-
+html,
 body {
- 
-  @apply dark:bg-black dark:text-white;
-}
-
-html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* optional: prevent accidental horizontal scroll */
+  overflow-x: clip; /* clip, not hidden: hidden makes body a scroll container and breaks sticky */
 }
 
+body {
+  background-color: rgb(var(--bone));
+  color: rgb(var(--ink));
+  font-family: "Inter Tight", system-ui, sans-serif;
+  font-feature-settings: "tnum" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgb(var(--olive));
+  color: #fff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--ink));
+  outline-offset: 3px;
+}
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid rgb(var(--olive));
+  outline-offset: 3px;
+}
+.map-focus:focus-visible {
+  outline-offset: 4px;
+}
+/* on the blue and black bands the ring turns white */
+.bg-olive :focus-visible,
+.bg-ink :focus-visible,
+footer :focus-visible {
+  outline-color: #fff;
+}
+/* skip link: hidden until focused */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -100px;
+  z-index: 100;
+  background: rgb(var(--ink));
+  color: #fff;
+  padding: 12px 16px;
+  font-weight: 600;
+}
+.skip-link:focus {
+  top: 8px;
+}
+
+/* ——— visitor settings ——— */
+/* High contrast: a grey accent (8:1), all secondary text in ink, solid outlines,
+   no transparency or glows. The page background is unchanged. */
+html[data-contrast="high"] {
+  --olive: 58 58 66; /* #3A3A42: a grey accent, 8:1 on the grey page */
+  --signal: 58 58 66;
+  --graphite: 14 14 16;
+  --field-grey: 14 14 16;
+  --concrete: 14 14 16;
+}
+html[data-contrast="high"] [class*="text-ink/"] { color: rgb(var(--ink)) !important; }
+html[data-contrast="high"] [class*="text-bone/"] { color: rgb(var(--bone)) !important; }
+html[data-contrast="high"] [class*="border-ink/"] { border-color: rgb(var(--ink)) !important; }
+html[data-contrast="high"] [class*="border-bone/"] { border-color: rgb(var(--bone)) !important; }
+html[data-contrast="high"] .map-edge { opacity: 1 !important; }
+html[data-contrast="high"] .map-edge:not([stroke-width="3"]) { stroke-width: 1.5px; }
+html[data-contrast="high"] .map-glow,
+html[data-contrast="high"] .work-glow,
+html[data-contrast="high"] .hero-glow { display: none; }
+html[data-contrast="high"] a { text-decoration-thickness: 2px; }
+html[data-contrast="high"] .wheel-cluster { fill: rgb(var(--ink)) !important; }
+html[data-motion="off"] {
+  scroll-behavior: auto;
+}
+html[data-motion="off"] *,
+html[data-motion="off"] ::before,
+html[data-motion="off"] ::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+@layer components {
+  /* big type: tight, flush-left, sentence case */
+  .fu-display {
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+  }
+  /* every home-page section opens on the same title: phi3 on wide screens */
+  .fu-section-title {
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+  }
+  @media (min-width: 768px) {
+    .fu-section-title { font-size: 68px; }
+  }
+  .fu-title {
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+  /* small labels and numbers */
+  .fu-meta {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+  }
+  /* one button language site-wide: mono, a 1px ink rule; primary is ink, secondary is paper */
+  .fu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1px solid rgb(var(--ink));
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.15s, color 0.15s, transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .fu-btn-primary {
+    background: rgb(var(--ink));
+    color: rgb(var(--bone));
+  }
+  .fu-btn-primary:hover {
+    background: rgb(var(--olive));
+    border-color: rgb(var(--olive));
+  }
+  .fu-btn-secondary {
+    background: rgb(var(--paper));
+    color: rgb(var(--ink));
+  }
+  .fu-btn-secondary:hover {
+    background: rgb(var(--bone));
+  }
+}
+
+/* pressable things answer the press */
+.fu-btn:active,
+button:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+/* the page gutter: 32 px, and on wide screens a centred 1600 px frame */
+@media (min-width: 768px) {
+  .fu-gutter {
+    padding-inline: max(32px, calc((100vw - 1600px) / 2 + 32px));
+  }
+}
+
+/* ——— index of works ——— */
+:root {
+  /* a firm spring, no overshoot (critically damped, 0.5 s) */
+  --spring-firm: linear(0, 0.068, 0.208, 0.362, 0.504, 0.624, 0.721, 0.795, 0.851, 0.893, 0.924, 0.946, 0.962, 0.973, 0.981, 0.987, 0.991, 0.994, 0.996, 0.997, 1);
+}
+.index-title {
+  transition: color 150ms ease, transform 500ms var(--spring-firm);
+}
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .index-title,
+  .index-title.is-on {
+    transform: translateX(10px);
+  }
+}
+/* the preview turns like a stack of cards: the new image rolls in from the side of the list it comes from */
+.index-shot {
+  transition: clip-path 420ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* ——— Motion ——— */
+/* the selected point on the wheel: a slow, breathing glow */
+.glow-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: glow-pulse 2.2s ease-in-out infinite alternate;
+}
+@keyframes glow-pulse {
+  from { transform: scale(0.75); opacity: 0.55; }
+  to { transform: scale(1.15); opacity: 1; }
+}
+/* a soft blue glow with a radial blur, breathing */
+.hero-glow {
+  background: radial-gradient(circle, rgb(var(--olive) / 0.5) 0%, rgb(var(--olive) / 0.18) 45%, rgb(var(--olive) / 0) 70%);
+  filter: blur(24px);
+  animation: hero-glow 3.6s ease-in-out infinite alternate;
+}
+@keyframes hero-glow {
+  from { transform: scale(0.8); opacity: 0.6; }
+  to { transform: scale(1.1); opacity: 1; }
+}
+/* cards lift onto a hard blue shadow; the mini sigil turns */
+.work-card > a,
+.work-lift {
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s;
+}
+.work-card > a:hover,
+.work-card > a:focus-visible,
+.work-lift:hover,
+.work-lift:focus-visible {
+  transform: translate(-4px, -4px);
+  box-shadow: 6px 6px 0 rgb(var(--olive));
+}
+.work-mini {
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.work-card > a:hover .work-mini {
+  transform: rotate(144deg);
+}
+@keyframes fu-blink {
+  50% { opacity: 0; }
+}
+.fu-blink {
+  animation: fu-blink 1.2s steps(1) infinite;
+}
+/* urgency curve points pop in when the version changes (uses `scale`, so Tailwind's translate stays intact) */
+@keyframes urgency-pop {
+  from { opacity: 0; scale: 0.4; }
+}
+.urgency-point {
+  animation: urgency-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fu-blink { animation: none; }
+  .work-card > a, .work-lift, .work-mini { transition: none; }
+  .hero-glow { animation: none; }
+  .urgency-point { animation: none; }
+}
+
+/* project pages: the project's own accent; its darker version in high contrast */
+.project-theme { --olive: var(--project); --signal: var(--project); }
+html[data-contrast="high"] .project-theme { --olive: 58 58 66; --signal: 58 58 66; }
+
+/* print: plain white paper, no site chrome */
+@media print {
+  @page { size: A4; margin: 14mm 12mm; }
+  html, body, .bg-bone { background: #fff !important; }
+  header.sticky, footer#contact, .skip-link { display: none !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
