@@ -24,7 +24,7 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-ink bg-bone text-ink">
-      <div className="flex h-16 items-center gap-6 px-4 tablet:px-8">
+      <div className="flex h-16 items-center gap-6 px-4 fu-gutter">
         <Link href="/" className="-m-2 flex items-center gap-3 p-2" aria-label={`${name}, home`}>
           <GraphMark size={34} />
           <span className="text-[18px] font-semibold lowercase tracking-[-0.01em]" aria-hidden="true">

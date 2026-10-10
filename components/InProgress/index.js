@@ -10,7 +10,7 @@ const InProgress = ({ projects }) => {
   if (!projects.length) return null;
 
   return (
-    <section id="in-progress" aria-labelledby="wip-title" className="scroll-mt-16 border-t border-ink px-4 py-16 tablet:px-8 tablet:py-24">
+    <section id="in-progress" aria-labelledby="wip-title" className="scroll-mt-16 border-t border-ink px-4 py-16 fu-gutter tablet:py-24">
       <div className="flex flex-col gap-12">
         <h2 id="wip-title" className="fu-section-title">
           In progress

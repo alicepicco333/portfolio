@@ -22,11 +22,18 @@ const mapTitle = (p) => p.short || shortTitle(p.title);
 const HALO = { paintOrder: "stroke", stroke: "rgb(var(--bone))", strokeWidth: 6, strokeLinejoin: "round" };
 
 // ——— desktop geometry ———
-// The stage spreads sideways to the room it gets: x is stretched by SX, y and text sizes are not.
-let SX = 1;
-const pos = (id) => [MAP.pos[id][0] * SX, MAP.pos[id][1]];
-const clusterPos = (id) => [MAP.clusters[id][0] * SX, MAP.clusters[id][1]];
-const stageW = () => MAP.W * SX;
+// G maps the map's design coordinates onto the stage. Positions stretch to the room the hero has;
+// text and node sizes never do, so labels read the same on a laptop and on a wide monitor.
+const G = { kx: 1, ky: 1, ox: 0, oy: 0, x0: 0, y0: 0, W: MAP.W, H: MAP.H };
+const place = ([x, y]) => [G.ox + (x - G.x0) * G.kx, G.oy + (y - G.y0) * G.ky];
+// each verb sits inside its own cluster
+const CLUSTER_AT = { ...MAP.clusters, counting: [450, 650], ordering: [140, 790] };
+const pos = (id) => place(MAP.pos[id]);
+const clusterPos = (id) => place(CLUSTER_AT[id]);
+const stageW = () => G.W;
+// the hero's side margin: the page gutter, and on wide screens a centred 1600 px frame
+const gutterOf = (vw) => Math.max(32, (vw - 1600) / 2 + 32);
+const LABEL_SCALE = 16 / 18; // labels are drawn at 18 units: 16 px on screen
 function labelBox(id) {
   const [x, y] = pos(id);
   const [dx, dy, anchor] = MAP.label[id];
@@ -37,9 +44,47 @@ function labelBox(id) {
 const nodeBox = (id) => [pos(id)[0] - 15, pos(id)[1] - 15, pos(id)[0] + 15, pos(id)[1] + 15];
 const clusterBox = (c) => {
   const [x, y] = clusterPos(c.id);
-  return [x, y - 22, x + textWidth(c.label, 22, true) * 1.2, y + 4];
+  return [x, y - 16, x + textWidth(c.label, 16, true) * 1.2, y + 4];
 };
-const staticBoxes = () => [...NODES.map((n) => labelBox(n.id)), ...NODES.map((n) => nodeBox(n.id)), ...CLUSTERS.map(clusterBox), [0, 0, stageW(), 100]];
+const staticBoxes = () => [...NODES.map((n) => labelBox(n.id)), ...NODES.map((n) => nodeBox(n.id)), ...CLUSTERS.map(clusterBox)];
+
+// every anchor (node or verb) with how far its own ink reaches on each side, in design units;
+// `widths` are the labels' rendered lengths once the fonts are in (estimates before that)
+const itemsFor = (widths = {}) => [
+  ...NODES.map((n) => {
+    const [x, y] = MAP.pos[n.id];
+    const [dx, dy, anchor] = MAP.label[n.id];
+    const w = widths[n.id] || textWidth(labelOf(n.id), 18) * 1.1;
+    const left = anchor === "end" ? x + dx - w : x + dx;
+    return { x, y, l: x - Math.min(left, x - 7), r: Math.max(left + w, x + 7) - x, t: y - Math.min(y + dy - 18, y - 7), b: Math.max(y + dy + 7, y + 7) - y };
+  }),
+  ...CLUSTERS.map((c) => {
+    // raw coordinates: the verb's text runs right from its anchor
+    const [x, y] = CLUSTER_AT[c.id];
+    return { x, y, l: 0, r: textWidth(c.label, 16, true) * 1.2, t: 16, b: 4 };
+  }),
+];
+// the stretch that makes the outermost ink span exactly `size`: positions scale, labels do not
+function fitAxis(ITEMS, key, lo, hi, size) {
+  const span = (k) => {
+    let min = Infinity;
+    let max = -Infinity;
+    ITEMS.forEach((it) => {
+      min = Math.min(min, it[key] * k - it[lo]);
+      max = Math.max(max, it[key] * k + it[hi]);
+    });
+    return { min, max };
+  };
+  let a = 0.05;
+  let b = 20;
+  for (let i = 0; i < 60; i += 1) {
+    const m = (a + b) / 2;
+    const { min, max } = span(m);
+    if (max - min > size) b = m;
+    else a = m;
+  }
+  return { k: a, offset: -span(a).min };
+}
 
 // Put a skill's tools (inner arc) and projects (outer arc) on the side of the node with the
 // most free room: every direction is scored by how much it would cover or leave the frame.
@@ -47,7 +92,7 @@ const grow = ([a, b, c, d], m) => [a - m, b - m, c + m, d + m];
 const cost = (boxes, obstacles) => {
   let score = 0;
   boxes.forEach((b, i) => {
-    if (b[0] < 8 || b[1] < 8 || b[2] > stageW() - 8 || b[3] > MAP.H - 8) score += 1e6;
+    if (b[0] < 8 || b[1] < 8 || b[2] > stageW() - 8 || b[3] > G.H - 8) score += 1e6;
     obstacles.forEach((o) => {
       score += overlapArea(b, o);
     });
@@ -103,7 +148,7 @@ const SkillMap = ({ projects }) => {
   // the statement as a headline above the graph; `?hero=now` / `?hero=caption` show the earlier placements
   const [heroMode, setHeroMode] = useState("band");
   const bandRef = useRef(null);
-  const TOP = heroMode === "band" ? 70 : 0; // band: the empty strip above the graph is cropped
+  const TOP = heroMode === "band" ? 0 : 70; // the earlier placements crop the empty strip above the graph
   const SH = MAP.H - TOP;
   useEffect(() => {
     const m = new URLSearchParams(window.location.search).get("hero");
@@ -116,6 +161,7 @@ const SkillMap = ({ projects }) => {
   const [fit, setFit] = useState(null);
   const [frameH, setFrameH] = useState(null);
   const [sx, setSx] = useState(1);
+  const [box, setBox] = useState(null);
   const frameRef = useRef(null);
   const stageRef = useRef(null);
   const narrowRef = useRef(null);
@@ -134,6 +180,37 @@ const SkillMap = ({ projects }) => {
       const el = frameRef.current;
       if (!el || !el.clientWidth) return; // hidden on phones: nothing to fit
       const band = bandRef.current?.offsetHeight || 0;
+      if (heroMode === "band") {
+        // one frame: the graph's outermost labels sit on the page gutters; 64 px under the header,
+        // 64 px to the headline, which closes the first screen 48 px above the fold
+        const gut = gutterOf(window.innerWidth);
+        const headerH = document.querySelector("header")?.offsetHeight || 65;
+        const pxW = el.clientWidth - 2 * gut;
+        const pxH = Math.max(320, window.innerHeight - headerH - band - 128);
+        const Wu = pxW / LABEL_SCALE;
+        const Hu = pxH / LABEL_SCALE;
+        const widths = {};
+        NODES.forEach((n) => {
+          const t = labelRefs.current[n.id];
+          if (t && t.getComputedTextLength) widths[n.id] = t.getComputedTextLength();
+        });
+        const items = itemsFor(widths);
+        const fx = fitAxis(items, "x", "l", "r", Wu);
+        const fy = fitAxis(items, "y", "t", "b", Hu);
+        G.kx = fx.k;
+        G.ky = fy.k;
+        G.ox = fx.offset;
+        G.oy = fy.offset;
+        G.x0 = 0;
+        G.y0 = 0;
+        G.W = Wu;
+        G.H = Hu;
+        setBox({ left: gut, top: 64, w: pxW, h: pxH });
+        setSx(G.kx + G.ky / 1000);
+        setFit(LABEL_SCALE);
+        setFrameH(pxH + 128);
+        return;
+      }
       // band: air around the graph, the page's 32 px gutter at the sides and a little under the header
       const AIR = heroMode === "band" ? { x: 32, top: 16 } : { x: 0, top: 0 };
       const room = window.innerHeight - (document.querySelector("header")?.offsetHeight || 65) - band - AIR.top;
@@ -141,7 +218,8 @@ const SkillMap = ({ projects }) => {
       const h = MAP.H - (heroMode === "band" ? 70 : 0);
       // band: the first screen is fitted exactly, however short the window; the earlier placements keep their floor
       const f = heroMode === "band" ? Math.min(availW / MAP.W, Math.max(0.4, room / h)) : Math.min(el.clientWidth / MAP.W, Math.max(0.8, Math.max(480, room) / h));
-      SX = Math.min(1.6, Math.max(1, availW / (MAP.W * f)));
+      const SX = Math.min(1.6, Math.max(1, availW / (MAP.W * f)));
+      Object.assign(G, { kx: SX, ky: 1, ox: 0, oy: 0, x0: 0, y0: 0, W: MAP.W * SX, H: MAP.H });
       setSx(SX);
       setFit(f);
       setFrameH(heroMode === "band" ? room + AIR.top : Math.max(Math.max(480, room), h * f));
@@ -291,19 +369,23 @@ const SkillMap = ({ projects }) => {
       {/* ——— desktop and tablet: the fixed stage ——— */}
       <div ref={frameRef} className="relative hidden h-[calc(100svh-64px)] w-full map:block" style={frameH ? { height: frameH } : undefined}>
         <div
-          className="absolute left-1/2"
-          style={{ top: heroMode === "band" ? "calc(50% + 8px)" : "50%", width: MAP.W * sx * (fit || 1), height: SH * (fit || 1), transform: "translate(-50%, -50%)", visibility: fit ? "visible" : "hidden" }}
+          className="absolute"
+          style={
+            heroMode === "band" && box
+              ? { left: box.left, top: box.top, width: box.w, height: box.h, visibility: fit ? "visible" : "hidden" }
+              : { left: "50%", top: "50%", width: G.W * (fit || 1), height: SH * (fit || 1), transform: "translate(-50%, -50%)", visibility: fit ? "visible" : "hidden" }
+          }
         >
           <div
             ref={stageRef}
             className="absolute left-0 top-0 origin-top-left"
-            style={{ width: MAP.W * sx, height: SH, transform: `scale(${fit || 1})` }}
+            style={{ width: G.W, height: heroMode === "band" ? G.H : SH, transform: `scale(${fit || 1})` }}
             onMouseLeave={() => setPinned(null)}
             onKeyDown={(e) => {
               if (e.key === "Escape") setPinned(null);
             }}
           >
-            <svg viewBox={`0 ${TOP} ${MAP.W * sx} ${SH}`} className="absolute inset-0 h-full w-full" role="group" aria-label="Skills, linked where they feed into each other. Select one to see its tools and projects.">
+            <svg viewBox={heroMode === "band" ? `0 0 ${G.W} ${G.H}` : `0 ${TOP} ${G.W} ${SH}`} className="absolute inset-0 h-full w-full" role="group" aria-label="Skills, linked where they feed into each other. Select one to see its tools and projects.">
               <defs>
               </defs>
               <g aria-hidden="true">
@@ -312,9 +394,9 @@ const SkillMap = ({ projects }) => {
                     key={c.id}
                     className="map-cluster"
                     x={clusterPos(c.id)[0]}
-                    y={MAP.clusters[c.id][1]}
+                    y={clusterPos(c.id)[1]}
                     fontFamily="JetBrains Mono, monospace"
-                    fontSize="22"
+                    fontSize="16"
                     fontWeight="500"
                     letterSpacing="0.18em"
                     style={{ fill: "rgb(var(--olive))" }}
@@ -465,12 +547,13 @@ const SkillMap = ({ projects }) => {
 
       {/* the statement closes the first screen, just above the fold */}
       {heroMode === "band" && (
-        <div ref={bandRef} className="map-intro hidden px-8 pb-8 pt-6 map:block">
-          <p className="fu-display max-w-[1320px] leading-[1.08]" style={{ fontSize: "clamp(30px, 5.4vh, 42px)" }}>{statement}</p>
+        <div ref={bandRef} className="map-intro fu-gutter hidden grid-cols-12 items-end gap-x-8 pb-12 map:grid">
+          <p className="fu-display col-span-9 leading-[1.06]" style={{ fontSize: "clamp(32px, 5vh, 48px)" }}>{statement}</p>
+          <p className="col-span-3 justify-self-end whitespace-nowrap pb-[0.35em] text-right font-mono text-[14px] leading-relaxed text-graphite">Available for freelance · Amsterdam</p>
         </div>
       )}
       {/* ——— phones and tablets: the statement only; the map needs a wide screen ——— */}
-      <div ref={narrowRef} className="relative overflow-hidden px-4 pb-16 pt-14 tablet:px-8 tablet:pb-24 tablet:pt-20 map:hidden">
+      <div ref={narrowRef} className="relative overflow-hidden px-4 pb-16 pt-14 fu-gutter tablet:pb-24 tablet:pt-20 map:hidden">
         <div className="map-intro relative flex max-w-[720px] flex-col gap-6">
           <p className="text-[34px] font-medium leading-[1.12] tracking-[-0.02em] tablet:text-[52px]">
             I&rsquo;m an HCI researcher and designer. I make complex information easy to understand and trust, and I test it with the people who use it.

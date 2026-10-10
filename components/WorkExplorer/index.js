@@ -302,7 +302,7 @@ const WorkExplorer = ({ projects: given }) => {
       id="work"
       aria-labelledby="work-title"
       ref={rootRef}
-      className="scroll-mt-16 border-t border-ink px-4 py-16 tablet:px-8 tablet:py-24"
+      className="scroll-mt-16 border-t border-ink px-4 py-16 fu-gutter tablet:py-24"
       onKeyDown={(e) => {
         if (!plainKey(e)) return;
         if (/^[igIG]$/.test(e.key)) setView("Grid");

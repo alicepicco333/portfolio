@@ -148,7 +148,7 @@ const Journey = ({ projects }) => {
     <section
       id="journey"
       aria-labelledby="journey-title"
-      className="scroll-mt-16 border-t border-ink px-4 py-16 tablet:px-8 tablet:py-24"
+      className="scroll-mt-16 border-t border-ink px-4 py-16 fu-gutter tablet:py-24"
     >
       <div className="flex flex-col gap-8">
         <div className="fu-reveal flex flex-wrap items-end justify-between gap-4">

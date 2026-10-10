@@ -9,7 +9,7 @@ const Contact = () => (
   <div className="min-h-screen bg-bone text-ink">
     <Seo title="Contact | Alice Picco" description="Write to Alice Picco, HCI researcher and designer in Amsterdam, available for freelance work." path="/contact/" />
     <Header />
-    <main id="main-content" tabIndex={-1} className="grid gap-x-4 gap-y-10 px-4 pb-24 pt-10 tablet:px-8 laptop:grid-cols-4 laptop:pt-16">
+    <main id="main-content" tabIndex={-1} className="grid gap-x-4 gap-y-10 px-4 pb-24 pt-10 fu-gutter laptop:grid-cols-4 laptop:pt-16">
       <div className="flex flex-col gap-4">
         <h1 className="fu-section-title">Contact</h1>
         <p className="font-mono text-[14px] leading-relaxed text-graphite">Available for freelance work, Amsterdam and remote</p>

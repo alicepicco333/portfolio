@@ -8,7 +8,7 @@ const Footer = () => {
   const { pathname } = useRouter();
 
   return (
-    <footer id="contact" aria-labelledby="contact-title" className="bg-ink px-4 pb-6 pt-16 text-bone tablet:px-8 tablet:pt-24">
+    <footer id="contact" aria-labelledby="contact-title" className="bg-ink px-4 pb-6 pt-16 text-bone fu-gutter tablet:pt-24">
       <div className="grid gap-x-4 gap-y-8 pb-16 laptop:grid-cols-4">
         <div className="flex flex-col gap-2">
           <h2 id="contact-title" className="fu-section-title">Contact</h2>

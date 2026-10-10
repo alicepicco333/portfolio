@@ -183,6 +183,13 @@ button:not(:disabled):active {
   transform: scale(0.97);
 }
 
+/* the page gutter: 32 px, and on wide screens a centred 1600 px frame */
+@media (min-width: 768px) {
+  .fu-gutter {
+    padding-inline: max(32px, calc((100vw - 1600px) / 2 + 32px));
+  }
+}
+
 /* ——— index of works ——— */
 :root {
   /* a firm spring, no overshoot (critically damped, 0.5 s) */

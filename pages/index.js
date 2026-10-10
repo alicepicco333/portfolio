@@ -72,7 +72,7 @@ const Home = () => {
         <WorkExplorer projects={finished} />
         <InProgress projects={wip} />
 
-        <section id="about" aria-labelledby="about-title" className="scroll-mt-16 bg-olive px-4 py-16 text-white tablet:px-8 tablet:py-24">
+        <section id="about" aria-labelledby="about-title" className="scroll-mt-16 bg-olive px-4 py-16 text-white fu-gutter tablet:py-24">
           <div className="grid gap-x-8 gap-y-10 laptop:grid-cols-4">
             <h2 id="about-title" className="fu-reveal fu-section-title">About</h2>
             <div className="flex flex-col gap-10 laptop:col-span-3">
