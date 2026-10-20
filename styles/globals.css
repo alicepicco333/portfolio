@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-ink: #2B2118;
+  --color-sage: #A8C69F;
+  --color-pink: #FFC1CF;
+  --color-mist: #D9D7D2;
+  --color-cream: #F5EFE6;
+}
+
 * {
   margin: 0vw;
   font-family: "Space Mono", monospace;
@@ -33,7 +41,8 @@
 
 
 body {
- 
+  background-color: var(--color-cream);
+  color: var(--color-ink);
   @apply dark:bg-black dark:text-white;
 }
 

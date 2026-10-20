@@ -18,10 +18,10 @@ const Header = ({ handleWorkScroll, handleAboutScroll }) => {
       {/* Fixed Home Button - visible on all screen sizes */}
       <div
         onClick={() => router.push("/")}
-        className="fixed top-16 left-5 w-10 h-10 tablet:w-12 tablet:h-12 flex items-center justify-center rounded-full bg-[#B6F5C6] cursor-pointer z-50 animate-spin-slow"
+        className="fixed top-16 left-5 w-10 h-10 tablet:w-12 tablet:h-12 flex items-center justify-center rounded-full bg-[#A8C69F] border border-[#2B2118] cursor-pointer z-50 animate-spin-slow"
         style={{ fontFamily: "'Space Mono', monospace" }}
       >
-        <span className="text-lg tablet:text-xl font-bold text-[#4A4A4A]">*</span>
+        <span className="text-lg tablet:text-xl font-bold text-[#2B2118]">*</span>
       </div>
 
       {/* Mobile Menu */}
@@ -43,7 +43,7 @@ const Header = ({ handleWorkScroll, handleAboutScroll }) => {
             </div>
 
             <Popover.Panel
-              className="absolute right-5 z-10 w-11/12 p-4 bg-white shadow-md rounded-md"
+              className="absolute right-5 z-10 w-11/12 p-4 bg-[#FFC1CF] border border-[#2B2118] shadow-md rounded-md"
             >
               <div className="grid grid-cols-1">
                 <Button onClick={() => router.push("/")}>Home</Button>
@@ -70,7 +70,7 @@ const Header = ({ handleWorkScroll, handleAboutScroll }) => {
 
       {/* Desktop Header */}
       <div
-        className="mt-5 hidden flex-row items-center justify-between sticky w-full rounded-full bg-white top-0 z-10 tablet:flex"
+        className="mt-5 hidden flex-row items-center justify-between sticky w-full rounded-full bg-[#FFC1CF] border border-[#2B2118] top-0 z-10 tablet:flex"
       >
         {/* Spacer for fixed home button */}
         <div className="w-16 ml-10"></div>

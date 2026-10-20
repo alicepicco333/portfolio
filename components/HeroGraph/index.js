@@ -3,10 +3,10 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 
 const HeroGraph = ({ hovered }) => {
   // Colors
-  const nodeColor = "#FFB6C1"; // Light pink
-  const lineColor = "#FFC0CB"; // Pink
-  const textColor = "#4A4A4A"; // Dark grey
-  const subNodeColor = "#FFD1DC"; // Lighter pink for subnodes
+  const nodeColor = "#A8C69F";
+  const lineColor = "#2B2118";
+  const textColor = "#2B2118";
+  const subNodeColor = "#FFC1CF";
 
   // Original node positions with subnodes (in percentage) - central positions
   const originalNodes = [
@@ -508,7 +508,7 @@ const HeroGraph = ({ hovered }) => {
                   y1={`${from.y}%`}
                   x2={`${to.x}%`}
                   y2={`${to.y}%`}
-                  stroke="#FF69B4"
+                  stroke="#A8C69F"
                   strokeWidth="2"
                   strokeDasharray="5 5"
                   strokeLinecap="round"

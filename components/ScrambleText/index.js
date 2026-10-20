@@ -78,7 +78,7 @@ const ScrambleText = ({ text, className, delay = 0, highlight = false }) => {
   }, [mounted, text, delay]);
 
   const highlightStyle = highlight ? {
-    backgroundColor: "#98FB98",
+    backgroundColor: "#A8C69F",
     padding: "0 8px",
     borderRadius: "8px",
   } : {};

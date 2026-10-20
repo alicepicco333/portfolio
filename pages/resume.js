@@ -39,8 +39,8 @@ const Resume = () => {
           <div className="mt-10 w-full flex flex-col items-center">
             <div
               className={`w-full ${
-                "bg-gray-50"
-              } max-w-4xl p-20 mob:p-5 desktop:p-20 rounded-lg shadow-sm`}
+                "bg-[#FFC1CF]"
+              } max-w-4xl p-20 mob:p-5 desktop:p-20 rounded-lg shadow-sm border border-[#2B2118]`}
             >
               <h1 className="text-3xl font-bold">{name}</h1>
               <h2 className="text-xl mt-5">{resume.tagline}</h2>
