@@ -2078,38 +2078,220 @@
         "flows": [
           {
             "src": "/images/projects/unobravo/flow-01-onboarding.jpg",
-            "alt": "Onboarding and discovery screens",
-            "caption": "01 · Onboarding and discovery: from first contact to an informed choice of path"
+            "alt": "Five onboarding screens: a welcome screen with three therapist portraits and the line “It’s good that you’re here”; a choice between the full and the short matching questionnaire; the full questionnaire’s three sections; a privacy screen with two required consent boxes and one optional; and the two paths again, with a link to browse profiles instead.",
+            "caption": "01 · Onboarding and discovery: from first contact to an informed choice of path",
+            "strings": [
+              [
+                "È un bene che tu sia qui",
+                "It’s good that you’re here"
+              ],
+              [
+                "Scegli tu",
+                "You choose"
+              ],
+              [
+                "Questionario Completo · Questionario Breve",
+                "Full questionnaire · Short questionnaire"
+              ],
+              [
+                "La tua privacy prima di tutto",
+                "Your privacy comes first"
+              ],
+              [
+                "Acconsento al trattamento dei dati sanitari",
+                "I consent to the processing of my health data"
+              ],
+              [
+                "Preferisci sfogliare i profili?",
+                "Would you rather browse the profiles?"
+              ]
+            ]
           },
           {
             "src": "/images/projects/unobravo/flow-02-questionnaire.jpg",
-            "alt": "Matching questionnaire screens",
-            "caption": "02 · Matching questionnaire: one question at a time, visible progress, support always at hand"
+            "alt": "Five questionnaire screens: the intro to section 1 with the estimated time and an emergency box; a multiple-choice question about what brings the user to therapy; a question about which area of life is most affected; a support screen with buttons to call 112 or a helpline; and a summary of all answers, each section editable.",
+            "caption": "02 · Matching questionnaire: one question at a time, visible progress, support always at hand",
+            "strings": [
+              [
+                "Sezione 1 · Domande personali",
+                "Section 1 · Personal questions"
+              ],
+              [
+                "Hai bisogno di aiuto subito?",
+                "Do you need help right now?"
+              ],
+              [
+                "Cosa ti spinge principalmente a cercare supporto psicologico?",
+                "What mainly brings you to look for psychological support?"
+              ],
+              [
+                "Come mai te lo stiamo chiedendo?",
+                "Why are we asking?"
+              ],
+              [
+                "Non sei solo/a",
+                "You’re not alone (written for any gender)"
+              ],
+              [
+                "Controlla le tue risposte",
+                "Check your answers"
+              ]
+            ]
           },
           {
             "src": "/images/projects/unobravo/flow-03-portal.jpg",
-            "alt": "Professionals portal screens",
-            "caption": "03 · Professionals portal: browse, filter and compare profiles independently"
+            "alt": "Five portal screens: the list of 5,467 professionals with search, sort and filters; the filter menu (approach, areas of work, gender, age, availability); the choice of therapeutic approach, each explained in one line; the list with filters applied; and a therapist’s profile with areas of work, résumé and a booking button.",
+            "caption": "03 · Professionals portal: browse, filter and compare profiles independently",
+            "strings": [
+              [
+                "Portale dei professionisti",
+                "Professionals portal"
+              ],
+              [
+                "Cerca per nome o orientamento",
+                "Search by name or approach"
+              ],
+              [
+                "Filtri",
+                "Filters"
+              ],
+              [
+                "Orientamento",
+                "Therapeutic approach"
+              ],
+              [
+                "Mostra 5.467 risultati",
+                "Show 5,467 results"
+              ],
+              [
+                "Prenota colloquio",
+                "Book a session"
+              ]
+            ]
           },
           {
             "src": "/images/projects/unobravo/flow-04-booking.jpg",
-            "alt": "Proposals and booking screens",
-            "caption": "04 · Proposals and booking: three explained proposals, booking in two taps, clear payment"
+            "alt": "Five booking screens: three proposed therapists in a carousel, each with first slot, languages, experience and price; why this therapist was proposed, based on the questionnaire answers; a calendar to book the introductory session; the booking confirmation; and the payment summary with card, PayPal or Apple Pay.",
+            "caption": "04 · Proposals and booking: three explained proposals, booking in two taps, clear payment",
+            "strings": [
+              [
+                "Le tue proposte",
+                "Your matches"
+              ],
+              [
+                "Nessuno mi convince",
+                "None of these feel right"
+              ],
+              [
+                "Perché ti proponiamo Martina",
+                "Why we suggest Martina"
+              ],
+              [
+                "Prenota il colloquio conoscitivo",
+                "Book the introductory session"
+              ],
+              [
+                "Hai prenotato il tuo primo colloquio",
+                "You’ve booked your first session"
+              ],
+              [
+                "Conferma e paga",
+                "Confirm and pay"
+              ]
+            ]
           },
           {
             "src": "/images/projects/unobravo/flow-05-personal-area.jpg",
-            "alt": "Personal area screens",
-            "caption": "05 · Personal area: next appointment first, chat, diary and agenda in a floating tab bar"
+            "alt": "Five personal-area screens: Home with a greeting, the next appointment, a suggested breathing break and the current therapist; the appointments calendar; a chat with the therapist; the invoices with a yearly total; and the diary, with a mood check-in and recent notes. A tab bar links Home, Agenda, Meditate, Diary and Chat.",
+            "caption": "05 · Personal area: next appointment first, chat, diary and agenda in a floating tab bar",
+            "strings": [
+              [
+                "Ciao Alice, che bello rivederti!",
+                "Hi Alice, lovely to see you again!"
+              ],
+              [
+                "Prossimo appuntamento · Gratuito",
+                "Next appointment · Free"
+              ],
+              [
+                "Una pausa per te",
+                "A break for you"
+              ],
+              [
+                "Appuntamenti · Fatture",
+                "Appointments · Invoices"
+              ],
+              [
+                "Come ti senti oggi?",
+                "How are you feeling today?"
+              ],
+              [
+                "Nuova nota",
+                "New note"
+              ]
+            ]
           },
           {
             "src": "/images/projects/unobravo/flow-06-online-session.jpg",
-            "alt": "Online session screens",
-            "caption": "06 · Online session: from device check to feedback without leaving the app"
+            "alt": "Five session screens: a waiting room with camera preview, microphone and camera checks and a breathing tip; the video call; an anonymous feedback form with a 1 to 5 rating and tags; a screen offering four ways to change therapist; and new proposals after updating preferences.",
+            "caption": "06 · Online session: from device check to feedback without leaving the app",
+            "strings": [
+              [
+                "La seduta inizia tra 5 minuti",
+                "The session starts in 5 minutes"
+              ],
+              [
+                "Tre respiri lenti per arrivare calmo",
+                "Three slow breaths to arrive calm"
+              ],
+              [
+                "Entra nella seduta",
+                "Join the session"
+              ],
+              [
+                "Com’è andata la seduta?",
+                "How did the session go?"
+              ],
+              [
+                "Vuoi cambiare terapeuta?",
+                "Do you want to change therapist?"
+              ],
+              [
+                "Nuove proposte",
+                "New matches"
+              ]
+            ]
           },
           {
             "src": "/images/projects/unobravo/flow-07-wellbeing.jpg",
-            "alt": "Meditation and progress screens",
-            "caption": "07 · Between sessions: short guided practices and a private view of progress, suggested by the therapist"
+            "alt": "Five screens for between sessions: Home with a suggested breathing break; the Meditate library of short practices chosen with the therapist; a guided 4-7-8 breathing exercise; the diary with a mood check-in; and a private progress view with sessions, practice minutes and average mood per week.",
+            "caption": "07 · Between sessions: short guided practices and a private view of progress, suggested by the therapist",
+            "strings": [
+              [
+                "Medita",
+                "Meditate"
+              ],
+              [
+                "Pause brevi tra una seduta e l’altra, scelte con la tua terapeuta",
+                "Short breaks between sessions, chosen with your therapist"
+              ],
+              [
+                "Respiro 4-7-8 · Inspira",
+                "4-7-8 breathing · Breathe in"
+              ],
+              [
+                "Termina la pratica",
+                "End the practice"
+              ],
+              [
+                "I tuoi progressi · Visibili solo a te e alla tua terapeuta",
+                "Your progress · Visible only to you and your therapist"
+              ],
+              [
+                "Umore medio per settimana",
+                "Average mood per week"
+              ]
+            ]
           }
         ],
         "motion": [
@@ -2664,7 +2846,8 @@
             }
           ],
           "path": "/images/projects/unobravo/before-after/"
-        }
+        },
+        "flowsNote": "The screens are in Italian, the language of Unobravo’s users and of the interviews and tests. The key text on each screen is translated under it."
       },
       "date": "2026-03-08",
       "dateLabel": "2025 - 2026",

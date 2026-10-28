@@ -69,13 +69,28 @@ function Lead({ children }) {
   return <p className="max-w-[68ch] text-lg leading-relaxed">{children}</p>;
 }
 
-function Figure({ src, alt, caption, className = "" }) {
+// `strings`: [original, English] pairs for screens designed in another language, listed under the caption
+function Figure({ src, alt, caption, strings, lang = "it", className = "" }) {
   return (
     <figure className={`flex flex-col gap-2 ${className}`}>
       <a href={withBase(src)} target="_blank" rel="noreferrer" className="block overflow-hidden bg-paper">
         <img src={withBase(src)} alt={alt} loading="lazy" className="h-auto w-full" />
       </a>
-      {caption && <figcaption className="fu-meta text-fieldgrey">{caption}</figcaption>}
+      {(caption || strings) && (
+        <figcaption className="flex flex-col gap-3">
+          {caption && <span className="fu-meta text-fieldgrey">{caption}</span>}
+          {strings && (
+            <dl className="grid gap-x-8 gap-y-2 border-t border-ink/15 pt-3 tablet:grid-cols-2 laptop:grid-cols-3">
+              {strings.map(([original, english]) => (
+                <div key={original} className="flex flex-col">
+                  <dt lang={lang} className="text-[15px] font-medium leading-snug">{original}</dt>
+                  <dd className="fu-meta leading-snug text-fieldgrey">{english}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </figcaption>
+      )}
     </figure>
   );
 }
@@ -413,6 +428,7 @@ export default function CaseStudy({ data, showStats = true }) {
     flows: ["design", flows.length > 0, "Final design", () => (
       <>
         <Lead>{data.flowsLead || "86 screens across seven flows, built from 34 components and 34 design tokens."}</Lead>
+        {data.flowsNote && <p className="fu-meta max-w-[68ch] text-fieldgrey">{data.flowsNote}</p>}
         {flows.map((f) => (
           <Figure key={f.src} {...f} />
         ))}
