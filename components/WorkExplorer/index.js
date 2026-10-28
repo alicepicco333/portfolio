@@ -133,10 +133,9 @@ const IndexList = ({ projects }) => {
 };
 
 // the card beside the wheel
-// imgMaxH: beside the wheel the image gives up height first, so card and wheel share one screen
-const ProjectCard = ({ project, skills = true, imgMaxH }) => (
+const ProjectCard = ({ project, skills = true }) => (
   <div className="work-side flex flex-col border border-ink bg-paper text-[16px] leading-snug shadow-[6px_6px_0_rgb(var(--olive-fill))]">
-    <Media project={project} className="aspect-[4/3] w-full border-b border-ink object-cover" style={imgMaxH ? { maxHeight: imgMaxH } : undefined} />
+    <Media project={project} className="aspect-[4/3] w-full border-b border-ink object-cover" />
     <div className="flex flex-col gap-2 px-4 py-3">
       <div className="flex items-center justify-between font-mono text-[14px]">
         <span className="text-olive">
@@ -510,11 +509,15 @@ const WorkExplorer = ({ projects: given }) => {
                 );
               })}
             </svg>
-            <div className="wheel-side sticky flex flex-1 flex-col gap-5 self-start" style={{ top: headH + MARGIN / 2 }}>
-              <ProjectCard project={selected} skills={false} imgMaxH={Math.max(140, availH - 460)} />
-              <Uses project={selected} row>
-                <Sigil skills={skillIds(selected.id)} size={180} width={2} />
-              </Uses>
+            {/* on short screens the whole card narrows (never the image's 4:3), so card and wheel share one screen */}
+            <div className="wheel-side sticky flex flex-1 flex-col gap-5 self-start" style={{ top: headH + MARGIN / 2, maxWidth: Math.max(340, Math.round(((availH - 460) * 4) / 3)) }}>
+              <ProjectCard project={selected} skills={false} />
+              {/* short screens: the sticky column would run past the fold, so the details stay on the project page */}
+              {availH >= 700 && (
+                <Uses project={selected} row>
+                  <Sigil skills={skillIds(selected.id)} size={180} width={2} />
+                </Uses>
+              )}
             </div>
         </div>
       )}
