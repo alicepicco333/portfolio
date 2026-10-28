@@ -16,7 +16,7 @@ import {
 } from "../Graph/data";
 import { useIsomorphicLayoutEffect, useMotionOn, withBase } from "../../utils";
 import { textWidth, overlapArea } from "../../utils/layout";
-import { scramble, drawIn, motionOn, tokenColor } from "../../utils/motion";
+import { scramble, drawIn, motionOn } from "../../utils/motion";
 
 const shortTitle = (title) => title.split(" - ")[0];
 const mapTitle = (p) => p.short || shortTitle(p.title);
@@ -140,12 +140,6 @@ const PHRASES = [
 ];
 // 1 to 5 select the first skill of each step of the method: listen, order, count, shape, play
 const STEP_KEYS = ["listening", "ordering", "counting", "shaping", "playing"];
-// scrolling past the hero builds the map in the same order: each skill's step, and each line
-// is drawn once both of its skills are in
-const STEP_OF = Object.fromEntries(STEP_KEYS.flatMap((k, i) => CLUSTERS.find((c) => c.id === k).skills.map((s) => [s, i])));
-const edgeStep = ([a, b]) => Math.max(STEP_OF[a], STEP_OF[b]);
-const STEP_LEN = 1; // timeline time per step: draw, then hold while the next scroll arrives
-const BUILD_END = STEP_KEYS.length * STEP_LEN + 0.5;
 
 const SkillMap = ({ projects }) => {
   const router = useRouter();
@@ -172,8 +166,7 @@ const SkillMap = ({ projects }) => {
   const frameRef = useRef(null);
   const stageRef = useRef(null);
   const narrowRef = useRef(null);
-  const sectionRef = useRef(null);
-  const readoutRef = useRef(null);
+  const viewRef = useRef(null);
   const motion = useMotionOn();
   const active = pinned;
 
@@ -288,78 +281,44 @@ const SkillMap = ({ projects }) => {
     return () => mm.revert();
   }, [fit !== null]);
 
-  // scroll: the hero holds while the map is built step by step, listening to playing. The step being
-  // drawn is blue; finished steps settle into ink. Wide screens only, and only with motion on.
+  // scroll: no hold. As the hero leaves, the map lingers a little behind the page, leans in toward the skills
+  // behind the first project in Selected work, and fades back so the list arrives on a quiet page.
   useIsomorphicLayoutEffect(() => {
-    if (!fit) return undefined;
+    if (!fit || heroMode !== "band") return undefined;
     gsap.registerPlugin(ScrollTrigger);
     const mm = gsap.matchMedia();
     mm.add("(min-width: 1152px) and (prefers-reduced-motion: no-preference)", () => {
       if (!motion) return undefined;
-      const section = sectionRef.current;
-      const s = stageRef.current;
-      const readout = readoutRef.current;
-      if (!section || !s || !readout) return undefined;
-      const q = (sel) => Array.from(s.querySelectorAll(sel));
-      const [num, verb, bar] = ["num", "verb", "bar"].map((k) => readout.querySelector(`[data-part="${k}"]`));
-      const ink = tokenColor("--ink");
+      const view = viewRef.current;
+      if (!view) return undefined;
+      const lead = [...projects].sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))[0];
+      const focus = lead ? NODES.filter((n) => n.work.includes(lead.id)) : [];
+      // the focus skills' centre, in the frame's pixels (the stage inside it is scaled to fit)
+      const origin = () => {
+        if (!focus.length) return "50% 50%";
+        const k = view.offsetWidth / G.W;
+        const [x, y] = focus.map((n) => pos(n.id)).reduce(([a, b], [c, d]) => [a + c / focus.length, b + d / focus.length], [0, 0]);
+        return `${x * k}px ${y * k}px`;
+      };
       const headerH = () => document.querySelector("header")?.offsetHeight || 65;
-      let shown = null;
-      const show = (progress) => {
-        const t = progress * BUILD_END;
-        // at rest (the first few pixels) and once built, the map reads as usual
-        const step = t < 0.1 || progress >= 1 ? null : Math.min(STEP_KEYS.length - 1, Math.floor(t / STEP_LEN));
-        bar.style.transform = `scaleX(${progress})`;
-        if (step === shown) return;
-        shown = step;
-        if (step === null) delete section.dataset.build;
-        else section.dataset.build = step;
-        const k = step ?? (progress >= 1 ? STEP_KEYS.length - 1 : 0);
-        num.textContent = `${String(k + 1).padStart(2, "0")} / ${String(STEP_KEYS.length).padStart(2, "0")}`;
-        verb.textContent = CLUSTERS.find((c) => c.id === STEP_KEYS[k]).label;
-      };
-      section.classList.add("is-building");
-
-      // the build is a paused timeline that follows the pin's progress. The pin is a standalone trigger, not the
-      // timeline's own: the motion switch kills running timelines, and the pin must outlive that to be undone.
-      const tl = gsap.timeline({ paused: true, defaults: { ease: "none" } });
-      STEP_KEYS.forEach((_, k) => {
-        const at = k * STEP_LEN;
-        tl.to(q(`.build-edge[data-s="${k}"]`), { strokeDashoffset: 0, duration: 0.6, stagger: { amount: 0.15 }, ease: "power1.inOut" }, at);
-        tl.fromTo(q(`.build-dot[data-s="${k}"]`), { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.3, stagger: 0.05, ease: "back.out(2)" }, at + 0.1);
-        // the step before settles into ink as this one starts
-        if (k > 0) tl.to(q(`.build-edge[data-s="${k - 1}"], .build-dot[data-s="${k - 1}"]`), { stroke: ink, fill: ink, strokeWidth: 1.25, duration: 0.3 }, at);
-      });
-      tl.to(q(`.build-edge[data-s="${STEP_KEYS.length - 1}"], .build-dot[data-s="${STEP_KEYS.length - 1}"]`), { stroke: ink, fill: ink, strokeWidth: 1.25, duration: 0.3 }, STEP_KEYS.length * STEP_LEN);
-      tl.set({}, {}, BUILD_END);
-      const follow = gsap.quickTo(tl, "progress", { duration: 0.6, ease: "power3" }); // a soft scrub
-      const pin = ScrollTrigger.create({
-        trigger: section,
-        start: () => `top ${headerH()}px`,
-        end: () => `+=${Math.round(window.innerHeight * 2.4)}`,
-        pin: true,
-        refreshPriority: 1, // first on the page: later triggers measure after its pin spacer
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          follow(self.progress);
-          show(self.progress);
-        },
-        onRefresh: (self) => {
-          tl.progress(self.progress);
-          show(self.progress);
+      // no drift down: the headline sits 64 px under the map, and a 1.08 lean stays clear of it
+      const tl = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: "#map",
+          start: () => `top ${headerH()}px`,
+          end: "bottom top",
+          scrub: 0.5,
+          invalidateOnRefresh: true,
         },
       });
-      ScrollTrigger.refresh();
-
-      return () => {
-        pin.kill(true);
-        tl.kill();
-        section.classList.remove("is-building");
-        delete section.dataset.build;
-      };
+      tl.fromTo(view, { scale: 1 }, { scale: 1.08, transformOrigin: origin, duration: 1 }, 0);
+      tl.fromTo(view, { opacity: 1 }, { opacity: 0.15, duration: 0.6 }, 0);
+      // the motion switch finishes running tweens where they end: put the map back at rest
+      return () => gsap.set(view, { clearProps: "transform,transformOrigin,opacity" });
     });
     return () => mm.revert();
-  }, [fit !== null, motion]);
+  }, [fit !== null, motion, heroMode]);
 
   // new skill: fan its projects out, and let the node glow
   useIsomorphicLayoutEffect(() => {
@@ -438,7 +397,6 @@ const SkillMap = ({ projects }) => {
 
   return (
     <section
-      ref={sectionRef}
       id="map"
       aria-labelledby="map-title"
       className="relative scroll-mt-16 bg-bone"
@@ -453,6 +411,7 @@ const SkillMap = ({ projects }) => {
       {/* ——— desktop and tablet: the fixed stage ——— */}
       <div ref={frameRef} className="relative hidden h-[calc(100svh-64px)] w-full map:block" style={frameH ? { height: frameH } : undefined}>
         <div
+          ref={viewRef}
           className="absolute"
           style={
             heroMode === "band" && box
@@ -477,7 +436,6 @@ const SkillMap = ({ projects }) => {
                   <text
                     key={c.id}
                     className="map-cluster"
-                    data-s={STEP_KEYS.indexOf(c.id)}
                     x={clusterPos(c.id)[0]}
                     y={clusterPos(c.id)[1]}
                     fontFamily="JetBrains Mono, monospace"
@@ -508,30 +466,6 @@ const SkillMap = ({ projects }) => {
                       style={{ stroke: hot ? "rgb(var(--olive))" : "rgb(var(--ink))", transition: "stroke .3s, stroke-width .3s, opacity .3s" }}
                       strokeWidth={hot ? 3 : 1}
                       opacity={hot ? 1 : active ? 0.22 : 0.4}
-                    />
-                  );
-                })}
-              </g>
-
-              {/* the scroll build: drawn over the resting lines (hidden until a step draws them) */}
-              <g aria-hidden="true" style={{ pointerEvents: "none" }}>
-                {EDGES.map(([a, b]) => {
-                  const [x1, y1] = pos(a);
-                  const [x2, y2] = pos(b);
-                  return (
-                    <line
-                      key={`b-${a}-${b}`}
-                      className="build-edge"
-                      data-s={edgeStep([a, b])}
-                      x1={x1}
-                      y1={y1}
-                      x2={x2}
-                      y2={y2}
-                      pathLength="1"
-                      strokeDasharray="1"
-                      strokeDashoffset="1"
-                      style={{ stroke: "rgb(var(--olive))" }}
-                      strokeWidth="2.5"
                     />
                   );
                 })}
@@ -618,8 +552,6 @@ const SkillMap = ({ projects }) => {
                           labelRefs.current[n.id] = el;
                         }}
                         className="map-label"
-                        data-s={STEP_OF[n.id]}
-                        data-on={isActive || hovered === n.id ? "" : undefined}
                         x={x + dx}
                         y={y + dy}
                         textAnchor={anchor}
@@ -639,25 +571,6 @@ const SkillMap = ({ projects }) => {
                   </g>
                 );
               })}
-
-              <g aria-hidden="true" style={{ pointerEvents: "none" }}>
-                {NODES.map((n) => {
-                  const [x, y] = pos(n.id);
-                  return (
-                    <circle
-                      key={`b-${n.id}`}
-                      className="build-dot"
-                      data-s={STEP_OF[n.id]}
-                      cx={x}
-                      cy={y}
-                      r="6.5"
-                      opacity="0"
-                      style={{ fill: "rgb(var(--olive))", stroke: "rgb(var(--olive))", transformBox: "fill-box", transformOrigin: "center" }}
-                      strokeWidth="1.5"
-                    />
-                  );
-                })}
-              </g>
             </svg>
 
             {heroMode !== "band" && (
@@ -679,19 +592,7 @@ const SkillMap = ({ projects }) => {
       {heroMode === "band" && (
         <div ref={bandRef} className="map-intro fu-gutter hidden grid-cols-12 items-end gap-x-8 pb-12 map:grid">
           <p className="fu-display col-span-9 leading-[1.06]" style={{ fontSize: "clamp(32px, 5vh, 48px)" }}>{statement}</p>
-          <div className="col-span-3 flex flex-col items-end gap-4 justify-self-end pb-[0.35em]">
-            {/* where the scroll build is: shown only while it can run */}
-            <div ref={readoutRef} className="build-readout hidden w-[220px] flex-col gap-2 font-mono text-[14px]" aria-hidden="true">
-              <div className="flex justify-between">
-                <span data-part="num" className="text-graphite">01 / 05</span>
-                <span data-part="verb" className="uppercase tracking-[0.18em] text-olive">Listening</span>
-              </div>
-              <div className="h-px w-full bg-ink/25">
-                <div data-part="bar" className="h-px w-full origin-left bg-olive" style={{ transform: "scaleX(0)" }} />
-              </div>
-            </div>
-            <p className="whitespace-nowrap text-right font-mono text-[14px] leading-relaxed text-graphite">Available for freelance · Amsterdam</p>
-          </div>
+<p className="col-span-3 justify-self-end whitespace-nowrap pb-[0.35em] text-right font-mono text-[14px] leading-relaxed text-graphite">Available for freelance · Amsterdam</p>
         </div>
       )}
       {/* ——— phones and tablets: the statement only; the map needs a wide screen ——— */}

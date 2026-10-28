@@ -276,33 +276,6 @@ button:not(:disabled):active {
   .urgency-point { animation: none; }
 }
 
-/* ——— the hero map, built by scrolling (components/SkillMap) ——— */
-/* the readout shows only while the build can run; the step being drawn keeps its verb and its labels blue */
-.is-building .build-readout {
-  display: flex;
-}
-.map-cluster,
-.map-label {
-  transition: opacity 0.3s, fill 0.2s;
-}
-#map[data-build] .map-cluster {
-  opacity: 0.3;
-}
-#map[data-build="0"] .map-cluster[data-s="0"],
-#map[data-build="1"] .map-cluster[data-s="1"],
-#map[data-build="2"] .map-cluster[data-s="2"],
-#map[data-build="3"] .map-cluster[data-s="3"],
-#map[data-build="4"] .map-cluster[data-s="4"] {
-  opacity: 1;
-}
-#map[data-build="0"] .map-label[data-s="0"]:not([data-on]),
-#map[data-build="1"] .map-label[data-s="1"]:not([data-on]),
-#map[data-build="2"] .map-label[data-s="2"]:not([data-on]),
-#map[data-build="3"] .map-label[data-s="3"]:not([data-on]),
-#map[data-build="4"] .map-label[data-s="4"]:not([data-on]) {
-  fill: rgb(var(--olive)) !important;
-}
-
 /* ——— the timeline, swept by scrolling (components/Journey) ——— */
 /* ahead of "now": faint; the chapter it is in: full ink under a blue rule */
 .jr-item,
