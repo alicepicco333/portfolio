@@ -51,3 +51,7 @@ export function drawIn(gsap, els, { at = 0, step = 0, duration = 0.8, ease = "po
     );
   });
 }
+
+// A colour token ("--ink") as a value GSAP can tween to: rgb(14, 14, 16).
+export const tokenColor = (name) =>
+  `rgb(${getComputedStyle(document.documentElement).getPropertyValue(name).trim().split(/\s+/).join(", ")})`;

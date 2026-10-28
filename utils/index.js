@@ -97,3 +97,20 @@ export const hexToTriplet = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, 
 // (applied through the .project-theme class in globals.css).
 export const projectStyle = (hex, hexHC) =>
   hex ? { "--project": hexToTriplet(hex), "--project-hc": hexToTriplet(hexHC || hex) } : undefined;
+
+// The visitor's own motion setting (see components/A11yControls), kept in step when it changes,
+// so scroll scenes can tear down to the static page the moment motion is switched off.
+export function useMotionOn() {
+  const [on, setOn] = useState(true);
+
+  useEffect(() => {
+    const el = document.documentElement;
+    const read = () => setOn(el.dataset.motion !== "off");
+    read();
+    const observer = new MutationObserver(read);
+    observer.observe(el, { attributes: true, attributeFilter: ["data-motion"] });
+    return () => observer.disconnect();
+  }, []);
+
+  return on;
+}

@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import portfolioData from "../../data/portfolio.json";
-import { withBase } from "../../utils";
+import { useIsomorphicLayoutEffect, useMotionOn, withBase } from "../../utils";
 import { textWidth } from "../../utils/layout";
 import { MODELS, ModelSwitch, Spiral } from "./Perspectives";
 
@@ -11,6 +13,7 @@ const NOW = 2026.75;
 // the axis starts where the layer's first item does: studies from 2018, roles from 2023
 const START = { studies: 2018.5, roles: 2023.1 };
 const T1 = 2027.1;
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const W = 1200;
 const PAD = 16;
 const ROW = 34;
@@ -66,6 +69,11 @@ const Journey = ({ projects }) => {
   const { resume, journey } = portfolioData;
   const T0 = START[layer];
   const px = scale(T0);
+  const motion = useMotionOn();
+  const wrapRef = useRef(null);
+  const headRef = useRef(null);
+  const sweep = useRef({ t: NOW, T0, px, apply: null });
+  Object.assign(sweep.current, { T0, px });
   const studies = spans(
     px,
     resume.educationList,
@@ -112,12 +120,79 @@ const Journey = ({ projects }) => {
     (y) => y > T0,
   );
 
+  // scroll: the timeline holds while "now" travels from its first year to today. Roles grow behind it,
+  // projects and chapters light as it passes. Wide screens and motion on only; otherwise it rests at now.
+  useIsomorphicLayoutEffect(() => {
+    if (model !== "linear") return undefined;
+    gsap.registerPlugin(ScrollTrigger);
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 1280px) and (prefers-reduced-motion: no-preference)", () => {
+      if (!motion) return undefined;
+      const wrap = wrapRef.current;
+      const head = headRef.current;
+      if (!wrap || !head) return undefined;
+      const label = head.querySelector('[data-part="label"]');
+      const apply = () => {
+        const { t, px: x } = sweep.current;
+        const at = x(t);
+        head.setAttribute("transform", `translate(${at - x(NOW)} 0)`);
+        label.textContent = t >= NOW - 0.01 ? "now" : `${MONTHS[Math.floor((t % 1) * 12)]} ${Math.floor(t)}`;
+        wrap.querySelectorAll(".jr-item").forEach((el) => el.classList.toggle("is-past", +el.dataset.t <= t));
+        wrap.querySelectorAll(".jr-bar").forEach((el) => {
+          el.setAttribute("x2", Math.max(+el.dataset.x0, Math.min(+el.dataset.x1, at)));
+        });
+        wrap.querySelectorAll(".jr-era").forEach((el) => el.classList.toggle("is-on", t >= +el.dataset.from && t < +el.dataset.to));
+      };
+      const follow = (progress) => {
+        const { T0: t0 } = sweep.current;
+        sweep.current.t = t0 + (NOW - t0) * progress;
+        apply();
+        // arrived at now: the whole career reads in full again
+        wrap.classList.toggle("jr-live", progress < 1);
+      };
+      sweep.current.apply = apply;
+      wrap.classList.add("jr-live");
+      const headerH = () => document.querySelector("header")?.offsetHeight || 65;
+      ScrollTrigger.create({
+        trigger: wrap,
+        // the drawn timeline and its chapters sit in the middle of the room under the header
+        start: () => `top ${Math.max(headerH() + 16, (window.innerHeight + headerH() - wrap.offsetHeight) / 2)}px`,
+        end: () => `+=${Math.round(window.innerHeight * 1.5)}`,
+        pin: true,
+        pinSpacing: true, // the parent is a flex column, where GSAP would otherwise leave no room
+        scrub: 0.5,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => follow(self.progress),
+        onRefresh: (self) => follow(self.progress),
+      });
+      ScrollTrigger.refresh();
+      return () => {
+        sweep.current.apply = null;
+        sweep.current.t = NOW;
+        wrap.classList.remove("jr-live");
+        head.removeAttribute("transform");
+        label.textContent = "now";
+        wrap.querySelectorAll(".jr-item, .jr-era").forEach((el) => el.classList.remove("is-past", "is-on"));
+        wrap.querySelectorAll(".jr-bar").forEach((el) => el.setAttribute("x2", el.dataset.x1));
+      };
+    });
+    return () => mm.revert();
+  }, [model, motion]);
+
+  // switching roles and studies redraws the layers: put the new ones where the scroll has got to
+  useIsomorphicLayoutEffect(() => {
+    if (!sweep.current.apply) return;
+    const { t } = sweep.current;
+    sweep.current.t = Math.max(T0, t);
+    sweep.current.apply();
+  }, [layer]);
+
   const bar = (it, kind) => {
     const e = it.e;
     const y = (kind === "study" ? yStudies : yRoles) + it.row * BAR_ROW;
     const ongoing = e.end == null;
     return (
-      <g key={`${kind}${e.id}`}>
+      <g key={`${kind}${e.id}`} className="jr-item" data-t={it.s}>
         <title>{`${kind === "study" ? e.name : e.position} (${e.dates})`}</title>
         <text
           x={it.flip ? Math.min(it.x1b, px(NOW) - 8) : it.bx}
@@ -131,6 +206,9 @@ const Journey = ({ projects }) => {
           {e.short}
         </text>
         <line
+          className="jr-bar"
+          data-x0={it.bx + 3}
+          data-x1={Math.max(it.bx + 3, it.x1b - 3)}
           x1={it.bx + 3}
           y1={y + 24}
           x2={Math.max(it.bx + 3, it.x1b - 3)}
@@ -201,7 +279,8 @@ const Journey = ({ projects }) => {
         {model === "linear" && (
           <>
             {/* ——— large screens: the drawn timeline ——— */}
-            <div className="fu-reveal hidden desktop:block">
+            <div ref={wrapRef} className="hidden desktop:block">
+              <div className="fu-reveal">
               <svg
                 viewBox={`0 0 ${W} ${H}`}
                 className="h-auto w-full"
@@ -290,6 +369,7 @@ const Journey = ({ projects }) => {
                       </text>
                     </g>
                   ))}
+                  <g ref={headRef}>
                   <line
                     x1={px(NOW)}
                     y1={yChapters + 56}
@@ -304,9 +384,11 @@ const Journey = ({ projects }) => {
                     fontFamily="JetBrains Mono, monospace"
                     fontSize="13"
                     style={{ fill: "rgb(var(--olive))" }}
+                    data-part="label"
                   >
                     now
                   </text>
+                  </g>
                 </g>
                 <text
                   x={PAD}
@@ -318,12 +400,14 @@ const Journey = ({ projects }) => {
                 >
                   PROJECTS
                 </text>
-                {work.map(({ p, x, row, flip }) => {
+                {work.map(({ p, t, x, row, flip }) => {
                   const y = yWork + row * ROW + 10;
                   const wip = p.category === "Work in Progress";
                   return (
                     <a
                       key={p.id}
+                      className="jr-item"
+                      data-t={t}
                       href={withBase(`/projects/${p.id}/`)}
                       aria-label={`${shortTitle(p)}, ${yearOf(p)}${wip ? ", in progress" : ""}`}
                     >
@@ -358,7 +442,9 @@ const Journey = ({ projects }) => {
                 {journey.chapters.map((c) => (
                   <li
                     key={c.title}
-                    className="flex flex-col gap-1 pt-3"
+                    className="jr-era flex flex-col gap-1 border-t-2 border-transparent pt-3"
+                    data-from={c.from}
+                    data-to={c.to}
                   >
                     <span className="font-mono text-[14px] text-graphite">{`${c.from}-${c.to > 2026 ? "now" : c.to}`}</span>
                     <span className="text-[18px] font-bold">{c.title}</span>
@@ -366,6 +452,7 @@ const Journey = ({ projects }) => {
                   </li>
                 ))}
               </ol>
+              </div>
             </div>
 
             {/* ——— smaller screens: the same journey as a list ——— */}
