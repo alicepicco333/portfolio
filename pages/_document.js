@@ -13,17 +13,14 @@ export default function Document() {
         {/* the browser bar takes the page colour; the script below switches it with the theme */}
         <meta name="theme-color" content="#D5D6DB" />
         {/* the visitor's settings before paint. The colour shuffle is gone: forget any palette saved earlier.
-            Theme: the stored choice, else the device's light or dark setting, followed while no choice is stored. */}
+            Theme: light for everyone, dark only when the visitor has picked it (the device setting is ignored). */}
         <script
           dangerouslySetInnerHTML={{
             __html:
               'try{localStorage.removeItem("fu-palette");var h=document.documentElement,m=localStorage.getItem("ap-motion"),c=localStorage.getItem("ap-contrast");' +
               'if(!m&&window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)m="off";if(m)h.dataset.motion=m;if(c)h.dataset.contrast=c;' +
-              'var q=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)"),' +
-              'set=function(t){h.dataset.theme=t;var tc=document.querySelector(\'meta[name="theme-color"]\');if(tc)tc.content=t==="dark"?"#0E0E10":"#D5D6DB";},' +
-              'own=function(){var t=localStorage.getItem("ap-theme");return t==="dark"||t==="light"?t:null;};' +
-              'set(own()||(q&&q.matches?"dark":"light"));' +
-              'if(q){var f=function(e){if(!own())set(e.matches?"dark":"light");};q.addEventListener?q.addEventListener("change",f):q.addListener(f);}' +
+              'var t=localStorage.getItem("ap-theme")==="dark"?"dark":"light";h.dataset.theme=t;' +
+              'var tc=document.querySelector(\'meta[name="theme-color"]\');if(tc)tc.content=t==="dark"?"#0E0E10":"#D5D6DB";' +
               '}catch(e){}',
           }}
         />

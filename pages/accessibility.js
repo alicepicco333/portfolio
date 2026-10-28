@@ -39,7 +39,7 @@ const Accessibility = () => (
             </li>
             <li>
               <strong>Dark</strong> shows the site on a near-black page with light gray text. Filled blue surfaces keep the same electric blue.
-              Blue text and lines turn a lighter blue so they stay readable. Until you choose, it follows your device&rsquo;s light or dark setting.
+              Blue text and lines turn a lighter blue so they stay readable. It is off by default.
             </li>
           </ul>
         </section>
