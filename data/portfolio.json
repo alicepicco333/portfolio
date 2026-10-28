@@ -193,7 +193,7 @@
       ],
       "shows": "Scholarly sources made readable side by side, with the edition’s own uncertainties marked.",
       "cardImage": "/images/projects/1-card-v4.jpg",
-      "rank": 9,
+      "rank": 10,
       "accentHC": "#1b1bbe",
       "cardWebp": "/images/projects/1-card-v4-800.webp",
       "decisions": [
@@ -454,7 +454,7 @@
       "shows": "Real-time interactive systems and collaboration: visuals generated and rewritten live, in dialogue with another performer.",
       "tileMotion": "/images/projects/5-loop-sm.webp",
       "cardImage": "/images/projects/5-card-v3.jpg",
-      "rank": 11,
+      "rank": 12,
       "embed": "https://player.vimeo.com/video/980415428?dnt=1",
       "cardWebp": "/images/projects/5-card-v3-800.webp",
       "embedCaption": "The full recording, published by the Institute of Network Cultures.",
@@ -515,7 +515,7 @@
       ],
       "shows": "Teaching as opening the tools up: newcomers writing and performing real-time visuals in one afternoon.",
       "cardImage": "/images/projects/10-card-v2.jpg",
-      "rank": 12,
+      "rank": 13,
       "cardWebp": "/images/projects/10-card-v2-800.webp",
       "decisions": [
         {
@@ -1001,43 +1001,98 @@
     },
     {
       "id": "13",
-      "title": "Archivio Fondazione Luki Massa",
-      "description": "Digitization and cataloging of an archive of lesbian and feminist activism in Bologna, 1976-2015.",
-      "introText": "Digitization of the archive of Luki Massa, which documents lesbian and feminist activism from 1976 to 2015 and was inventoried by Emanuela Fiorletta in 2023.",
-      "gridImages": [],
-      "middleText": "The work covers five of the archive's series: political groups, lesbian and feminist conferences, seminars and demonstrations, other lesbian, feminist and LGBTQI+ groups, the lesbian and feminist press, and Luki Massa's own notes and writings. Every scan follows a shared nomenclature (archive, series, subseries, file, documentary unit, page), and spreadsheets record the title, date, medium, material and a short description of each unit.",
-      "highlightImage": "",
-      "conclusionText": "",
-      "imageSrc": "",
-      "url": "",
-      "category": "Work in Progress",
-      "tags": [
-        "Digital Archives",
-        "Digitization"
+      "title": "Archivio Luki Massa",
+      "description": "METS metadata for the digitized archive of Luki Massa: 9,882 scans of lesbian and feminist activism, 1976-2015, described to Italian national guidelines and checked file by file.",
+      "introText": "Metadata for the digitized archive of Luki Massa, which documents lesbian and feminist activism from 1976 to 2015 and was inventoried by Emanuela Fiorletta in 2023. I turned the team's cataloguing spreadsheets and the scans into METS records for long-term preservation.",
+      "gridImages": [
+        {
+          "src": "/images/projects/13-g1.jpg",
+          "caption": "One documentary unit, nine pages: hand-painted signs for the third lesbian week, June 1998. In the METS each page is a TIFF master and a JPEG copy, in order."
+        },
+        {
+          "src": "/images/projects/13-g2.jpg",
+          "caption": "Immaginaria, 5th lesbian film festival, Casalecchio di Reno (Bologna), 1997."
+        },
+        {
+          "src": "/images/projects/13-g3.jpg",
+          "caption": "No Vat: national demonstration for self-determination, Rome, 11 February 2006."
+        },
+        {
+          "src": "/images/projects/13-g4.jpg",
+          "caption": "Lesbian Blues, Bologna, 2011: the first of four scanned pages."
+        },
+        {
+          "src": "/images/projects/13-g5.jpg",
+          "caption": "A scan beside the record that describes it: the unit's title, date and size (EAD3), the file's size, checksum and resolution (NISO MIX), and the order of its pages."
+        }
       ],
-      "date": "2026-09-03",
-      "dateLabel": "2026 -",
+      "middleText": "The records follow the Italian national guidelines for digitizing cultural heritage (ICDP, 2022): METS as the container, EAD3 for the archival description from the whole archive down to each page, NISO MIX for the technical data of every image and METS Rights for the rights. A Python pipeline reads the spreadsheets and the image files themselves, so every size and MD5 checksum comes from the real file, and validates each record against the official schemas. Comparing the sheets with the scans also turned up pages listed without a file, files without a row and names that did not match; the team corrected them and the records were rebuilt from the corrected catalogue.",
+      "highlightImage": "/images/projects/13-hl.jpg",
+      "highlightCaption": "The poster series: all 143 scanned pages, from festivals and demonstrations to club nights.",
+      "conclusionText": "The hand-in is 90 METS files at three levels: one per archival file, one per series and one for the whole archive, each stored next to the images it describes, with every link checked against the archive's storage. Only what has been scanned is described: four series, from political and cultural activism to Luki Massa's personal papers and posters.",
+      "imageSrc": "/images/projects/13.jpg",
+      "url": "",
+      "category": "Research",
+      "tags": [
+        "Metadata",
+        "Digital Archives"
+      ],
+      "date": "2026-10-28",
+      "dateLabel": "Sep - Oct 2026",
       "context": "Archivio Luki Massa, Bologna",
-      "collaborators": null,
+      "collaborators": [],
       "summary": {
-        "brief": "Digitizing the archive of Luki Massa, which documents lesbian and feminist activism from 1976 to 2015.",
-        "role": "Digitization and cataloging.",
-        "method": "A shared file nomenclature (archive, series, file, unit, page) and a catalog record for every unit.",
-        "outcome": "In progress: five series being digitized.",
-        "stack": "Scanning · spreadsheets"
+        "brief": "A digitized community archive that needed describing to national preservation standards.",
+        "role": "Metadata: the METS profile, the generation and validation pipeline, and the checks between catalogue and scans.",
+        "method": "Cataloguing spreadsheets and image files read by a Python pipeline into METS with EAD3, NISO MIX and METS Rights, validated against the official schemas.",
+        "outcome": "90 valid METS records describing 85 archival files, 1,629 documentary units and 4,942 pages.",
+        "stack": "Python, lxml, METS, EAD3, NISO MIX 2.0, XML Schema"
       },
       "short": "Luki Massa archive",
       "facts": [
         [
-          "5",
-          "series being digitized"
+          "9,882",
+          "images described, each with its size and MD5 checksum"
+        ],
+        [
+          "1,629",
+          "documentary units in 85 archival files"
+        ],
+        [
+          "90",
+          "METS records, none with validation errors"
         ],
         [
           "1976-2015",
           "years of activism documented"
         ]
       ],
-      "shows": "Careful, standards-based cataloging of a community archive."
+      "shows": "A community archive described to national preservation standards, with every record checked against the files it points to.",
+      "cardImage": "/images/projects/13-card.jpg",
+      "cardWebp": "/images/projects/13-card-800.webp",
+      "rank": 9,
+      "decisions": [
+        {
+          "choice": "Describe only what has been scanned.",
+          "why": "The records are for the digital copies: a description without images would promise material that is not there.",
+          "result": "Four series are described; the one not yet digitized can be added when its scans exist."
+        },
+        {
+          "choice": "Take sizes, checksums and image data from the files themselves, not from the spreadsheets.",
+          "why": "Preservation depends on knowing that each file is exactly the one described.",
+          "result": "Every one of the 9,882 images has a verified MD5 checksum and its real technical data."
+        },
+        {
+          "choice": "Report mismatches between catalogue and scans to the team instead of patching them in the records.",
+          "why": "The spreadsheets are the archive's catalogue, so corrections belong there.",
+          "result": "The team corrected names and rows, and the records were regenerated from the corrected catalogue."
+        },
+        {
+          "choice": "Three levels of records: per archival file, per series and for the whole archive.",
+          "why": "Each folder carries its own record, while the series and archive records give the whole structure in one place.",
+          "result": "All three levels link exactly the same 9,882 images, checked automatically."
+        }
+      ]
     },
     {
       "id": "14",
@@ -1099,7 +1154,7 @@
       ],
       "shows": "The same openness in performance: the code projected beside the visuals, so the audience can see how every change is made.",
       "cardImage": "/images/projects/14-card-v3.jpg",
-      "rank": 10,
+      "rank": 11,
       "cardWebp": "/images/projects/14-card-v3-800.webp",
       "embed": "https://odysee.com/$/embed/@alicepicco:0/5pic3_livingFull:d",
       "embedAspect": "4 / 3",
