@@ -163,7 +163,7 @@ html[data-contrast="high"] [class*="text-bone/"] { color: rgb(var(--bone)) !impo
 html[data-contrast="high"] [class*="border-ink/"] { border-color: rgb(var(--ink)) !important; }
 html[data-contrast="high"] [class*="border-bone/"] { border-color: rgb(var(--bone)) !important; }
 html[data-contrast="high"] .map-edge { opacity: 1 !important; }
-html[data-contrast="high"] .map-edge:not([stroke-width="3"]) { stroke-width: 1.5px; }
+html[data-contrast="high"] .map-edge:not([stroke-width="4"]) { stroke-width: 1.5px; }
 html[data-contrast="high"] .map-glow,
 html[data-contrast="high"] .work-glow,
 html[data-contrast="high"] .hero-glow { display: none; }
@@ -270,6 +270,51 @@ button:not(:disabled):active {
 .index-shot {
   transition: clip-path 420ms cubic-bezier(0.77, 0, 0.175, 1);
 }
+
+/* ——— the signature (components/Signature): the house tokens, resolved where it is drawn ——— */
+.sig {
+  --sig-lit: rgb(var(--olive));
+  --sig-ink: rgb(var(--ink));
+  --sig-faint: rgb(var(--concrete));
+  --sig-muted: rgb(var(--graphite));
+  --sig-bg: rgb(var(--paper));
+  --sig-halo: rgb(var(--bone));
+}
+.bg-paper .sig { --sig-halo: rgb(var(--paper)); }
+html[data-contrast="high"] .sig { --sig-faint: rgb(var(--ink) / 0.45); }
+
+/* the card beside the work wheel: narrower on laptops so the wheel's type stays at 12 px or more */
+.wheel-side { min-width: 340px; }
+@media (min-width: 1366px) {
+  .wheel-side { min-width: 400px; }
+}
+
+/* ——— Playing: the live Hydra patch in the hero map (components/SkillMap/Hydra.js) ——— */
+.hy-panel {
+  transition: opacity 200ms cubic-bezier(0.23, 1, 0.32, 1), clip-path 320ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+.hy-panel[data-on="false"] {
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+}
+.hy-panel[data-on="true"] {
+  opacity: 1;
+  clip-path: inset(-12px -12px -12px -12px);
+}
+.hy-code .ln {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+/* the code sits on the near-black of a Hydra editor in every theme */
+.hy-code { --hy-bg: 14 14 16; --hy-fg: 213 214 219; --hy-fn: 255 255 255; --hy-num: 154 154 255; --hy-dim: 146 146 156; }
+@media screen {
+  html[data-theme="dark"] .hy-code { --hy-bg: 0 0 0; }
+}
+/* high contrast keeps the page grey: the patch plays in greyscale */
+html[data-contrast="high"] .hy-panel canvas,
+html[data-contrast="high"] .hy-panel img { filter: grayscale(1) contrast(1.15); }
+html[data-contrast="high"] .hy-code { --hy-fg: 255 255 255; --hy-num: 255 255 255; --hy-dim: 255 255 255; }
 
 /* ——— Motion ——— */
 /* the selected point on the wheel: a slow, breathing glow */

@@ -17,6 +17,7 @@ import {
 import { useIsomorphicLayoutEffect, useMotionOn, withBase } from "../../utils";
 import { textWidth, overlapArea } from "../../utils/layout";
 import { scramble, drawIn, motionOn } from "../../utils/motion";
+import HydraPlaying, { codeSize } from "./Hydra";
 
 const shortTitle = (title) => title.split(" - ")[0];
 const mapTitle = (p) => p.short || shortTitle(p.title);
@@ -106,9 +107,9 @@ const cost = (boxes, obstacles) => {
 
 // Projects fan out from the selected skill: try every direction, radius and spread and keep
 // the one that covers nothing.
-function fanLayout(id, works) {
+function fanLayout(id, works, extra = []) {
   const [ox, oy] = pos(id);
-  const boxes = staticBoxes();
+  const boxes = [...staticBoxes(), ...extra];
   let leaves = null;
   for (let deg = 0; deg < 360; deg += 5) {
     const a = (deg * Math.PI) / 180;
@@ -128,6 +129,22 @@ function fanLayout(id, works) {
     });
   }
   return { leafPts: leaves.pts };
+}
+
+// Playing: the Hydra screen behind its cluster, and the patch under it, flush with its right edge
+function playingBox() {
+  const [cx] = pos("cc");
+  const [px, py] = pos("perf");
+  const [lx, ly] = pos("live");
+  const x = cx - 56;
+  const y = py - 40;
+  const r = Math.min(stageW() - 4, Math.max(px, lx) + 48);
+  const b = Math.min(G.H - 4, ly + 34);
+  return { x, y, w: r - x, h: b - y };
+}
+function codeLayout(box) {
+  const { w, h } = codeSize();
+  return { x: box.x + box.w - w, y: box.y + box.h + 12, w, h };
 }
 
 // a plain key press inside this section, not typing in a field and not a browser shortcut
@@ -251,7 +268,15 @@ const SkillMap = ({ projects }) => {
   const workOf = (id) => nodeOf(id).work.map((pid) => projects.find((p) => p.id === pid)).filter(Boolean);
   const activeNode = active ? nodeOf(active) : null;
   const activeWork = activeNode ? workOf(active) : [];
-  const fan = useMemo(() => (activeNode ? fanLayout(active, activeWork) : null), [active, sx]); // eslint-disable-line react-hooks/exhaustive-deps
+  const playing = !!activeNode && clusterOf(active).id === "playing";
+  // the screen and the patch are laid out once per stage size
+  const hy = useMemo(() => {
+    if (!fit || heroMode !== "band") return null;
+    const b = playingBox();
+    return { box: b, code: codeLayout(b) };
+  }, [fit, sx, box, heroMode]); // eslint-disable-line react-hooks/exhaustive-deps
+  const codeObstacle = hy && playing ? [[hy.code.x - 8, hy.code.y - 8, hy.code.x + hy.code.w + 8, hy.code.y + hy.code.h + 8]] : [];
+  const fan = useMemo(() => (activeNode ? fanLayout(active, activeWork, codeObstacle) : null), [active, sx, !!hy]); // eslint-disable-line react-hooks/exhaustive-deps
   const lit = activeNode ? new Set(neighbours(active)) : new Set();
 
   // ——— motion ———
@@ -428,26 +453,34 @@ const SkillMap = ({ projects }) => {
               if (e.key === "Escape") setPinned(null);
             }}
           >
-            <svg viewBox={heroMode === "band" ? `0 0 ${G.W} ${G.H}` : `0 ${TOP} ${G.W} ${SH}`} className="absolute inset-0 h-full w-full overflow-visible" role="group" aria-label="Skills, linked where they feed into each other. Select one to see its tools and projects.">
+            {hy && <HydraPlaying on={playing} box={hy.box} code={hy.code} motion={motion} />}
+            <svg viewBox={heroMode === "band" ? `0 0 ${G.W} ${G.H}` : `0 ${TOP} ${G.W} ${SH}`} className="absolute inset-0 z-[1] h-full w-full overflow-visible" role="group" aria-label="Skills, linked where they feed into each other. Select one to see its tools and projects.">
               <defs>
               </defs>
               <g aria-hidden="true">
-                {CLUSTERS.map((c) => (
-                  <text
-                    key={c.id}
-                    className="map-cluster"
-                    x={clusterPos(c.id)[0]}
-                    y={clusterPos(c.id)[1]}
-                    fontFamily="JetBrains Mono, monospace"
-                    fontSize="16"
-                    fontWeight="500"
-                    letterSpacing="0.18em"
-                    style={{ fill: "rgb(var(--olive))" }}
-                    opacity={1}
-                  >
-                    {c.label.toUpperCase()}
-                  </text>
-                ))}
+                {CLUSTERS.map((c) => {
+                  const [x, y] = clusterPos(c.id);
+                  const on = activeNode && clusterOf(active).id === c.id;
+                  const w = c.label.length * 16 * 0.78 - 16 * 0.18;
+                  return (
+                    <g key={c.id}>
+                      {/* the verb of the selected skill: a blue tag, the one filled label in the map */}
+                      <rect x={x - 8} y={y - 19} width={w + 16} height="26" style={{ fill: "rgb(var(--olive-fill))", opacity: on ? 1 : 0, transition: "opacity .2s" }} />
+                      <text
+                        className="map-cluster"
+                        x={x}
+                        y={y}
+                        fontFamily="JetBrains Mono, monospace"
+                        fontSize="16"
+                        fontWeight="700"
+                        letterSpacing="0.18em"
+                        style={{ fill: on ? "#fff" : "rgb(var(--olive))", transition: "fill .2s" }}
+                      >
+                        {c.label.toUpperCase()}
+                      </text>
+                    </g>
+                  );
+                })}
               </g>
 
               <g aria-hidden="true">
@@ -464,8 +497,8 @@ const SkillMap = ({ projects }) => {
                       x2={x2}
                       y2={y2}
                       style={{ stroke: hot ? "rgb(var(--olive))" : "rgb(var(--ink))", transition: "stroke .3s, stroke-width .3s, opacity .3s" }}
-                      strokeWidth={hot ? 3 : 1}
-                      opacity={hot ? 1 : active ? 0.22 : 0.4}
+                      strokeWidth={hot ? 4 : 1.25}
+                      opacity={hot ? 1 : active ? 0.3 : 0.62}
                     />
                   );
                 })}
@@ -499,6 +532,9 @@ const SkillMap = ({ projects }) => {
                 const [dx, dy, anchor] = MAP.label[n.id];
                 const isActive = active === n.id;
                 const isLit = lit.has(n.id);
+                // over the running patch every Playing label wears a tag, so it reads on the moving pattern
+                const onScreen = playing && clusterOf(n.id).id === "playing";
+                const plain = quiet && !isActive && !isLit && hovered !== n.id && !onScreen;
                 return (
                   <g
                     key={n.id}
@@ -522,18 +558,19 @@ const SkillMap = ({ projects }) => {
                       className="map-node"
                       cx={x}
                       cy={y}
-                      r={isActive ? 13 : 6.5}
+                      r={isActive ? 14 : 7}
                       style={{
                         fill: isActive ? "rgb(var(--olive))" : isLit ? "rgb(var(--ink))" : "rgb(var(--bone))",
                         stroke: isActive ? "rgb(var(--olive))" : "rgb(var(--ink))",
-                        transition: "all .25s",
+                        transition: "fill .25s, stroke .25s, r .25s",
                       }}
-                      strokeWidth="1.5"
+                      strokeWidth="2"
                     />
                     <g className="map-chip-g">
                       {/* quiet: only the selected skill and its neighbours wear a chip; the rest read as plain grey labels */}
-                      {!(quiet && !isActive && !isLit && hovered !== n.id) && (() => {
-                        const tw = (chipW[n.id] || textWidth(n.label, 18)) * (isActive || isLit ? 1.05 : 1);
+                      {!plain && (() => {
+                        const tagged = isLit || onScreen;
+                        const tw = (chipW[n.id] || textWidth(n.label, 18)) * (isActive || tagged ? 1.05 : 1);
                         const left = anchor === "end" ? x + dx - tw : x + dx;
                         return (
                           <rect
@@ -542,8 +579,8 @@ const SkillMap = ({ projects }) => {
                             y={y + dy - 18}
                             width={tw + 20}
                             height="25"
-                            style={{ fill: isActive ? "rgb(var(--olive-fill))" : hovered === n.id ? "color-mix(in srgb, rgb(var(--olive)) 16%, rgb(var(--chalk)))" : "rgb(var(--paper))", stroke: isActive || hovered === n.id ? "rgb(var(--olive))" : isLit ? "rgb(var(--ink))" : "rgb(var(--concrete))", transition: "fill .2s, stroke .2s" }}
-                            strokeWidth={hovered === n.id && !isActive ? 2.5 : isLit ? 1.5 : 1}
+                            style={{ fill: isActive ? "rgb(var(--olive-fill))" : hovered === n.id ? "color-mix(in srgb, rgb(var(--olive)) 16%, rgb(var(--chalk)))" : "rgb(var(--paper))", stroke: isActive || hovered === n.id ? "rgb(var(--olive))" : tagged ? "rgb(var(--ink))" : "rgb(var(--concrete))", transition: "fill .2s, stroke .2s" }}
+                            strokeWidth={hovered === n.id && !isActive ? 2.5 : tagged ? 1.5 : 1}
                           />
                         );
                       })()}
@@ -557,12 +594,12 @@ const SkillMap = ({ projects }) => {
                         textAnchor={anchor}
                         fontFamily="Inter Tight, sans-serif"
                         fontSize="18"
-                        fontWeight={isActive ? 700 : isLit ? 600 : 400}
+                        fontWeight={isActive ? 700 : isLit ? 600 : 500}
                         style={{
-                          fill: isActive ? "#fff" : hovered === n.id ? "rgb(var(--olive))" : quiet && !isLit ? "rgb(var(--graphite))" : "rgb(var(--ink))",
+                          fill: isActive ? "#fff" : hovered === n.id ? "rgb(var(--olive))" : "rgb(var(--ink))",
                           transition: "fill .2s",
                           // a plain label (no chip) keeps the lines off its letters with a halo in the page colour
-                          ...(quiet && !isActive && !isLit && hovered !== n.id ? HALO : {}),
+                          ...(plain ? HALO : {}),
                         }}
                       >
                         {n.label}

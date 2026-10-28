@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { NODES, RING, CLUSTERS, labelOf, skillsOfProject } from "../Graph/data";
-import Sigil from "../Sigil";
+import Signature from "../Signature";
 import { categoryMeta, withBase, useIsomorphicLayoutEffect, usePrefersReducedMotion } from "../../utils";
 import { relaxRects, textWidth } from "../../utils/layout";
 import { scramble, drawIn, motionOn } from "../../utils/motion";
@@ -40,29 +41,30 @@ const CLUSTER_TEXT = CLUSTERS.map((c) => {
   return { ...c, x, y, anchor, box: [left, y - 26, left + w, y + 8], arc: [angleOf(c.skills[0]) - 0.15, angleOf(c.skills[c.skills.length - 1]) + 0.15] };
 });
 
-function wheelLayout(projects) {
+function wheelLayout(projects, fs = 16) {
   const items = {};
   projects.forEach((p) => {
     const s = skillIds(p.id);
     const x = s.reduce((a, k) => a + anchorOf(k)[0], 0) / s.length;
     const y = s.reduce((a, k) => a + anchorOf(k)[1], 0) / s.length;
-    const w = textWidth(mapTitle(p), 16) * 1.1 + 18;
-    items[p.id] = [Wh.CX + (x - Wh.CX) * 0.78, Wh.CY + (y - Wh.CY) * 0.78, -Math.max(16, w / 2), -16, Math.max(16, w / 2), 16];
+    const w = textWidth(mapTitle(p), fs) * 1.1 + 18;
+    const h = fs / 2 + 8;
+    items[p.id] = [Wh.CX + (x - Wh.CX) * 0.78, Wh.CY + (y - Wh.CY) * 0.78, -Math.max(16, w / 2), -h, Math.max(16, w / 2), h];
   });
   const inner = Wh.R * 0.78;
   return relaxRects(items, { fixed: CLUSTER_TEXT.map((c) => c.box), box: [Wh.CX - inner, Wh.CY - inner, Wh.CX + inner, Wh.CY + inner], pad: 7 });
 }
 
 // stillOnly: the grid always shows the still; the wheel card plays the loop unless motion is off
-const Media = ({ project, className = "", stillOnly = false }) => {
+const Media = ({ project, className = "", stillOnly = false, style }) => {
   const reduced = usePrefersReducedMotion() || !motionOn();
   const motion = project.tileMotion && !reduced && !stillOnly ? project.tileMotion : null;
   const still = project.cardWebp || project.cardImage || project.imageSrc;
   const src = motion || still;
   if (motion && motion.endsWith(".mp4")) {
-    return <video src={withBase(motion)} poster={withBase(still)} className={className} autoPlay muted loop playsInline aria-label={project.title} />;
+    return <video src={withBase(motion)} poster={withBase(still)} className={className} style={style} autoPlay muted loop playsInline aria-label={project.title} />;
   }
-  if (src) return <img src={withBase(src)} alt="" className={className} loading="lazy" draggable={false} />;
+  if (src) return <img src={withBase(src)} alt="" className={className} style={style} loading="lazy" draggable={false} />;
   return (
     <div className={`bg-khaki ${className}`} />
   );
@@ -104,6 +106,10 @@ const IndexList = ({ projects }) => {
                   {teamOf(p) && <span className="block">{teamOf(p)}</span>}
                 </span>
                 <p className="max-w-[60ch] text-[18px] leading-snug text-ink/80">{p.description}</p>
+                {/* phones and tablets have no hero map and no preview: the signature travels with the row */}
+                <div className="mt-2 w-full max-w-[230px] laptop:hidden">
+                  <Signature lit={skillIds(p.id)} size={230} />
+                </div>
               </Link>
             </li>
           );
@@ -123,7 +129,17 @@ const IndexList = ({ projects }) => {
               );
             })}
           </div>
-          {current && <p className="mt-3 font-mono text-[14px] leading-relaxed text-graphite">{skillIds(current.id).map(labelOf).join(", ")}</p>}
+          {/* the project's place in the practice: its skills lit on the hero map, in miniature */}
+          {current && (
+            <div className="mt-4 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-x-6 border-t border-ink pt-4">
+              <Signature lit={skillIds(current.id)} size={340} />
+              <p className="whitespace-nowrap pb-1 text-right font-mono text-[14px] leading-relaxed text-ink">
+                {skillIds(current.id).map((id) => (
+                  <span key={id} className="block">{labelOf(id)}</span>
+                ))}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -131,9 +147,10 @@ const IndexList = ({ projects }) => {
 };
 
 // the card beside the wheel
-const ProjectCard = ({ project, skills = true }) => (
+// imgMaxH: beside the wheel the image gives up height first, so card and wheel share one screen
+const ProjectCard = ({ project, skills = true, imgMaxH }) => (
   <div className="work-side flex flex-col border border-ink bg-paper text-[16px] leading-snug shadow-[6px_6px_0_rgb(var(--olive-fill))]">
-    <Media project={project} className="aspect-[4/3] w-full border-b border-ink object-cover" />
+    <Media project={project} className="aspect-[4/3] w-full border-b border-ink object-cover" style={imgMaxH ? { maxHeight: imgMaxH } : undefined} />
     <div className="flex flex-col gap-2 px-4 py-3">
       <div className="flex items-center justify-between font-mono text-[14px]">
         <span className="text-olive">
@@ -153,7 +170,7 @@ const ProjectCard = ({ project, skills = true }) => (
 
 const Uses = ({ project, row = false, children }) => (
   <figure className={`flex gap-4 border border-ink bg-paper p-4 ${row ? "flex-row items-start" : "flex-col"}`}>
-    {row ? <div className="w-[180px] shrink-0">{children}</div> : children}
+    {row ? <div className="w-[200px] shrink-0">{children}</div> : children}
     <dl className={`grid flex-1 gap-x-3 text-[16px] leading-snug ${row ? "grid-cols-1 gap-y-1 [&>dd]:mb-2" : "grid-cols-[112px_1fr] gap-y-2"}`}>
       <dt className="font-mono text-[14px] uppercase text-olive">Disciplines</dt>
       <dd>{skillIds(project.id).map(labelOf).join(", ")}</dd>
@@ -204,7 +221,6 @@ const WorkExplorer = ({ projects: given }) => {
     if (new URLSearchParams(window.location.search).get("work") === "cards") setLayout("cards");
   }, []);
   const selected = shown.find((p) => p.id === picked) || shown[0] || projects[0];
-  const wheel = useMemo(() => wheelLayout(projects), [projects]);
   const filtered = skill !== "all" || year !== "all";
 
   // each view makes its entrance when it is switched to
@@ -242,19 +258,54 @@ const WorkExplorer = ({ projects: given }) => {
   const plotRef = useRef(null);
   const [plotW, setPlotW] = useState(null);
   const [winH, setWinH] = useState(900);
+  const [headH, setHeadH] = useState(65);
   useIsomorphicLayoutEffect(() => {
     const measure = () => {
-      if (plotRef.current) setPlotW(plotRef.current.clientWidth - 400 - 40);
+      if (plotRef.current) setPlotW(plotRef.current.clientWidth - (window.innerWidth < 1366 ? 340 : 400) - 40);
       setWinH(window.innerHeight);
+      setHeadH(document.querySelector("header")?.offsetHeight || 65);
     };
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
   }, [view]);
-  // the wheel at a little under the full width beside its card
+  // the wheel at a little under the full width beside its card, and never taller than the screen under
+  // the header: the drawing is cropped to its ink (ring labels included), so the height cap costs no type
   const FIT = 0.88;
   const WW = Wh.CX * 2 + 40;
-  const ws = plotW ? Math.min(1.2, (plotW / WW) * FIT) : 0.8;
+  const VB_Y = 88;
+  const VB_H = 830;
+  const MARGIN = 32;
+  const availH = winH - headH - MARGIN;
+  const ws = plotW ? Math.min(1.2, (plotW / WW) * FIT, availH / VB_H) : 0.8;
+  // type never under 12 px on screen: when the wheel is drawn small, its labels grow in drawing units
+  const MIN_PX = 12.2;
+  const fsSkill = Math.max(17, MIN_PX / ws);
+  const fsChip = Math.max(16, MIN_PX / ws);
+  const fsVerb = Math.max(18, MIN_PX / ws);
+  const wheel = useMemo(() => wheelLayout(projects, fsChip), [projects, fsChip]);
+
+  // switching to the wheel brings the whole of it into view under the header
+  // (the page's ScrollTrigger refresh follows layout changes, such as the card's image loading, and puts the
+  // old scroll position back: for a moment after the switch the scroll is issued again after each refresh)
+  useEffect(() => {
+    if (view !== "Wheel") return undefined;
+    const go = () => {
+      const el = plotRef.current;
+      if (!el || !el.offsetParent) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - headH - MARGIN / 2;
+      if (Math.abs(top - window.scrollY) < 2) return;
+      window.scrollTo({ top, behavior: motionOn() && !window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "auto" });
+    };
+    const t = setTimeout(go, 220);
+    ScrollTrigger.addEventListener("refresh", go);
+    const stop = setTimeout(() => ScrollTrigger.removeEventListener("refresh", go), 1500);
+    return () => {
+      clearTimeout(t);
+      clearTimeout(stop);
+      ScrollTrigger.removeEventListener("refresh", go);
+    };
+  }, [view]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [chipW, setChipW] = useState({});
   useIsomorphicLayoutEffect(() => {
@@ -294,7 +345,7 @@ const WorkExplorer = ({ projects: given }) => {
         }
       if (e.key === "Enter") window.location.assign(withBase(`/projects/${p.id}/`));
     },
-    style: { cursor: matches(p) ? "pointer" : "default", opacity: matches(p) ? 1 : 0.15, transition: "opacity .3s" },
+    style: { cursor: matches(p) ? "pointer" : "default", opacity: matches(p) ? 1 : 0.6, transition: "opacity .3s" },
   });
 
   return (
@@ -402,7 +453,7 @@ const WorkExplorer = ({ projects: given }) => {
       {/* ——— wheel ——— */}
       {view === "Wheel" && (
         <div ref={plotRef} className="hidden items-start gap-10 desktop:flex">
-            <svg viewBox={`0 0 ${WW} ${Wh.H}`} width={WW * ws} height={Wh.H * ws} className="shrink-0" role="group" aria-label="Work wheel: each project is pulled towards the skills it uses">
+            <svg viewBox={`0 ${VB_Y} ${WW} ${VB_H}`} width={WW * ws} height={VB_H * ws} className="shrink-0" role="group" aria-label="Work wheel: each project is pulled towards the skills it uses">
               <defs>
                 <radialGradient id="work-glow">
                   <stop offset="0%" style={{ stopColor: "rgb(var(--olive))" }} stopOpacity="0.5" />
@@ -422,7 +473,7 @@ const WorkExplorer = ({ projects: given }) => {
                       strokeWidth="6"
                       opacity="0.16"
                     />
-                    <text className="wheel-cluster" x={c.x} y={c.y} textAnchor={c.anchor} fontFamily="JetBrains Mono, monospace" fontSize="18" fontWeight="500" letterSpacing="0.16em" style={{ fill: "rgb(var(--olive))" }}>
+                    <text className="wheel-cluster" x={c.x} y={c.y} textAnchor={c.anchor} fontFamily="JetBrains Mono, monospace" fontSize={fsVerb} fontWeight="500" letterSpacing="0.16em" style={{ fill: "rgb(var(--olive))" }}>
                       {c.label.toUpperCase()}
                     </text>
                   </g>
@@ -446,7 +497,7 @@ const WorkExplorer = ({ projects: given }) => {
                 return (
                   <g key={k} aria-hidden="true">
                     <circle className="wheel-anchor" cx={x} cy={y} r="7" style={{ fill: on ? "rgb(var(--olive))" : "rgb(var(--bone))", stroke: on ? "rgb(var(--olive))" : "rgb(var(--ink))" }} strokeWidth="1.5" />
-                    <text x={lx} y={ly + dy} textAnchor={anchor} fontFamily="Inter Tight, sans-serif" fontSize="17" fontWeight={on ? 700 : 400} style={{ fill: on ? "rgb(var(--olive))" : "rgb(var(--ink))" }}>
+                    <text x={lx} y={ly + dy} textAnchor={anchor} fontFamily="Inter Tight, sans-serif" fontSize={fsSkill} fontWeight={on ? 700 : 400} style={{ fill: on ? "rgb(var(--olive))" : "rgb(var(--ink))" }}>
                       {labelOf(k)}
                     </text>
                   </g>
@@ -461,22 +512,22 @@ const WorkExplorer = ({ projects: given }) => {
                     {on && <circle className="work-glow glow-pulse" cx={x} cy={y} r="44" fill="url(#work-glow)" />}
                     {(() => {
                       const w = widthOf(`w${p.id}`, mapTitle(p), 16) + 16;
-                      const top = y - 13;
+                      const top = y - (fsChip + 10) / 2;
                       return (
-                        <rect x={x - w / 2} y={top} width={w} height="26" style={{ fill: on ? "rgb(var(--olive-fill))" : hot === p.id ? "color-mix(in srgb, rgb(var(--olive)) 16%, rgb(var(--chalk)))" : "rgb(var(--paper))", stroke: on || hot === p.id ? "rgb(var(--olive))" : "rgb(var(--ink))", transition: "fill .2s" }} strokeWidth={hot === p.id && !on ? 2.5 : 1} />
+                        <rect x={x - w / 2} y={top} width={w} height={fsChip + 10} style={{ fill: on ? "rgb(var(--olive-fill))" : hot === p.id ? "color-mix(in srgb, rgb(var(--olive)) 16%, rgb(var(--chalk)))" : "rgb(var(--paper))", stroke: on || hot === p.id ? "rgb(var(--olive))" : "rgb(var(--ink))", transition: "fill .2s" }} strokeWidth={hot === p.id && !on ? 2.5 : 1} />
                       );
                     })()}
-                    <text data-chip={`w${p.id}`} x={x} y={y + 5} textAnchor="middle" fontFamily="Inter Tight, sans-serif" fontSize="16" fontWeight="500" style={{ fill: on ? "#fff" : hot === p.id ? "rgb(var(--olive))" : col, transition: "fill .2s" }}>
+                    <text data-chip={`w${p.id}`} x={x} y={y + fsChip * 0.32} textAnchor="middle" fontFamily="Inter Tight, sans-serif" fontSize={fsChip} fontWeight="500" style={{ fill: on ? "#fff" : hot === p.id ? "rgb(var(--olive))" : col, transition: "fill .2s" }}>
                       {mapTitle(p)}
                     </text>
                   </g>
                 );
               })}
             </svg>
-            <div className="sticky top-20 flex min-w-[400px] flex-1 flex-col gap-5 self-start">
-              <ProjectCard project={selected} skills={false} />
+            <div className="wheel-side sticky flex flex-1 flex-col gap-5 self-start" style={{ top: headH + MARGIN / 2 }}>
+              <ProjectCard project={selected} skills={false} imgMaxH={Math.max(140, availH - 460)} />
               <Uses project={selected} row>
-                <Sigil skills={skillIds(selected.id)} size={180} width={2} />
+                <Signature lit={skillIds(selected.id)} size={200} />
               </Uses>
             </div>
         </div>
