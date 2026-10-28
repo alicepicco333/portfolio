@@ -274,12 +274,15 @@ const Journey = ({ projects }) => {
           <span className="desktop:hidden">{model === "linear" ? "Top to bottom, oldest to newest: the usual way to read a career." : MODELS.find((m) => m.id === model).note}</span>
         </p>
 
+        {/* the scroll sweep pins this wrapper, which stays mounted in both models: React only swaps what is
+            inside it, so switching to the spiral never removes a node GSAP has moved into its pin spacer */}
+        <div ref={wrapRef}>
         {model === "spiral" && <Spiral projects={projects} />}
 
         {model === "linear" && (
           <>
             {/* ——— large screens: the drawn timeline ——— */}
-            <div ref={wrapRef} className="hidden desktop:block">
+            <div className="hidden desktop:block">
               <div className="fu-reveal">
               <svg
                 viewBox={`0 0 ${W} ${H}`}
@@ -531,6 +534,7 @@ const Journey = ({ projects }) => {
             </ol>
           </>
         )}
+        </div>
       </div>
     </section>
   );
