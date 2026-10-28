@@ -105,7 +105,7 @@
       ],
       "shows": "Contested history made readable: every claim shown with its sources, at the depth the visitor chooses.",
       "cardImage": "/images/projects/0-card-v4.jpg",
-      "rank": 3,
+      "rank": 6,
       "accentHC": "#75210c",
       "cardWebp": "/images/projects/0-card-v4-800.webp",
       "decisions": [
@@ -288,7 +288,7 @@
       ],
       "shows": "Testing a model against its own requirements, and reporting what it cannot answer.",
       "cardImage": "/images/projects/2-card-v4.jpg",
-      "rank": 4,
+      "rank": 8,
       "accentHC": "#111111",
       "cardWebp": "/images/projects/2-card-v4-800.webp",
       "decisions": [
@@ -386,7 +386,7 @@
       ],
       "shows": "A research question answered with the data rather than illustrated, with a plain reading of how far to trust each result.",
       "cardImage": "/images/projects/3-card-v5.jpg",
-      "rank": 5,
+      "rank": 7,
       "accentHC": "#701e3c",
       "cardWebp": "/images/projects/3-card-v5-800.webp",
       "decisions": [
@@ -454,7 +454,7 @@
       "shows": "Real-time interactive systems and collaboration: visuals generated and rewritten live, in dialogue with another performer.",
       "tileMotion": "/images/projects/5-loop-sm.webp",
       "cardImage": "/images/projects/5-card-v3.jpg",
-      "rank": 12,
+      "rank": 11,
       "embed": "https://player.vimeo.com/video/980415428?dnt=1",
       "cardWebp": "/images/projects/5-card-v3-800.webp",
       "embedCaption": "The full recording, published by the Institute of Network Cultures.",
@@ -515,7 +515,7 @@
       ],
       "shows": "Teaching as opening the tools up: newcomers writing and performing real-time visuals in one afternoon.",
       "cardImage": "/images/projects/10-card-v2.jpg",
-      "rank": 13,
+      "rank": 12,
       "cardWebp": "/images/projects/10-card-v2-800.webp",
       "decisions": [
         {
@@ -591,7 +591,7 @@
       ],
       "shows": "A client commission taken from Figma to a working bilingual site, built around how visitors browse a label’s collection and its history.",
       "cardImage": "/images/projects/11-card-v3.jpg",
-      "rank": 6,
+      "rank": 2,
       "accentHC": "#111111",
       "cardWebp": "/images/projects/11-card-v3-800.webp",
       "decisions": [
@@ -685,7 +685,7 @@
       ],
       "shows": "A messy cultural archive made queryable, with the limits of its automatic classification stated.",
       "cardImage": "/images/projects/12-card-v4.jpg",
-      "rank": 8,
+      "rank": 4,
       "accentHC": "#3a3733",
       "cardWebp": "/images/projects/12-card-v4-800.webp",
       "caseStudy": {
@@ -1070,7 +1070,7 @@
       "shows": "A community archive described to national preservation standards, with every record checked against the files it points to.",
       "cardImage": "/images/projects/13-card.jpg",
       "cardWebp": "/images/projects/13-card-800.webp",
-      "rank": 9,
+      "rank": 3,
       "decisions": [
         {
           "choice": "Describe only what has been scanned.",
@@ -1154,7 +1154,7 @@
       ],
       "shows": "The same openness in performance: the code projected beside the visuals, so the audience can see how every change is made.",
       "cardImage": "/images/projects/14-card-v3.jpg",
-      "rank": 11,
+      "rank": 13,
       "cardWebp": "/images/projects/14-card-v3-800.webp",
       "embed": "https://odysee.com/$/embed/@alicepicco:0/5pic3_livingFull:d",
       "embedAspect": "4 / 3",
@@ -1250,7 +1250,7 @@
       ],
       "shows": "Data storytelling anyone can check: fair measures, findings stated plainly and a data table behind every chart.",
       "cardImage": "/images/projects/15-card-v4.jpg",
-      "rank": 2,
+      "rank": 5,
       "accentHC": "#18309d",
       "cardWebp": "/images/projects/15-card-v4-800.webp",
       "decisions": [
@@ -2804,7 +2804,7 @@
       ],
       "shows": "Following a theme across five centuries, with every editorial choice kept visible.",
       "cardImage": "/images/projects/21-card-v5.jpg",
-      "rank": 7,
+      "rank": 9,
       "accentHC": "#70223d",
       "cardWebp": "/images/projects/21-card-v5-800.webp",
       "decisions": [
