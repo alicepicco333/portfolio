@@ -3,7 +3,7 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { NODES, RING, CLUSTERS, labelOf, skillsOfProject } from "../Graph/data";
-import Signature from "../Signature";
+import Sigil from "../Sigil";
 import { categoryMeta, withBase, useIsomorphicLayoutEffect, usePrefersReducedMotion } from "../../utils";
 import { relaxRects, textWidth } from "../../utils/layout";
 import { scramble, drawIn, motionOn } from "../../utils/motion";
@@ -106,10 +106,6 @@ const IndexList = ({ projects }) => {
                   {teamOf(p) && <span className="block">{teamOf(p)}</span>}
                 </span>
                 <p className="max-w-[60ch] text-[18px] leading-snug text-ink/80">{p.description}</p>
-                {/* phones and tablets have no hero map and no preview: the signature travels with the row */}
-                <div className="mt-2 w-full max-w-[230px] laptop:hidden">
-                  <Signature lit={skillIds(p.id)} size={230} />
-                </div>
               </Link>
             </li>
           );
@@ -129,17 +125,7 @@ const IndexList = ({ projects }) => {
               );
             })}
           </div>
-          {/* the project's place in the practice: its skills lit on the hero map, in miniature */}
-          {current && (
-            <div className="mt-4 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-x-6 border-t border-ink pt-4">
-              <Signature lit={skillIds(current.id)} size={340} />
-              <p className="whitespace-nowrap pb-1 text-right font-mono text-[14px] leading-relaxed text-ink">
-                {skillIds(current.id).map((id) => (
-                  <span key={id} className="block">{labelOf(id)}</span>
-                ))}
-              </p>
-            </div>
-          )}
+          {current && <p className="mt-3 font-mono text-[14px] leading-relaxed text-graphite">{skillIds(current.id).map(labelOf).join(", ")}</p>}
         </div>
       </div>
     </div>
@@ -527,7 +513,7 @@ const WorkExplorer = ({ projects: given }) => {
             <div className="wheel-side sticky flex flex-1 flex-col gap-5 self-start" style={{ top: headH + MARGIN / 2 }}>
               <ProjectCard project={selected} skills={false} imgMaxH={Math.max(140, availH - 460)} />
               <Uses project={selected} row>
-                <Signature lit={skillIds(selected.id)} size={200} />
+                <Sigil skills={skillIds(selected.id)} size={180} width={2} />
               </Uses>
             </div>
         </div>
