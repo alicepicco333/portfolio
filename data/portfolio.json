@@ -3263,23 +3263,31 @@
     ]
   },
   "about": {
-    "lead": "I design for information that’s complicated or easy to misread, so people can understand it, trust it and check it themselves.",
+    "lead": "I work with information that is easy to misread, from archives and public data to health and learning services, and shape it so people can check it themselves.",
     "paragraphs": [
-      "That shapes how I work. Research comes first, from a background in cultural anthropology and digital humanities: interviews, usability tests, fieldwork and data analysis. I show the evidence behind what an interface claims: its sources, its data, how far to trust a result. And I test whether it worked, with people and with the data: in my Unobravo redesign, the usability score rose from 75 to 91.25 in a four-person summative test.",
-      "I've worked as a UX researcher and designer at BrainBite, an AI tutoring platform for children, on support for neurodiverse learners; done practice-based research as a research intern at the Institute of Network Cultures; and taken part in The Hmm's Voices of Makers program with DEN. My projects deal with museum collections, archives, public data and online therapy, and I care that the result is inclusive, well evidenced and easy to use."
+      "I start with people, not with the interface. I trained in cultural anthropology, so I watch how people actually use a system before deciding what they need, then check it with interviews and think-aloud tests. Then I put the material in order, whether it is an archive, a collection or a public dataset, so it stays findable and can be queried.",
+      "After that I shape it: flows into Figma prototypes and working code, tested with the people who will use them. I show where information comes from and how far to trust a result. I design for people who are often left out, such as neurodiverse users and older adults with low digital literacy. I also use code to make images and sound, live for an audience."
     ],
     "practice": [
       {
-        "title": "Research",
-        "items": "Interviews, usability testing (SUS, think-aloud), ethnography, personas, data analysis"
+        "title": "Listening",
+        "items": "Ethnographic observation, interviews, personas, think-aloud and usability tests (SUS), WCAG accessibility audits"
       },
       {
-        "title": "Design",
-        "items": "Information architecture, interaction and visual design, prototyping in Figma"
+        "title": "Ordering",
+        "items": "Archival metadata (METS, EAD3), linked data with RDF, SPARQL and Wikidata, OWL models, TEI"
       },
       {
-        "title": "Build",
-        "items": "React, D3.js, Leaflet, Python, RDF, SPARQL and OWL, Hydra"
+        "title": "Counting",
+        "items": "Scraped and open data, analysis in Python, charts, maps and interactive views in D3.js and Leaflet"
+      },
+      {
+        "title": "Shaping",
+        "items": "Information architecture, flows, interaction states, Figma prototypes, typography and layout, built in React"
+      },
+      {
+        "title": "Playing",
+        "items": "Hydra, Processing and JavaScript for live audio-reactive visuals, VJ sets and projections"
       }
     ]
   },

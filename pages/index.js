@@ -82,13 +82,18 @@ const Home = () => {
                   <p key={text.slice(0, 20)}>{text}</p>
                 ))}
               </div>
-              <div className="fu-reveal grid max-w-[980px] gap-6 tablet:grid-cols-3" role="group" aria-label="How I work">
+              {/* the five steps of the method, in the hero map's order: one ruled row each, the methods
+                  starting on the second paragraph's column */}
+              <div className="fu-reveal flex max-w-[980px] flex-col gap-3">
+              <p id="about-method" className="font-mono text-[14px] uppercase tracking-[0.12em]">How I work</p>
+              <dl className="flex flex-col border-t border-white/60" aria-labelledby="about-method">
                 {about.practice.map((p) => (
-                  <div key={p.title} className="flex flex-col gap-2">
-                    <span className="font-mono text-[14px] uppercase tracking-[0.12em]">{p.title}</span>
-                    <span className="text-[18px] leading-snug">{p.items}</span>
+                  <div key={p.title} className="grid gap-2 border-b border-white/60 py-4 tablet:grid-cols-2 tablet:gap-6">
+                    <dt className="font-mono text-[14px] uppercase tracking-[0.12em] tablet:pt-1">{p.title}</dt>
+                    <dd className="text-[18px] leading-snug">{p.items}</dd>
                   </div>
                 ))}
+              </dl>
               </div>
             </div>
           </div>
