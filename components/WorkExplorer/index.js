@@ -438,7 +438,7 @@ const WorkExplorer = ({ projects: given }) => {
       {/* ——— wheel ——— */}
       {view === "Wheel" && (
         <div ref={plotRef} className="hidden items-start gap-10 desktop:flex">
-            <svg viewBox={`0 ${VB_Y} ${WW} ${VB_H}`} width={WW * ws} height={VB_H * ws} className="shrink-0" role="group" aria-label="Work wheel: each project is pulled towards the skills it uses">
+            <svg viewBox={`0 ${VB_Y} ${WW} ${VB_H}`} width={WW * ws} height={VB_H * ws} className="mx-auto shrink-0" role="group" aria-label="Work wheel: each project is pulled towards the skills it uses">
               <defs>
                 <radialGradient id="work-glow">
                   <stop offset="0%" style={{ stopColor: "rgb(var(--olive))" }} stopOpacity="0.5" />
