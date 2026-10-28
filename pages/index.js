@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 import Seo from "../components/Seo";
 import Link from "next/link";
 import { gsap } from "gsap";
@@ -60,9 +59,6 @@ const Home = () => {
   return (
     <div id="top" className="min-h-screen bg-bone text-ink">
       <Seo title="Alice Picco, HCI researcher & designer" description={about.lead} />
-      <Head>
-        <meta name="theme-color" content="#D5D6DB" />
-      </Head>
 
       <Header />
 

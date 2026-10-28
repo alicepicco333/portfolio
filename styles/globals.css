@@ -5,12 +5,15 @@
 
 /* Grey and blue. Tokens are "r g b" triplets; Tailwind reads them in tailwind.config.js.
    Names are kept from the earlier system: bone = page grey, paper = card surface, olive = the blue
-   accent (project pages override it with the project's own colour via projectStyle). */
+   accent (project pages override it with the project's own colour via projectStyle).
+   The accent comes in two roles: --olive for blue text, lines and rings, --olive-fill for blue
+   surfaces that carry white text (bg-olive). On the grey page they are the same blue. */
 :root {
   --bone: 213 214 219;
   --paper: 236 237 240;
   --ink: 14 14 16;
   --olive: 26 26 255; /* #1A1AFF: 5.5:1 on the grey */
+  --olive-fill: 26 26 255; /* white on it: 8:1 */
   --khaki: 194 197 207;
   --concrete: 165 166 174;
   --graphite: 85 85 94; /* 5.1:1 on the grey */
@@ -19,6 +22,51 @@
   --lilac: 194 197 207;
   --mint: 194 197 207;
   --signal: 26 26 255;
+  --chalk: 255 255 255; /* the lightest surface: white here, a raised step in the dark theme */
+  /* persona colours of the Unobravo cast (components/CaseStudy/research.js) */
+  --persona-giulia: 29 78 216;
+  --persona-alessandro: 4 120 87;
+  --persona-sara: 126 34 206;
+  --persona-chiara: 180 83 9;
+  --persona-antonio: 14 116 144;
+  --persona-paola: 190 24 93;
+}
+
+/* Dark: a near-black page, light grey text, the same electric blue for fills. Blue text, lines and
+   rings use a lighter blue, because #1A1AFF is only 2.4:1 on near-black. Screen only: print stays light.
+   Ratios are against the page / the paper surface. */
+@media screen {
+  html[data-theme="dark"] {
+    color-scheme: dark;
+    --bone: 14 14 16; /* #0E0E10, the page */
+    --paper: 28 28 33; /* #1C1C21, cards */
+    --ink: 213 214 219; /* #D5D6DB: 13.3:1 / 11.7:1 */
+    --olive: 126 126 255; /* #7E7EFF: 5.8:1 page, 5.1:1 cards, 4.5:1 hover; as close to the fill blue as AA allows */
+    --olive-fill: 26 26 255; /* #1A1AFF, white on it 8:1 */
+    --khaki: 38 38 44; /* #26262C, hover surfaces */
+    --concrete: 74 74 84; /* #4A4A54, faint rules only */
+    --graphite: 146 146 156; /* #92929C: 6.3:1 / 5.5:1 */
+    --field-grey: 146 146 156;
+    --pink: 38 38 44;
+    --lilac: 38 38 44;
+    --mint: 38 38 44;
+    --signal: 126 126 255;
+    --chalk: 22 22 26; /* #16161A */
+    --persona-giulia: 96 165 250;
+    --persona-alessandro: 52 211 153;
+    --persona-sara: 192 132 252;
+    --persona-chiara: 251 191 36;
+    --persona-antonio: 34 211 238;
+    --persona-paola: 244 114 182;
+  }
+  /* bands that stay near-black in both themes (footer, case-study part headers, phone frames):
+     ink and bone swap back inside them, on a shade a step above the page */
+  html[data-theme="dark"] .fu-band {
+    --ink: 28 28 33; /* #1C1C21, the card shade: a band stands off the page */
+    --bone: 213 214 219;
+  }
+  html[data-theme="dark"] .skip-link { color: rgb(var(--bone)); }
+  html[data-theme="dark"] .fu-btn-primary:hover { color: #fff; }
 }
 
 html {
@@ -41,7 +89,7 @@ body {
 }
 
 ::selection {
-  background: rgb(var(--olive));
+  background: rgb(var(--olive-fill));
   color: #fff;
 }
 
@@ -91,10 +139,24 @@ footer :focus-visible {
    no transparency or glows. The page background is unchanged. */
 html[data-contrast="high"] {
   --olive: 58 58 66; /* #3A3A42: a grey accent, 8:1 on the grey page */
+  --olive-fill: 58 58 66;
   --signal: 58 58 66;
   --graphite: 14 14 16;
   --field-grey: 14 14 16;
   --concrete: 14 14 16;
+}
+/* dark high contrast: near-white text, a light grey accent (10:1), grey fills under white text (11:1) */
+@media screen {
+  html[data-theme="dark"][data-contrast="high"] {
+    --ink: 242 242 245;
+    --olive: 189 189 198; /* #BDBDC6 */
+    --olive-fill: 58 58 66;
+    --signal: 189 189 198;
+    --graphite: 242 242 245;
+    --field-grey: 242 242 245;
+    --concrete: 242 242 245;
+  }
+  html[data-theme="dark"][data-contrast="high"] .fu-band { --ink: 22 22 26; --bone: 242 242 245; }
 }
 html[data-contrast="high"] [class*="text-ink/"] { color: rgb(var(--ink)) !important; }
 html[data-contrast="high"] [class*="text-bone/"] { color: rgb(var(--bone)) !important; }
@@ -165,8 +227,8 @@ html[data-motion="off"] ::after {
     color: rgb(var(--bone));
   }
   .fu-btn-primary:hover {
-    background: rgb(var(--olive));
-    border-color: rgb(var(--olive));
+    background: rgb(var(--olive-fill));
+    border-color: rgb(var(--olive-fill));
   }
   .fu-btn-secondary {
     background: rgb(var(--paper));
@@ -240,7 +302,7 @@ button:not(:disabled):active {
 .work-lift:hover,
 .work-lift:focus-visible {
   transform: translate(-4px, -4px);
-  box-shadow: 6px 6px 0 rgb(var(--olive));
+  box-shadow: 6px 6px 0 rgb(var(--olive-fill)); /* a fill, not a line: always the true blue */
 }
 .work-mini {
   transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -293,9 +355,14 @@ button:not(:disabled):active {
   border-color: rgb(var(--olive));
 }
 
-/* project pages: the project's own accent; its darker version in high contrast */
-.project-theme { --olive: var(--project); --signal: var(--project); }
-html[data-contrast="high"] .project-theme { --olive: 58 58 66; --signal: 58 58 66; }
+/* project pages: the project's own accent; in the dark theme a lighter version for text and lines and a
+   fill at least as visible as the house blue (both computed in utils projectStyle); in high contrast the
+   page's own high-contrast accent, in either theme */
+.project-theme { --olive: var(--project); --olive-fill: var(--project); --signal: var(--project); }
+@media screen {
+  html[data-theme="dark"] .project-theme { --olive: var(--project-dark); --olive-fill: var(--project-fill-dark); --signal: var(--project-dark); }
+}
+html[data-contrast="high"] .project-theme { --olive: inherit; --olive-fill: inherit; --signal: inherit; }
 
 /* print: plain white paper, no site chrome */
 @media print {

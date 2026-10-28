@@ -9,7 +9,7 @@ const Accessibility = () => (
   <div className="min-h-screen bg-bone text-ink">
     <Seo
       title="Accessibility statement | Alice Picco"
-      description="How this portfolio aims to meet WCAG 2.1 AA, and the controls it offers for motion and contrast."
+      description="How this site aims to meet WCAG 2.1 AA, and the three settings it offers: motion, high contrast and dark mode."
       path="/accessibility/"
     />
     <Header />
@@ -26,7 +26,7 @@ const Accessibility = () => (
             Your settings
           </h2>
           <p className="mt-3 text-[18px] leading-relaxed">
-            Both settings are also in the navigation bar of every page (in the menu on phones). They are saved on this device only.
+            You can also change all three settings in the navigation bar of every page (in the menu on phones). Your choices are saved on this device only.
           </p>
           <A11yControls className="mt-4" />
           <ul className="mt-5 list-disc space-y-2 pl-5 text-[18px] leading-relaxed">
@@ -35,7 +35,11 @@ const Accessibility = () => (
               It is off by default if your device asks for reduced motion.
             </li>
             <li>
-              <strong>High contrast</strong> switches the accent color to a dark gray on every page, turns all secondary text and outlines black, and removes glows and transparency. The page background stays the same.
+              <strong>High contrast</strong> turns the accent color gray on every page. Secondary text and outlines take the main text color: black in light mode, near-white in dark mode. Glows and transparency are removed. The page background does not change.
+            </li>
+            <li>
+              <strong>Dark</strong> shows the site on a near-black page with light gray text. Filled blue surfaces keep the same electric blue.
+              Blue text and lines turn a lighter blue so they stay readable. Until you choose, it follows your device&rsquo;s light or dark setting.
             </li>
           </ul>
         </section>

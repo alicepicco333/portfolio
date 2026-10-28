@@ -5,15 +5,16 @@ import { usePrefersReducedMotion, withBase } from "../../utils";
 // Interactive research blocks for the long-form case study: interviews, cast with
 // personality radars, the urgency curve explorer and a native design-system specimen.
 
+// lighter versions of the same hues in the dark theme (--persona-* in globals.css); Marco is the ink
 const PERSONA_COLORS = {
   luca: "rgb(var(--olive))",
-  giulia: "#1d4ed8",
-  alessandro: "#047857",
-  sara: "#7e22ce",
-  chiara: "#b45309",
-  marco: "#0e0e10",
-  antonio: "#0e7490",
-  paola: "#be185d",
+  giulia: "rgb(var(--persona-giulia))",
+  alessandro: "rgb(var(--persona-alessandro))",
+  sara: "rgb(var(--persona-sara))",
+  chiara: "rgb(var(--persona-chiara))",
+  marco: "rgb(var(--ink))",
+  antonio: "rgb(var(--persona-antonio))",
+  paola: "rgb(var(--persona-paola))",
 };
 const colorOf = (id) => PERSONA_COLORS[id] || "rgb(var(--ink))";
 
@@ -573,7 +574,7 @@ export function UrgencyExplorer({ data }) {
                     aria-pressed={on}
                     aria-label={`${p.id}: ${p.title}. Impact ${p.impact}, persistence ${p.persistence}. ${SEVERITY_LABEL[sev]}.`}
                     className={`urgency-point absolute flex h-7 w-7 -translate-x-1/2 translate-y-1/2 items-center justify-center rounded-full text-[10px] font-semibold tablet:h-8 tablet:w-8 tablet:text-[11px] transition-transform ${
-                      sev === "critical" ? "bg-olive text-bone" : sev === "high" ? "bg-ink text-bone" : "border-2 border-ink bg-bone text-ink"
+                      sev === "critical" ? "bg-olive text-bone dark:text-white" : sev === "high" ? "bg-ink text-bone" : "border-2 border-ink bg-bone text-ink"
                     } ${on ? "z-10 scale-125 ring-2 ring-ink ring-offset-2 ring-offset-bone" : ""}`}
                     style={{ left: pct(p.x), bottom: pct(p.y), animationDelay: reduced ? "0ms" : `${i * 60}ms` }}
                   >
@@ -634,7 +635,7 @@ export function UrgencyExplorer({ data }) {
 
 function Phone({ src, alt }) {
   return (
-    <div className="mx-auto w-full max-w-[260px] overflow-hidden rounded-[30px] border-[7px] border-ink bg-ink">
+    <div className="fu-band mx-auto w-full max-w-[260px] overflow-hidden rounded-[30px] border-[7px] border-ink bg-ink">
       <img src={withBase(src)} alt={alt} loading="lazy" className="block aspect-[393/852] h-auto w-full rounded-[23px] object-cover object-top" />
     </div>
   );
@@ -786,7 +787,7 @@ export function DesignSystem({ data }) {
                   </span>
                 </span>
                 <span
-                  className="min-w-0 truncate text-[#1A1B1F]"
+                  className="min-w-0 truncate text-[#1A1B1F] dark:text-ink"
                   style={{ fontFamily: `'${t.family}', ${t.family === "Fraunces" ? "serif" : "sans-serif"}`, fontWeight: t.weight, fontSize: t.size, lineHeight: `${t.line}px` }}
                 >
                   {t.sample}

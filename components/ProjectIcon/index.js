@@ -5,7 +5,7 @@ import React from "react";
 // that fits the work. All glyphs are drawn on a 32 × 32 grid.
 const S = { fill: "none", stroke: "#fff", strokeWidth: 2.4, strokeLinecap: "round", strokeLinejoin: "round" };
 const F = { fill: "#fff" };
-const B = { fill: "rgb(var(--olive))" };
+const B = { fill: "rgb(var(--olive-fill))" };
 
 const GLYPHS = {
   // The Stolen Archive: the luggage tag from its favicon
@@ -102,7 +102,7 @@ const GLYPHS = {
 };
 
 // Inside an existing <svg>, centred on (x, y).
-export const ProjectIconG = ({ id, x, y, size = 28, tile = "rgb(var(--olive))", className }) => (
+export const ProjectIconG = ({ id, x, y, size = 28, tile = "rgb(var(--olive-fill))", className }) => (
   <g className={className} transform={`translate(${x - size / 2} ${y - size / 2}) scale(${size / 32})`}>
     <rect width="32" height="32" style={{ fill: tile }} />
     {GLYPHS[id] || <circle cx="16" cy="16" r="5" {...F} />}

@@ -3,7 +3,9 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: "class",
+  // the dark theme is html[data-theme="dark"] (components/A11yControls); `dark:` is only for the few
+  // exceptions the tokens in globals.css cannot cover
+  darkMode: ["class", '[data-theme="dark"]'],
   theme: {
     screens: {
       mob: "375px",
@@ -27,6 +29,12 @@ module.exports = {
         lilac: "rgb(var(--lilac) / <alpha-value>)",
         mint: "rgb(var(--mint) / <alpha-value>)",
         signal: "rgb(var(--signal) / <alpha-value>)",
+        chalk: "rgb(var(--chalk) / <alpha-value>)",
+      },
+      // blue surfaces carry white text, so bg-olive is the fill blue; text, borders, rings and
+      // decorations stay on --olive, the blue that reads as text in both themes
+      backgroundColor: {
+        olive: "rgb(var(--olive-fill) / <alpha-value>)",
       },
       fontFamily: {
         sans: ["Inter Tight", "system-ui", "sans-serif"],

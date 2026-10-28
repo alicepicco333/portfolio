@@ -17,7 +17,7 @@ export const MODELS = [
   },
 ];
 
-const TINT = "color-mix(in srgb, rgb(var(--olive)) 16%, #fff)";
+const TINT = "color-mix(in srgb, rgb(var(--olive)) 16%, rgb(var(--chalk)))";
 const yearOf = (p) => +(((p.dateLabel || "").match(/\d{4}/) || [(p.date || "").slice(0, 4)])[0]);
 const timeOf = (p) => {
   const y = yearOf(p);
@@ -235,7 +235,7 @@ export const Spiral = ({ projects }) => {
           {/* phases, outside the last lap */}
           {phaseBoxes.map((p) => (
             <g key={p.id} aria-hidden="true">
-              <rect x={p.x - p.w / 2} y={p.y - 13} width={p.w} height="26" style={{ fill: "rgb(var(--olive))" }} />
+              <rect x={p.x - p.w / 2} y={p.y - 13} width={p.w} height="26" style={{ fill: "rgb(var(--olive-fill))" }} />
               <text x={p.x} y={p.y + 5} textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="13" style={{ fill: "#fff" }}>
                 {p.label}
               </text>
@@ -257,10 +257,10 @@ export const Spiral = ({ projects }) => {
                   cx={it.x}
                   cy={it.y}
                   r={project ? 5 : 4}
-                  style={{ fill: project ? (over ? "rgb(var(--olive))" : "rgb(var(--ink))") : "#fff", stroke: project ? "none" : over ? "rgb(var(--olive))" : "rgb(var(--graphite))" }}
+                  style={{ fill: project ? (over ? "rgb(var(--olive))" : "rgb(var(--ink))") : "rgb(var(--chalk))", stroke: project ? "none" : over ? "rgb(var(--olive))" : "rgb(var(--graphite))" }}
                   strokeWidth="1.5"
                 />
-                <rect x={bx} y={by} width={L.w} height="22" style={{ fill: over ? TINT : project ? "rgb(var(--paper))" : "#fff", stroke: over ? "rgb(var(--olive))" : project ? "rgb(var(--ink))" : "rgb(var(--concrete))", transition: "fill .2s" }} strokeWidth={over ? 2 : 1} />
+                <rect x={bx} y={by} width={L.w} height="22" style={{ fill: over ? TINT : project ? "rgb(var(--paper))" : "rgb(var(--chalk))", stroke: over ? "rgb(var(--olive))" : project ? "rgb(var(--ink))" : "rgb(var(--concrete))", transition: "fill .2s" }} strokeWidth={over ? 2 : 1} />
                 <text x={bx + L.w / 2} y={L.y + 4.5} textAnchor="middle" fontFamily="Inter Tight, sans-serif" fontSize="13" fontWeight={project ? 500 : 400} style={{ fill: over ? "rgb(var(--olive))" : project ? "rgb(var(--ink))" : "rgb(var(--graphite))" }}>
                   {it.label}
                 </text>
@@ -283,7 +283,7 @@ export const Spiral = ({ projects }) => {
         </svg>
         <div className="mt-2 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[14px] text-graphite" aria-hidden="true">
           <span className="flex items-center gap-2"><span className="inline-block h-[11px] w-[11px] rounded-full bg-ink" /> project</span>
-          <span className="flex items-center gap-2"><span className="inline-block h-[9px] w-[9px] rounded-full border-[1.5px] border-graphite bg-white" /> role or study</span>
+          <span className="flex items-center gap-2"><span className="inline-block h-[9px] w-[9px] rounded-full border-[1.5px] border-graphite bg-chalk" /> role or study</span>
           <span className="flex items-center gap-2"><span className="inline-block h-0 w-6 border-t-2 border-dashed border-olive" /> what comes next</span>
         </div>
       </div>

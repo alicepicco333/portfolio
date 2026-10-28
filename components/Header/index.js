@@ -47,7 +47,7 @@ const Header = () => {
               </Link>
             );
           })}
-          <Link href="/resume" className={`flex min-h-[44px] items-center px-4 text-white ${pathname === "/resume" ? "bg-ink" : "bg-olive hover:bg-ink"}`}>
+          <Link href="/resume" className={`flex min-h-[44px] items-center px-4 text-white ${pathname === "/resume" ? "bg-ink dark:text-bone" : "bg-olive hover:bg-ink dark:hover:text-bone"}`}>
             cv
           </Link>
         </nav>

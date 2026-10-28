@@ -132,7 +132,7 @@ const IndexList = ({ projects }) => {
 
 // the card beside the wheel
 const ProjectCard = ({ project, skills = true }) => (
-  <div className="work-side flex flex-col border border-ink bg-paper text-[16px] leading-snug shadow-[6px_6px_0_rgb(var(--olive))]">
+  <div className="work-side flex flex-col border border-ink bg-paper text-[16px] leading-snug shadow-[6px_6px_0_rgb(var(--olive-fill))]">
     <Media project={project} className="aspect-[4/3] w-full border-b border-ink object-cover" />
     <div className="flex flex-col gap-2 px-4 py-3">
       <div className="flex items-center justify-between font-mono text-[14px]">
@@ -463,7 +463,7 @@ const WorkExplorer = ({ projects: given }) => {
                       const w = widthOf(`w${p.id}`, mapTitle(p), 16) + 16;
                       const top = y - 13;
                       return (
-                        <rect x={x - w / 2} y={top} width={w} height="26" style={{ fill: on ? "rgb(var(--olive))" : hot === p.id ? "color-mix(in srgb, rgb(var(--olive)) 16%, #fff)" : "rgb(var(--paper))", stroke: on || hot === p.id ? "rgb(var(--olive))" : "rgb(var(--ink))", transition: "fill .2s" }} strokeWidth={hot === p.id && !on ? 2.5 : 1} />
+                        <rect x={x - w / 2} y={top} width={w} height="26" style={{ fill: on ? "rgb(var(--olive-fill))" : hot === p.id ? "color-mix(in srgb, rgb(var(--olive)) 16%, rgb(var(--chalk)))" : "rgb(var(--paper))", stroke: on || hot === p.id ? "rgb(var(--olive))" : "rgb(var(--ink))", transition: "fill .2s" }} strokeWidth={hot === p.id && !on ? 2.5 : 1} />
                       );
                     })()}
                     <text data-chip={`w${p.id}`} x={x} y={y + 5} textAnchor="middle" fontFamily="Inter Tight, sans-serif" fontSize="16" fontWeight="500" style={{ fill: on ? "#fff" : hot === p.id ? "rgb(var(--olive))" : col, transition: "fill .2s" }}>

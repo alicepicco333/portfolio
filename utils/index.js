@@ -93,10 +93,43 @@ export function useActiveSection(ids) {
 // A project's own colour, applied by overriding the house accent inside its page or tile.
 // Accents are stored as hex in portfolio.json and already clear 4.5:1 against the paper.
 export const hexToTriplet = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(" ");
-// Each project page carries its own colour, with a darker version for high-contrast mode
-// (applied through the .project-theme class in globals.css).
+
+// WCAG contrast, and the accent mixed towards white in small steps until it passes a test.
+const rgbOf = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+const luminance = (rgb) =>
+  rgb
+    .map((v) => v / 255)
+    .map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4))
+    .reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+const contrast = (a, b) => {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+};
+const lightenUntil = (hex, passes) => {
+  const rgb = rgbOf(hex);
+  for (let t = 0; t <= 1; t += 0.02) {
+    const mixed = rgb.map((v) => Math.round(v + (255 - v) * t));
+    if (passes(mixed)) return mixed.join(" ");
+  }
+  return "255 255 255";
+};
+// the dark theme's page and card surface (--bone and --paper in globals.css)
+const DARK_PAGE = [14, 14, 16];
+const DARK_PAPER = [28, 28, 33];
+const HOUSE_FILL_ON_DARK = contrast([26, 26, 255], DARK_PAGE); // #1A1AFF on the dark page, 2.4:1
+
+// Each project page carries its own colour, with a darker version for high-contrast mode and, for the
+// dark theme, a lighter one for text and lines (4.5:1 on the dark cards) and a fill that stands off the
+// dark page at least as clearly as the house blue (applied through .project-theme in globals.css).
 export const projectStyle = (hex, hexHC) =>
-  hex ? { "--project": hexToTriplet(hex), "--project-hc": hexToTriplet(hexHC || hex) } : undefined;
+  hex
+    ? {
+        "--project": hexToTriplet(hex),
+        "--project-hc": hexToTriplet(hexHC || hex),
+        "--project-dark": lightenUntil(hex, (c) => contrast(c, DARK_PAPER) >= 4.5),
+        "--project-fill-dark": lightenUntil(hex, (c) => contrast(c, DARK_PAGE) >= HOUSE_FILL_ON_DARK),
+      }
+    : undefined;
 
 // The visitor's own motion setting (see components/A11yControls), kept in step when it changes,
 // so scroll scenes can tear down to the static page the moment motion is switched off.

@@ -542,7 +542,7 @@ const SkillMap = ({ projects }) => {
                             y={y + dy - 18}
                             width={tw + 20}
                             height="25"
-                            style={{ fill: isActive ? "rgb(var(--olive))" : hovered === n.id ? "color-mix(in srgb, rgb(var(--olive)) 16%, #fff)" : "rgb(var(--paper))", stroke: isActive || hovered === n.id ? "rgb(var(--olive))" : isLit ? "rgb(var(--ink))" : "rgb(var(--concrete))", transition: "fill .2s, stroke .2s" }}
+                            style={{ fill: isActive ? "rgb(var(--olive-fill))" : hovered === n.id ? "color-mix(in srgb, rgb(var(--olive)) 16%, rgb(var(--chalk)))" : "rgb(var(--paper))", stroke: isActive || hovered === n.id ? "rgb(var(--olive))" : isLit ? "rgb(var(--ink))" : "rgb(var(--concrete))", transition: "fill .2s, stroke .2s" }}
                             strokeWidth={hovered === n.id && !isActive ? 2.5 : isLit ? 1.5 : 1}
                           />
                         );

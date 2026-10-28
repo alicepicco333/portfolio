@@ -112,7 +112,7 @@ function PhoneVideo({ src, poster, caption }) {
   const reduced = usePrefersReducedMotion();
   return (
     <figure className="flex flex-col items-center gap-3">
-      <div className="w-full max-w-[260px] overflow-hidden rounded-[40px] border-[10px] border-ink bg-ink">
+      <div className="fu-band w-full max-w-[260px] overflow-hidden rounded-[40px] border-[10px] border-ink bg-ink">
         <video
           key={reduced ? "static" : "motion"}
           src={withBase(src)}
@@ -141,7 +141,7 @@ function PrototypeEmbed({ src, poster }) {
       ) : (
         <button type="button" onClick={() => setActive(true)} className="group block h-full w-full">
           {poster && <img src={withBase(poster)} alt="" className="h-full w-full object-cover" loading="lazy" />}
-          <span className="fu-btn fu-btn-primary absolute bottom-6 left-6 group-hover:bg-olive">
+          <span className="fu-btn fu-btn-primary absolute bottom-6 left-6 group-hover:bg-olive dark:group-hover:text-white">
             Load the interactive prototype ▶
           </span>
         </button>
@@ -179,7 +179,7 @@ function FlexibleSection({ id, index, toc, section }) {
         <div className="grid grid-cols-2 gap-4 tablet:grid-cols-4">
           {items.map((f) => (
             <figure key={f.src} className="flex flex-col gap-2">
-              <div className="overflow-hidden rounded-[28px] border-[8px] border-ink bg-ink">
+              <div className="fu-band overflow-hidden rounded-[28px] border-[8px] border-ink bg-ink">
                 <img src={withBase(f.src)} alt={f.alt} loading="lazy" className="block h-auto w-full rounded-[20px]" />
               </div>
               {f.caption && <figcaption className="fu-meta text-fieldgrey">{f.caption}</figcaption>}
@@ -243,7 +243,7 @@ function ViewSwitcher({ view, setView, views }) {
 
 function PartHeader({ part, title, text }) {
   return (
-    <div className="bg-ink px-4 py-10 text-bone tablet:px-10">
+    <div className="fu-band bg-ink px-4 py-10 text-bone dark:border-y dark:border-bone/20 tablet:px-10">
       <span className="fu-meta text-bone/70">{part}</span>
       <h2 className="fu-display mt-1 text-[40px] leading-none tablet:text-phi2">{title}</h2>
       {text && <p className="mt-3 max-w-[640px] text-[18px] leading-relaxed text-bone/80">{text}</p>}
