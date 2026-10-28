@@ -1006,43 +1006,23 @@
       "introText": "Metadata for the digitized archive of Luki Massa, which documents lesbian and feminist activism from 1976 to 2015 and was inventoried by Emanuela Fiorletta in 2023. I turned the team's cataloguing spreadsheets and the scans into METS records for long-term preservation.",
       "gridImages": [
         {
-          "src": "/images/projects/13-v2-g1.jpg",
-          "caption": "Newspaper coverage of the third national lesbian conference, at Palazzo Re Enzo, Bologna, January 1983, which kept the press out: «Silenzio stampa», «Non siamo né streghe né mostri», «Basta con i ghetti»."
+          "src": "/images/projects/13-v3-anatomy.jpg",
+          "caption": "Inside one METS record: header, EAD3 description, NISO MIX technical data, rights, files and the two structural maps, and how a single page links to its files, its technical data, its description and its rights."
         },
         {
-          "src": "/images/projects/13-v2-g2.jpg",
-          "caption": "Flyers of the Circolo culturale lesbico Tiaso at the Cassero di Porta Saragozza, Bologna: a screening of William Wyler's «La calunnia» with an open debate, and the Befane party of 6 January 1984."
+          "src": "/images/projects/13-v3-levels.jpg",
+          "caption": "Three levels: a record for each fascicolo, each series and the whole archive, each stored next to what it describes, with links relative to its own folder. All three levels link the same 9,882 files."
         },
         {
-          "src": "/images/projects/13-v2-g3.jpg",
-          "caption": "«Reagisci»: a twelve-page self-defence handbook, in comics, «for all women out in the city»."
-        },
-        {
-          "src": "/images/projects/13-v2-g4.jpg",
-          "caption": "Journals and pamphlets: the proceedings of a conference of lesbian women (Rome, December 1981), Teresa de Lauretis on feminism and lesbianism in Italy and the USA, Audre Lorde's «Uses of the Erotic» in Italian, a guide to lesbian cinema (1992) and two self-published zines."
-        },
-        {
-          "src": "/images/projects/13-v2-g5.jpg",
-          "caption": "International links: the 8th conference of the International Lesbian Information Service, Geneva, March 1986, and the 11th Paris lesbian film festival, 1999."
-        },
-        {
-          "src": "/images/projects/13-v2-g6.jpg",
-          "caption": "The poster series (Serie 5): all 143 scanned pages, from festivals and demonstrations to club nights."
-        },
-        {
-          "src": "/images/projects/13-v2-g7.jpg",
-          "caption": "The No Vat campaign for secularism and self-determination: «San Gramsci, protettore No-Vat» and the national demonstration in Rome, 11 February 2006."
-        },
-        {
-          "src": "/images/projects/13-v2-g8.jpg",
-          "caption": "A scan beside the record that describes it: the unit's title, date and size (EAD3), the file's size, checksum and resolution (NISO MIX), and the order of its pages."
+          "src": "/images/projects/13-v3-code.jpg",
+          "caption": "An excerpt of a real record: the unit's title, date and size (EAD3), the size, checksum and resolution of one file (NISO MIX), and the order of the unit's pages."
         }
       ],
       "middleText": "The records follow the Italian national guidelines for digitizing cultural heritage (ICDP, 2022): METS as the container, EAD3 for the archival description from the whole archive down to each page, NISO MIX for the technical data of every image and METS Rights for the rights. A Python pipeline reads the spreadsheets and the image files themselves, so every size and MD5 checksum comes from the real file, and validates each record against the official schemas. Comparing the sheets with the scans also turned up pages listed without a file, files without a row and names that did not match; the team corrected them and the records were rebuilt from the corrected catalogue.",
       "highlightImage": "/images/projects/13-v2-structure.jpg",
-      "highlightCaption": "What the METS describe: the archive, its four scanned series, their subseries and all 85 fascicoli, sized by documentary units, and one path traced down to its files: the nine hand-painted signs of unit S05-F01-UD20, each a TIFF master and a JPEG copy with its checksum.",
+      "highlightCaption": "What the METS describe: the archive, its four scanned series, their subseries and all 85 fascicoli, sized by documentary units, and one path traced down to its files: a unit of nine pages, each a TIFF master and a JPEG copy with its checksum.",
       "conclusionText": "The hand-in is 90 METS files at three levels: one per archival file, one per series and one for the whole archive, each stored next to the images it describes, with every link checked against the archive's storage. Only what has been scanned is described: four series, from political and cultural activism to Luki Massa's personal papers and posters.",
-      "imageSrc": "/images/projects/13.jpg",
+      "imageSrc": "/images/projects/13-v3-og.jpg",
       "url": "",
       "category": "Research",
       "tags": [
@@ -1080,8 +1060,8 @@
         ]
       ],
       "shows": "A community archive described to national preservation standards, with every record checked against the files it points to.",
-      "cardImage": "/images/projects/13-card.jpg",
-      "cardWebp": "/images/projects/13-card-800.webp",
+      "cardImage": "/images/projects/13-v3-card.jpg",
+      "cardWebp": "/images/projects/13-v3-card-800.webp",
       "rank": 3,
       "decisions": [
         {
