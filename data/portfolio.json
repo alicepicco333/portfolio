@@ -1167,40 +1167,40 @@
       "introText": "Culture4All maps access to culture across Italy: where libraries, archives and museums are, how far people live from a library, how libraries are used, and how reading habits differ and change from region to region.",
       "gridImages": [
         {
-          "src": "/images/projects/15-g1.jpg",
+          "src": "/images/projects/15-g1-v5.jpg",
           "caption": "Counting libraries rewards big provinces; per inhabitant, the map changes."
         },
         {
-          "src": "/images/projects/15-g2.jpg",
+          "src": "/images/projects/15-g2-v5.jpg",
           "caption": "Where the cultural institutions are, next to the share of municipalities with no library, by region."
         },
         {
-          "src": "/images/projects/15-g3.jpg",
+          "src": "/images/projects/15-g3-v5.jpg",
           "caption": "Southern libraries lend a fraction of what northern ones do: loans per public library, 2022."
         },
         {
-          "src": "/images/projects/15-g4.jpg",
+          "src": "/images/projects/15-g4-v5.jpg",
           "caption": "Where libraries lend less, fewer people read: reading habits by region, 2021."
         },
         {
-          "src": "/images/projects/15-g6.jpg",
+          "src": "/images/projects/15-g6-v5.jpg",
           "caption": "Follow a region: pick one and it stays highlighted in every chart, with a profile of where it stands on seven measures, a link and a shareable image."
         },
         {
-          "src": "/images/projects/15-g7.jpg",
+          "src": "/images/projects/15-g7-v5.jpg",
           "caption": "How far is the nearest library? 3.5 million people live in a municipality without one, but for half of those municipalities one is within 3.9 km."
         },
         {
-          "src": "/images/projects/15-g8.jpg",
+          "src": "/images/projects/15-g8-v5.jpg",
           "caption": "Reading from 2011 to 2021: the north-south gap narrowed because the north read less, not because the south read more."
         },
         {
-          "src": "/images/projects/15-g5.jpg",
+          "src": "/images/projects/15-g5-v5.jpg",
           "caption": "The findings, each linked back to its chart, and how every number was made."
         }
       ],
       "middleText": "Built on open data from ISTAT and the Ministry of Culture, the 2026 version is a data story on unequal access to culture. It sets ISTAT's rate of libraries per 10,000 inhabitants beside the raw counts, measures the straight-line distance from every municipality without a library to the nearest one, and follows reading habits from 2011 to 2021. Readers can follow one region through every chart. Each chart states its finding, explains how to read it in plain language and has a data table behind it.",
-      "highlightImage": "/images/projects/15-hl.jpg",
+      "highlightImage": "/images/projects/15-hl-v5.jpg",
       "conclusionText": "Distance is rarely the barrier: the widest gap is in how libraries are used, with southern libraries lending a fraction of what northern ones do, and reading is falling everywhere but Umbria. The data also has blind spots: regions that run their own heritage, like Sicily, almost vanish from the Ministry's events data. Made for Information Visualization (2023/24, University of Bologna) with Corrado Consiglio and Salvatore Di Marzo, who gathered and cleaned the data; I designed the visualizations and built the site, and reworked it on my own in 2026 with D3.js and Python. A comprehension test plan for the charts is published in the repository.",
       "imageSrc": "/images/projects/15.jpg",
       "url": "https://alicepicco333.github.io/culture4all/",
@@ -1209,7 +1209,7 @@
         "Data Visualization",
         "Web Development"
       ],
-      "highlightCaption": "Where you live in Italy decides how much culture you can reach: the opening, with four headline figures.",
+      "highlightCaption": "Where you live in Italy decides how much culture you can reach: the opening, with a public library's year of loans in Emilia-Romagna and in Campania as two piles of books.",
       "date": "2024-06-04",
       "dateLabel": "2024 · reworked 2026",
       "context": "Information Visualization, 2023/24, MA Digital Humanities and Digital Knowledge, University of Bologna",
@@ -1218,7 +1218,7 @@
         "Salvatore Di Marzo"
       ],
       "reworkNote": "Culture4All began as a group project with Corrado Consiglio and Salvatore Di Marzo for Information Visualization (2023/24). I reworked it independently in 2026; the version shown here is that rework.",
-      "accent": "#1f3fd1",
+      "accent": "#874529",
       "summary": {
         "brief": "Access to culture in Italy is unequal, but raw counts of libraries and museums mostly show where people live.",
         "role": "Data visualization and web development; the 2026 rework on my own.",
@@ -1241,10 +1241,10 @@
         ]
       ],
       "shows": "Data storytelling anyone can check: fair measures, findings stated plainly and a data table behind every chart.",
-      "cardImage": "/images/projects/15-card-v4.jpg",
+      "cardImage": "/images/projects/15-card-v5.jpg",
       "rank": 5,
-      "accentHC": "#18309d",
-      "cardWebp": "/images/projects/15-card-v4-800.webp",
+      "accentHC": "#6e3426",
+      "cardWebp": "/images/projects/15-card-v5-800.webp",
       "decisions": [
         {
           "choice": "Show libraries per inhabitant beside the raw counts.",
