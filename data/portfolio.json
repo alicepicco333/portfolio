@@ -34,35 +34,35 @@
       "introText": "The Stolen Archive is a virtual exhibition of thirty objects taken during colonial wars, conquests and excavations, from the Benin Bronzes to the Parthenon Marbles. It works as a companion to a museum visit and as a museum of its own, and asks who was able to take these objects, who keeps them and who has managed to get them back.",
       "gridImages": [
         {
-          "src": "/images/projects/0-g1-v4.jpg",
+          "src": "/images/projects/0-g1-v5.jpg",
           "caption": "Five eras of appropriation, from the spoils of Europe's wars to world wars and returns."
         },
         {
-          "src": "/images/projects/0-g2-v4.jpg",
+          "src": "/images/projects/0-g2-v5.jpg",
           "caption": "Three ways through the archive: choose a tour, then how long and how complex the texts should be."
         },
         {
-          "src": "/images/projects/0-g3-v4.jpg",
+          "src": "/images/projects/0-g3-v5.jpg",
           "caption": "The collection: thirty objects from five continents, filterable by region."
         },
         {
-          "src": "/images/projects/0-g4-v4.jpg",
+          "src": "/images/projects/0-g4-v5.jpg",
           "caption": "Object page for the Benin Bronzes, with where they were made, where they are held and how they left."
         },
         {
-          "src": "/images/projects/0-g5-v4.jpg",
+          "src": "/images/projects/0-g5-v5.jpg",
           "caption": "Whose object is it? The claimant's and the holder's positions side by side, each with its sources."
         },
         {
-          "src": "/images/projects/0-g6-v4.jpg",
+          "src": "/images/projects/0-g6-v5.jpg",
           "caption": "The Timeline tour, one of three readings of the same thirty objects."
         }
       ],
       "middleText": "Visitors pick one of three tours (Timeline, Colonial Conquests, Geo) and choose how long and how complex the texts should be: every object has nine versions of its text for each tour, 810 in all. Each object page explains how the object left, who claims it and who holds it, with the sources for each position. An atlas traces the thirty routes on a map, and a floor plan places the objects in thirteen rooms over two floors.",
-      "highlightImage": "/images/projects/0-hl-v4.jpg",
+      "highlightImage": "/images/projects/0-hl-v5.jpg",
       "conclusionText": "Developed for Information Modeling and Web Technologies (prof. Fabio Vitali) in the Digital Humanities and Digital Knowledge master's at the University of Bologna. Built in HTML, CSS and JavaScript, with inline SVG maps, 3D views of the objects, an RDF graph for every record, and dark and light themes.",
-      "imageSrc": "/images/projects/0.jpg",
-      "url": "https://alicepicco333.github.io/Looted-items-collection/",
+      "imageSrc": "/images/projects/0-v5.jpg",
+      "url": "https://alicepicco333.github.io/the-stolen-archive/",
       "category": "Design",
       "tags": [
         "UX Design",
@@ -104,10 +104,10 @@
         ]
       ],
       "shows": "Contested history made readable: every claim shown with its sources, at the depth the visitor chooses.",
-      "cardImage": "/images/projects/0-card-v4.jpg",
+      "cardImage": "/images/projects/0-card-v5.jpg",
       "rank": 6,
       "accentHC": "#75210c",
-      "cardWebp": "/images/projects/0-card-v4-800.webp",
+      "cardWebp": "/images/projects/0-card-v5-800.webp",
       "decisions": [
         {
           "choice": "Give every object three positions, how it left, who claims it and who holds it, each with its sources.",
