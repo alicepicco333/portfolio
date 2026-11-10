@@ -1460,9 +1460,9 @@
           "caption": "All sources from both presentations in one list, with a note on how every picture on these plates was made."
         }
       ],
-      "middleText": "The prototype has two parts. The Arduino car responds to two-hand gestures and spoken commands. The 3D Junior runs the whole system offline on one laptop: the squeeze, gestures, voice with pointing, glow detection, the local model and the way home. He drives like the car and follows the same stop rules, halting 20 cm before a rock as the firmware does. The palm squeeze is a gate: it carries no content, only “now”, and switches which camera's gestures drive Junior, stopping him first. With “check that one”, speech says what and pointing says where.",
+      "middleText": "What held up: every camera switch stops Junior first, and a work glove barely changed the gesture scores. Still open: a test with people who work in gloves rather than classmates, a wireless glove, a way home without drift, and consent for cloned voices. I wrote the world and Marvin, added voice commands to the inherited two-hand gesture car, worked on its firmware with Alexis and drew up the probe-rover plan. Bor gathered the research and built the visor, Junior's brain and the 3D Junior; Alexis made the palm switch, the one-hand gestures that leave the other hand on a tool, 3D models and project site; Bram the cloned voices.",
       "highlightImage": "/images/projects/18-hl.jpg",
-      "conclusionText": "What held up: every camera switch stops Junior first, and a work glove barely changed the gesture scores. Still open: testing with people who work in gloves rather than classmates, a wireless glove, a way home that does not drift, and consent for cloned voices. I wrote the world and Marvin, added voice commands to the gesture car, worked on its firmware with Alexis and drew up the probe-rover plan. Bor gathered the research and built the visor, Junior's brain and the 3D Junior; Alexis made the palm switch, gestures, 3D models and project site; Bram the cloned voices.",
+      "conclusionText": "",
       "imageSrc": "/images/projects/18.jpg",
       "url": "",
       "category": "Design",
@@ -1485,7 +1485,7 @@
         "brief": "Salvage workers on Proxima b dig in sealed suits and thick gloves among hazards marked in infrared they cannot see, and checking a site means walking up to it.",
         "role": "In a team of four: the world and Marvin's persona, voice commands for the gesture car, its firmware with Alexis, and the probe-rover plan.",
         "method": "A speculative world built on published research, a persona, weekly prototypes from a gesture car to the 3D Junior, and tests of the squeeze and gestures with three testers, plus logged response times.",
-        "outcome": "A prototype in two parts: an Arduino car that responds to two-hand gestures and voice commands, and a 3D Junior that runs the whole system, with a browser version to try on this page.",
+        "outcome": "A prototype in two parts: the Arduino car, an inherited two-hand gesture car to which I added voice commands, and the 3D Junior, which runs the whole system with one-hand gestures; a browser version is on this page.",
         "stack": "Arduino, Python, MediaPipe, Whisper, Gemma 3 4B (Ollama), XTTS v2, force-sensitive resistor"
       },
       "facts": [
