@@ -7,7 +7,7 @@ import { NODES, EDGES, neighbours, nodeOf, labelOf, CLUSTERS, clusterOf, SKILL_N
 import { useIsomorphicLayoutEffect, useMotionOn, usePrefersReducedMotion, withBase } from "../../utils";
 import { textWidth, overlapArea } from "../../utils/layout";
 import { scramble, drawIn, motionOn } from "../../utils/motion";
-import HydraCard, { SCREEN } from "./HydraCard";
+import SkillScreen, { SCREEN } from "./SkillScreen";
 // the statement (STATEMENT: plain text, and [phrase, skill] pairs that open the part of the map they name),
 // the plain-key test, 1 to 5 for the first skill of each step, and whether the hero is on screen
 import { STATEMENT, STATEMENT_TEXT, STEP_KEYS, plainKey, useInView } from "./shared";
@@ -146,46 +146,16 @@ const cost = (boxes, obstacles) => {
   return score;
 };
 
-// The skill card (its Hydra screen) takes the nearest clear pocket beside the skill, after its leaves: every
-// position on a grid over the stage is scored by what it would cover (labels, verbs, points, links, the
-// leaves and their lines; above all the skill itself and its own links) and by how far it sits from it.
-function cardLayout(id, leaves = []) {
+// The skill's screen sits behind the skill (its point, label and links are drawn over it): the skill
+// near the screen's upper left, or upper right when the skill is in the right half, kept on the stage.
+function cardLayout(id) {
   const [x, y] = pos(id);
   const { w: W, h: H } = SCREEN;
-  const lit = new Set(neighbours(id));
-  const boxes = [];
-  // the skill, its links and the skills they reach stay in view; the rest of the map is quiet while a
-  // skill is open, and may sit under the card if that keeps the card close
-  NODES.forEach((n) => {
-    const k = n.id === id ? 40 : lit.has(n.id) ? 12 : 1.5;
-    boxes.push([grow(labelBox(n.id), 8), k], [grow(nodeBox(n.id), 8), k]);
-  });
-  CLUSTERS.forEach((c) => boxes.push([grow(verbBox(c), 6), headOf(c)[0] === id ? 40 : 1.5]));
-  leaves.forEach((lf) => boxes.push([lf.box, 12]));
-  const points = [];
-  LINKS.forEach((l) => {
-    const own = l.a === id || l.b === id;
-    samplesOf(l).forEach((p) => points.push([p, own ? 6000 : 120]));
-  });
-  leaves.forEach((lf) => {
-    for (let i = 1; i < 10; i += 1) points.push([[x + ((lf.x - x) * i) / 10, y + ((lf.y - y) * i) / 10], 2500]);
-  });
-  const near = (b) => Math.hypot(Math.max(b[0] - x, 0, x - b[2]), Math.max(b[1] - y, 0, y - b[3]));
-  let best = null;
-  for (let l = 6; l <= stageW() - W - 6; l += 20) {
-    for (let t = 6; t <= G.H - H - 6; t += 20) {
-      const b = [l, t, l + W, t + H];
-      let s = Math.max(0, near(b) - 30) * 45;
-      boxes.forEach(([o, k]) => {
-        s += overlapArea(b, o) * k;
-      });
-      points.forEach(([[px, py], k]) => {
-        if (px > b[0] - 6 && px < b[2] + 6 && py > b[1] - 6 && py < b[3] + 6) s += k;
-      });
-      if (!best || s < best.s) best = { s, x: l, y: t };
-    }
-  }
-  return { x: best.x, y: best.y, w: W, h: H };
+  const left = x > stageW() / 2 ? x - W + 70 : x - 70;
+  const top = y - 60;
+  const l = Math.min(Math.max(left, 6), stageW() - W - 6);
+  const t = Math.min(Math.max(top, 6), G.H - H - 6);
+  return { x: l, y: t, w: W, h: H };
 }
 
 // Projects fan out from the selected skill: try every direction, radius and spread and keep
@@ -344,7 +314,7 @@ const SkillMap = ({ projects }) => {
   const activeWork = activeNode ? workOf(active) : [];
   // the card in the clearest pocket beside the skill, then the leaves around both, their lines clear of it
   const card = useMemo(() => (activeNode && fit ? cardLayout(active) : null), [active, sx, fit]); // eslint-disable-line react-hooks/exhaustive-deps
-  const fan = useMemo(() => (activeNode && fit ? fanLayout(active, activeWork, card ? [grow([card.x, card.y, card.x + card.w, card.y + card.h], 14)] : []) : null), [active, sx, fit, card]); // eslint-disable-line react-hooks/exhaustive-deps
+  const fan = useMemo(() => (activeNode && fit ? fanLayout(active, activeWork) : null), [active, sx, fit]); // eslint-disable-line react-hooks/exhaustive-deps
   const lit = activeNode ? new Set(neighbours(active)) : new Set();
   const [ax, ay] = active ? pos(active) : [0, 0];
   // the leaves of the skill just left fade out where they were
@@ -703,8 +673,8 @@ const SkillMap = ({ projects }) => {
               if (e.key === "Escape") setPinned(null);
             }}
           >
-            {fit && <HydraCard skill={active} box={card} animate={animate && wide} />}
-            <svg viewBox={`0 0 ${G.W} ${G.H}`} className="absolute inset-0 z-[1] h-full w-full overflow-visible" role="group" aria-label="Skills, linked where they feed into each other; larger points carry more projects. Select one to see its projects and its live-coded card.">
+            {fit && <SkillScreen skill={active} box={card} animate={animate && wide} />}
+            <svg viewBox={`0 0 ${G.W} ${G.H}`} className="absolute inset-0 z-[1] h-full w-full overflow-visible" role="group" aria-label="Skills, linked where they feed into each other; larger points carry more projects. Select one to see its projects and a picture of its work.">
               <g aria-hidden="true" fill="none">
                 {LINKS.map((l) => {
                   const hot = active && (l.a === active || l.b === active);
@@ -859,7 +829,7 @@ const SkillMap = ({ projects }) => {
               })}
             </svg>
 
-            {/* the card is the live-coded screen; screen readers hear the skill */}
+            {/* the screen is a picture behind the skill; screen readers hear the skill */}
             <p className="sr-only" aria-live="polite">
               {activeNode ? `${activeNode.label}. ${SKILL_NOTES[active]} Tools: ${activeNode.tools.join(", ")}.` : ""}
             </p>

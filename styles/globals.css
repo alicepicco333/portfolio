@@ -277,32 +277,31 @@ button:not(:disabled):active {
   .wheel-side { min-width: 400px; }
 }
 
-/* ——— Playing: the live Hydra patch in the hero map (components/SkillMap/Hydra.js) ——— */
-.hy-panel {
-  transition: opacity 200ms cubic-bezier(0.23, 1, 0.32, 1), clip-path 320ms cubic-bezier(0.77, 0, 0.175, 1);
+/* ——— the skill's screen in the hero map (components/SkillMap/SkillScreen.js): behind the skill ——— */
+.skill-screen {
+  transition: opacity 260ms cubic-bezier(0.23, 1, 0.32, 1);
 }
-.hy-panel[data-on="false"] {
+.skill-screen[data-on="false"] {
   opacity: 0;
-  clip-path: inset(0 0 100% 0);
-  pointer-events: none;
 }
-.hy-panel[data-on="true"] {
-  opacity: 1;
-  clip-path: inset(-12px -12px -12px -12px);
+.skill-screen[data-on="true"] {
+  opacity: 0.9;
 }
-.hy-code .ln {
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+/* the work moving slowly: a pan and zoom, back and forth; only while motion is on */
+@keyframes skill-screen-move {
+  from { transform: scale(1.04) translate(-1.6%, -1.2%); }
+  to { transform: scale(1.14) translate(1.6%, 1.2%); }
 }
-/* the code sits on the near-black of a Hydra editor in every theme */
-.hy-code { --hy-bg: 14 14 16; --hy-fg: 213 214 219; --hy-fn: 255 255 255; --hy-num: 154 154 255; --hy-dim: 146 146 156; }
-@media screen {
-  html[data-theme="dark"] .hy-code { --hy-bg: 0 0 0; }
+.skill-screen-move {
+  animation: skill-screen-move 16s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform;
 }
-/* high contrast keeps the page grey: the patch plays in greyscale */
-html[data-contrast="high"] .hy-panel canvas,
-html[data-contrast="high"] .hy-panel img { filter: grayscale(1) contrast(1.15); }
-html[data-contrast="high"] .hy-code { --hy-fg: 255 255 255; --hy-num: 255 255 255; --hy-dim: 255 255 255; }
+@media (prefers-reduced-motion: reduce) {
+  .skill-screen-move { animation: none; }
+}
+html[data-motion="off"] .skill-screen-move { animation: none; }
+/* high contrast keeps the page grey */
+html[data-contrast="high"] .skill-screen img { filter: grayscale(1) contrast(1.15); }
 
 /* ——— Motion ——— */
 /* the selected point on the wheel: a slow, breathing glow */
