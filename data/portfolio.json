@@ -1382,7 +1382,7 @@
         {
           "section": "Worldbuilding",
           "src": "/images/projects/18-p02.jpg",
-          "caption": "The world I wrote for it: settlers on Proxima b dug into sealed sites whose warnings were written in light they cannot see."
+          "caption": "The world we wrote for it: settlers on Proxima b dug into sealed sites whose warnings were written in light they cannot see."
         },
         {
           "section": "Worldbuilding",
@@ -1397,7 +1397,7 @@
         {
           "section": "Persona",
           "src": "/images/projects/18-p05.jpg",
-          "caption": "Marvin, the salvage worker I wrote, and the suit's channels, each chosen for a sealed suit, busy hands and orange light."
+          "caption": "Marvin, the salvage worker we wrote, and the suit's channels, each chosen for a sealed suit, busy hands and orange light."
         },
         {
           "section": "The suit",
@@ -1412,42 +1412,42 @@
         {
           "section": "Junior, the rover",
           "src": "/images/projects/18-p08.jpg",
-          "caption": "The final starts with the Arduino car, in a frame from my voice test: one of Junior's two parts, steered by gestures and speech."
+          "caption": "The final starts with the Arduino car, in a frame from a voice test: one of Junior's two parts, steered by gestures and speech."
         },
         {
           "section": "Inputs",
           "src": "/images/projects/18-p09.jpg",
-          "caption": "The suit narrowed to a glove and a rover; after my diagram, each input gets one role, and the fixed rules never wait for the model."
+          "caption": "The suit narrowed to a glove and a rover; each input gets one role, and the fixed rules never wait for the model."
         },
         {
           "section": "Inputs",
           "src": "/images/projects/18-p11.jpg",
-          "caption": "Alexis's palm switch makes the squeeze a gate that says only “now”, with thresholds that ignore a brush and stop Junior on every switch."
+          "caption": "The palm switch makes the squeeze a gate that says only “now”, with thresholds that ignore a brush and stop Junior on every switch."
         },
         {
           "section": "Inputs",
           "src": "/images/projects/18-p12.jpg",
-          "caption": "Alexis's one-hand gestures, kept coarse so a work glove can make them and the other hand stays free, each echoed back on the visor."
+          "caption": "One-hand gestures, kept coarse so a work glove can make them and the other hand stays free, each echoed back on the visor."
         },
         {
           "section": "Inputs",
           "src": "/images/projects/18-p13.jpg",
-          "caption": "Bram's cloned voices let Junior answer each of us in our own voice, and the response times show why only fixed rules handle “stop”."
+          "caption": "Cloned voices let Junior answer each of us in our own voice, and the response times show why only fixed rules handle “stop”."
         },
         {
           "section": "Marvin’s shift",
           "src": "/images/projects/18-p10.jpg",
-          "caption": "The second part: Bor's 3D Junior, which runs the whole system, taking Marvin's shift from the first squeeze to the way home."
+          "caption": "The second part: the 3D Junior, which runs the whole system, taking Marvin's shift from the first squeeze to the way home."
         },
         {
           "section": "Marvin’s shift",
           "src": "/images/projects/18-p14.jpg",
-          "caption": "Bor's autopilot replaced retracing every step with a straight way home, and an open hand can always take control back from it."
+          "caption": "The autopilot replaced retracing every step with a straight way home, and an open hand can always take control back from it."
         },
         {
           "section": "Testing",
           "src": "/images/projects/18-p15.jpg",
-          "caption": "Alexis's glove tests with classmates and our logged response times measure how legible the inputs are, not yet what Marvin would experience."
+          "caption": "Glove tests with classmates and our logged response times measure how legible the inputs are, not yet what Marvin would experience."
         },
         {
           "section": "What holds up",
@@ -1460,7 +1460,7 @@
           "caption": "All sources from both presentations in one list, with a note on how every picture on these plates was made."
         }
       ],
-      "middleText": "What held up: every camera switch stops Junior first, and a work glove barely changed the gesture scores. Still open: a test with people who work in gloves rather than classmates, a wireless glove, a way home without drift, and consent for cloned voices. I wrote the world and Marvin, added voice commands to the inherited two-hand gesture car, worked on its firmware with Alexis and drew up the probe-rover plan. Bor gathered the research and built the visor, Junior's brain and the 3D Junior; Alexis made the palm switch, the one-hand gestures that leave the other hand on a tool, 3D models and project site; Bram the cloned voices.",
+      "middleText": "What held up: every camera switch stops Junior first, and a work glove barely changed the gesture scores. Still open: a test with people who work in gloves rather than classmates, a wireless glove, a way home without drift, and consent for cloned voices.",
       "highlightImage": "/images/projects/18-hl.jpg",
       "conclusionText": "",
       "imageSrc": "/images/projects/18.jpg",
@@ -1483,9 +1483,9 @@
       "accentHC": "#1f4d2b",
       "summary": {
         "brief": "Salvage workers on Proxima b dig in sealed suits and thick gloves among hazards marked in infrared they cannot see, and checking a site means walking up to it.",
-        "role": "In a team of four: the world and Marvin's persona, voice commands for the gesture car, its firmware with Alexis, and the probe-rover plan.",
+        "role": "A group project, in a team of four.",
         "method": "A speculative world built on published research, a persona, weekly prototypes from a gesture car to the 3D Junior, and tests of the squeeze and gestures with three testers, plus logged response times.",
-        "outcome": "A prototype in two parts: the Arduino car, an inherited two-hand gesture car to which I added voice commands, and the 3D Junior, which runs the whole system with one-hand gestures; a browser version is on this page.",
+        "outcome": "A prototype in two parts: the Arduino car, a two-hand gesture car that also takes voice commands, and the 3D Junior, which runs the whole system with one-hand gestures; a browser version is on this page.",
         "stack": "Arduino, Python, MediaPipe, Whisper, Gemma 3 4B (Ollama), XTTS v2, force-sensitive resistor"
       },
       "facts": [
@@ -1523,8 +1523,8 @@
         },
         {
           "choice": "Let Junior speak in the cloned voices of the crew.",
-          "why": "My idea, after Sebeok's 1984 proposal to keep nuclear warnings alive by retelling them: Marvin could hear a warning in the voice of the teammate he lost.",
-          "result": "Bram built it with XTTS v2: Junior answers Bram, Bor and Alexis in their own voices and anyone else in a blend of the three. A voice Marvin trusts also makes over-trust easier (Parasuraman & Riley, 1997)."
+          "why": "After Sebeok's 1984 proposal to keep nuclear warnings alive by retelling them: Marvin could hear a warning in the voice of the teammate he lost.",
+          "result": "Built with XTTS v2: Junior answers three of us in our own voices, and anyone else in a blend of the three. A voice Marvin trusts also makes over-trust easier (Parasuraman & Riley, 1997)."
         }
       ],
       "gallery": "sections",
@@ -1543,7 +1543,7 @@
         "poster": "/images/projects/18-voice-test-poster.jpg",
         "width": 464,
         "height": 832,
-        "caption": "My voice test of the Arduino car on 8 October 2026, filmed from above on a floor at home. I set a base, then move, stop, turn and reverse the car by voice, and send it back to base.",
+        "caption": "A voice test of the Arduino car on 8 October 2026, filmed from above on a floor at home: setting a base, then moving, stopping, turning and reversing the car by voice, and sending it back to base.",
         "transcript": [
           "Set base.",
           "Move forward.",
