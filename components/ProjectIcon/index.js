@@ -20,13 +20,6 @@ const GLYPHS = {
       </g>
     </>
   ),
-  // Digitalian Folktales: two overlapping tales
-  1: (
-    <>
-      <circle cx="12" cy="13" r="7" {...S} fill="rgba(255,255,255,.25)" />
-      <circle cx="20" cy="20" r="7" {...S} />
-    </>
-  ),
   // Cognitive Bias Ontology: two linked classes
   2: (
     <>
@@ -73,8 +66,6 @@ const GLYPHS = {
   ),
   // 5PIC3 live: a waveform
   14: <path d="M7 14 v4 M10.5 10.5 v11 M14 6.5 v19 M17.5 11.5 v9 M21 8.5 v15 M24.5 13 v6" {...S} />,
-  // Culture4All: the square from its favicon
-  15: <rect x="8" y="8" width="16" height="16" {...F} />,
   // Rijksmuseum conversational interface: a museum front
   17: (
     <>
@@ -89,14 +80,6 @@ const GLYPHS = {
       <circle cx="11.5" cy="15" r="1.5" {...F} />
       <circle cx="16" cy="15" r="1.5" {...F} />
       <circle cx="20.5" cy="15" r="1.5" {...F} />
-    </>
-  ),
-  // Words of Gender: an open book, one passage highlighted
-  21: (
-    <>
-      <path d="M16 9 C 12.5 7, 8.5 7, 5 8 V 25 C 8.5 24, 12.5 24, 16 26 C 19.5 24, 23.5 24, 27 25 V 8 C 23.5 7, 19.5 7, 16 9 Z M16 9 V 26" {...S} strokeWidth="2.2" />
-      <rect x="18.5" y="13" width="6" height="3" {...F} />
-      <path d="M8 14.5 h5 M8 18.5 h5 M19 20 h5" {...S} strokeWidth="1.8" />
     </>
   ),
 };

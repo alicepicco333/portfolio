@@ -126,90 +126,6 @@
       ]
     },
     {
-      "id": "1",
-      "title": "Digitalian Folktales",
-      "description": "A searchable digital edition that sets Calvino’s Italian folktales beside the Friulian and Sicilian versions he drew on, and follows the same tales north and south.",
-      "introText": "Digitalian Folktales is a digital edition of tales from Italo Calvino’s Fiabe italiane, read alongside the dialect versions Calvino drew on: his Jesus-and-Peter cycles from Friuli and from Sicily.",
-      "gridImages": [
-        {
-          "src": "/images/projects/1-g1-v3.jpg",
-          "caption": "A Friulian legend from Pagine friulane (1893): the dialect text beside the English translation, with a dialect gloss, Wikidata-linked record and the map of its places."
-        },
-        {
-          "src": "/images/projects/1-g2-v3.jpg",
-          "caption": "The same tales, north and south: tale types told both in Friuli and in Sicily, each title opening its passage."
-        },
-        {
-          "src": "/images/projects/1-g3-v3.jpg",
-          "caption": "Three more tales from Pitrè’s 1875 collection, each linked to the page images it was transcribed from."
-        },
-        {
-          "src": "/images/projects/1-g4-v3.jpg",
-          "caption": "The structured reading of each tale: tale type, places in order, people, supernatural figures and resolution."
-        }
-      ],
-      "middleText": "Each tale is encoded in TEI XML: the dialect text, the Italian translation and an English working translation, aligned passage by passage, with a glossary of dialect words and narrators, collectors and places linked to Wikidata. For every tale the edition records its source, narrators, ATU tale type and a Propp-based reading of its places, people and outcome. In 2026 I added five Friulian legends from the magazine Pagine friulane (1890-94), including the origin of buckwheat, the subject of Calvino’s fourth Friulian tale, for which no source had been found, and three more Sicilian tales from Pitrè, all transcribed from the page images and linked to them.",
-      "highlightImage": "/images/projects/1-hl-v4.jpg",
-      "conclusionText": "The 2026 version makes the edition usable and comparable: a search across every passage in three languages, the TEI of any passage on request, maps of the places of collection, a table of the tale types told both in Friuli and in Sicily (the proud smith, St Peter’s mother, the jests of Christ and Peter), an Italian readability index, and a list of the dialect readings still to be checked by a speaker.",
-      "imageSrc": "/images/projects/1.jpg",
-      "url": "https://alicepicco333.github.io/digitalian-folktales/",
-      "category": "Research",
-      "tags": [
-        "Digital Edition"
-      ],
-      "highlightCaption": "The search page: a tale, an episode or any word of the texts, in Friulian, Sicilian, Italian or English.",
-      "date": "2024-01-25",
-      "dateLabel": "2023 · reworked 2026",
-      "context": "MA Digital Humanities and Digital Knowledge, University of Bologna",
-      "collaborators": [
-        "Nikolai Gorbachev"
-      ],
-      "reworkNote": "Digitalian Folktales began as a group project with Nikolai Gorbachev. I reworked it independently in 2026; the version shown here is that rework.",
-      "accent": "#1f1fe0",
-      "summary": {
-        "brief": "Calvino retold Italy's folktales in standard Italian; the dialect versions he drew on are hard to read against his.",
-        "role": "Edition design and web development; the 2026 rework on my own.",
-        "method": "TEI XML with the dialect text, Italian and English aligned passage by passage; ATU types and a structural reading for each tale; Wikidata links.",
-        "outcome": "A searchable edition of 11 Jesus-and-Peter tales from Friuli and Sicily: 56 passages aligned in three languages and compared by tale type.",
-        "stack": "TEI, Python, JavaScript, D3.js, Wikidata"
-      },
-      "facts": [
-        [
-          "11",
-          "tales from Friuli and Sicily"
-        ],
-        [
-          "56",
-          "passages aligned in three languages"
-        ],
-        [
-          "7",
-          "tale types compared north and south"
-        ],
-        [
-          "1890-1894",
-          "Friulian legends recovered from Pagine friulane"
-        ]
-      ],
-      "shows": "Scholarly sources made readable side by side, with the edition’s own uncertainties marked.",
-      "cardImage": "/images/projects/1-card-v4.jpg",
-      "rank": 10,
-      "accentHC": "#1b1bbe",
-      "cardWebp": "/images/projects/1-card-v4-800.webp",
-      "decisions": [
-        {
-          "choice": "Align the dialect text, the Italian and an English translation passage by passage.",
-          "why": "Calvino’s retellings are hard to read against the dialect versions he drew on.",
-          "result": "56 passages can be read side by side and compared tale type by tale type, north and south."
-        },
-        {
-          "choice": "List the dialect readings still to be checked by a speaker.",
-          "why": "The transcriptions of Friulian and Sicilian need a speaker’s check.",
-          "result": "The edition marks what it is not yet sure of."
-        }
-      ]
-    },
-    {
       "id": "2",
       "title": "Cognitive Bias Ontology",
       "description": "Sixteen OWL ontologies of cognitive biases, and an explorer that walks through each user story as a graph and tests every competency question with SPARQL.",
@@ -1024,13 +940,13 @@
       "conclusionText": "The hand-in is 90 METS files at three levels: one per archival file, one per series and one for the whole archive, each stored next to the images it describes, with every link checked against the archive's storage. Only what has been scanned is described: four series, from political and cultural activism to Luki Massa's personal papers and posters.",
       "imageSrc": "/images/projects/13-v3-og.jpg",
       "url": "",
-      "category": "Research",
+      "category": "Work in Progress",
       "tags": [
         "Metadata",
         "Digital Archives"
       ],
-      "date": "2026-10-28",
-      "dateLabel": "Sep - Oct 2026",
+      "date": "2026-09-03",
+      "dateLabel": "Sep 2026 -",
       "context": "Archivio Associazione Luki Massa, Bologna",
       "collaborators": [],
       "summary": {
@@ -1157,109 +1073,6 @@
           "choice": "Project the code alongside the visuals.",
           "why": "So the room could watch the patches being typed, changed and broken as the music moved.",
           "result": "Nothing about how the visuals are made is hidden: the audience reads the system while it runs."
-        }
-      ]
-    },
-    {
-      "id": "15",
-      "title": "Culture4All",
-      "description": "A data story on unequal access to culture in Italy, from ISTAT and Ministry of Culture open data: follow your region through every chart, from libraries and distance to reading over ten years.",
-      "introText": "Culture4All maps access to culture across Italy: where libraries, archives and museums are, how far people live from a library, how libraries are used, and how reading habits differ and change from region to region.",
-      "gridImages": [
-        {
-          "src": "/images/projects/15-g1-v5.jpg",
-          "caption": "Counting libraries rewards big provinces; per inhabitant, the map changes."
-        },
-        {
-          "src": "/images/projects/15-g2-v5.jpg",
-          "caption": "Where the cultural institutions are, next to the share of municipalities with no library, by region."
-        },
-        {
-          "src": "/images/projects/15-g3-v5.jpg",
-          "caption": "Southern libraries lend a fraction of what northern ones do: loans per public library, 2022."
-        },
-        {
-          "src": "/images/projects/15-g4-v5.jpg",
-          "caption": "Where libraries lend less, fewer people read: reading habits by region, 2021."
-        },
-        {
-          "src": "/images/projects/15-g6-v5.jpg",
-          "caption": "Follow a region: pick one and it stays highlighted in every chart, with a profile of where it stands on seven measures, a link and a shareable image."
-        },
-        {
-          "src": "/images/projects/15-g7-v5.jpg",
-          "caption": "How far is the nearest library? 3.5 million people live in a municipality without one, but for half of those municipalities one is within 3.9 km."
-        },
-        {
-          "src": "/images/projects/15-g8-v5.jpg",
-          "caption": "Reading from 2011 to 2021: the north-south gap narrowed because the north read less, not because the south read more."
-        },
-        {
-          "src": "/images/projects/15-g5-v5.jpg",
-          "caption": "The findings, each linked back to its chart, and how every number was made."
-        }
-      ],
-      "middleText": "Built on open data from ISTAT and the Ministry of Culture, the 2026 version is a data story on unequal access to culture. It sets ISTAT's rate of libraries per 10,000 inhabitants beside the raw counts, measures the straight-line distance from every municipality without a library to the nearest one, and follows reading habits from 2011 to 2021. Readers can follow one region through every chart. Each chart states its finding, explains how to read it in plain language and has a data table behind it.",
-      "highlightImage": "/images/projects/15-hl-v5.jpg",
-      "conclusionText": "Distance is rarely the barrier: the widest gap is in how libraries are used, with southern libraries lending a fraction of what northern ones do, and reading is falling everywhere but Umbria. The data also has blind spots: regions that run their own heritage, like Sicily, almost vanish from the Ministry's events data. Made for Information Visualization (2023/24, University of Bologna) with Corrado Consiglio and Salvatore Di Marzo, who gathered and cleaned the data; I designed the visualizations and built the site, and reworked it on my own in 2026 with D3.js and Python. A comprehension test plan for the charts is published in the repository.",
-      "imageSrc": "/images/projects/15.jpg",
-      "url": "https://alicepicco333.github.io/culture4all/",
-      "category": "Research",
-      "tags": [
-        "Data Visualization",
-        "Web Development"
-      ],
-      "highlightCaption": "The opening screen: each book stands for 100 loans a year per public library. Emilia-Romagna's pile is about 101 books high; Campania's is one and a half, 68 times fewer.",
-      "date": "2024-06-04",
-      "dateLabel": "2024 · reworked 2026",
-      "context": "Information Visualization, 2023/24, MA Digital Humanities and Digital Knowledge, University of Bologna",
-      "collaborators": [
-        "Corrado Consiglio",
-        "Salvatore Di Marzo"
-      ],
-      "reworkNote": "Culture4All began as a group project with Corrado Consiglio and Salvatore Di Marzo for Information Visualization (2023/24). I reworked it independently in 2026; the version shown here is that rework.",
-      "accent": "#874529",
-      "summary": {
-        "brief": "Access to culture in Italy is unequal, but raw counts of libraries and museums mostly show where people live.",
-        "role": "Data visualization and web development; the 2026 rework on my own.",
-        "method": "ISTAT and Ministry of Culture open data, with rates per inhabitant, distances and 2023 population wherever the data allows.",
-        "outcome": "A data story: one municipality in four has no library, southern libraries lend a fraction of what northern ones do, and reading fell almost everywhere from 2011 to 2021.",
-        "stack": "D3.js, GeoJSON, Python"
-      },
-      "facts": [
-        [
-          "3.5 million",
-          "people live in a municipality with no library"
-        ],
-        [
-          "Follow a region",
-          "through every chart"
-        ],
-        [
-          "Every chart",
-          "has a how-to line and a data table"
-        ]
-      ],
-      "shows": "Data storytelling anyone can check: fair measures, findings stated plainly and a data table behind every chart.",
-      "cardImage": "/images/projects/15-card-v5.jpg",
-      "rank": 5,
-      "accentHC": "#6e3426",
-      "cardWebp": "/images/projects/15-card-v5-800.webp",
-      "decisions": [
-        {
-          "choice": "Show libraries per inhabitant beside the raw counts.",
-          "why": "Raw counts of libraries and museums mostly show where people live, not how well they are served.",
-          "result": "The charts compare access rather than population size."
-        },
-        {
-          "choice": "Measure the straight-line distance from every municipality without a library to the nearest one.",
-          "why": "To test whether distance is what keeps people from libraries.",
-          "result": "It rarely is: the widest gap is in how libraries are used, with southern libraries lending a fraction of what northern ones do."
-        },
-        {
-          "choice": "Give every chart its finding in one sentence, a plain line on how to read it, and a data table.",
-          "why": "So the story can be followed without decoding the chart, and every number can be checked.",
-          "result": "A comprehension test plan for the charts is published with the code."
         }
       ]
     },
@@ -2904,98 +2717,6 @@
           "choice": "Replace the app’s sidebar with a tab bar and a dashboard.",
           "why": "Navigation was hidden in the sidebar, and there was nowhere to see the next appointment or the therapy so far.",
           "result": "Comparing and changing therapist, a task every user failed on the original app, took about 30 seconds."
-        }
-      ]
-    },
-    {
-      "id": "21",
-      "title": "Words of Gender",
-      "description": "A digital archive of women authors that follows how writers across five centuries wrote about the same gendered concepts.",
-      "introText": "Words of Gender is the prototype of an archive of women authors. Taking its lead from Vera Gheno's Parole d'altro genere (Rizzoli, 2023), it asks how different authors, in different historical and cultural contexts, have written about the same concepts tied to gender: beauty, grace, strength, independence, marriage, maternity.",
-      "middleText": "Excerpts from nine women authors spanning five centuries (1558 to 1958), in Italian, French and English, are encoded in TEI XML and linked to VIAF, Wikidata and WorldCat. The 2023 encoding tagged 172 passages with 27 concepts; in 2026 I reviewed every untagged occurrence of a concept word in context, tagged the 128 that are instances of the concept, kept them apart from the encoders' own tags, and recorded why the other 59 are not.",
-      "conclusionText": "The 2026 version turns the prototype into a reading edition: a reading view where up to four concepts are highlighted at once, never by color alone, with working English translations of all 127 French and Italian passages and the TEI of any passage on request; an author-by-concept matrix that opens every passage on a concept side by side; the concepts on a proportional time axis; a search across the texts and translations; and a timeline of first editions with each author's life and portrait from Wikidata.",
-      "gridImages": [
-        {
-          "src": "/images/projects/21-g1-v3.jpg",
-          "caption": "The contents in time: each first edition, the edition transcribed, and the author's life from Wikidata."
-        },
-        {
-          "src": "/images/projects/21-g2-v3.jpg",
-          "caption": "Ada Negri's Nella nebbia with two concepts on, and the working English translation of each tagged passage under the paragraph."
-        },
-        {
-          "src": "/images/projects/21-g3-v3.jpg",
-          "caption": "Concepts in time: one row per concept, each author at the year of her first edition on a proportional axis."
-        },
-        {
-          "src": "/images/projects/21-g4-v3.jpg",
-          "caption": "How the words were tagged: for each concept, the occurrences tagged in 2023, those tagged in the 2026 review, and why the rest are not the concept."
-        }
-      ],
-      "highlightImage": "/images/projects/21-hl-v3.jpg",
-      "highlightCaption": "The opening: the research question, after Vera Gheno, and the archive in numbers: 9 authors, 3 languages, 27 concepts, 300 tagged passages, 1558 to 1958.",
-      "imageSrc": "/images/projects/21.jpg",
-      "url": "https://alicepicco333.github.io/DigitalTextInTheHumanities/",
-      "category": "Research",
-      "tags": [
-        "Digital Edition",
-        "TEI",
-        "Gender Studies"
-      ],
-      "date": "2023-10-09",
-      "dateLabel": "2023 · reworked 2026",
-      "context": "Digital Text in the Humanities (prof. Tiziana Mancinelli), MA Digital Humanities and Digital Knowledge, University of Bologna",
-      "collaborators": [
-        "Nicole Liggeri",
-        "Lucia Bertoldini",
-        "Chiara Parravicini"
-      ],
-      "reworkNote": "Words of Gender began as a group project with Nicole Liggeri, Lucia Bertoldini and Chiara Parravicini for Digital Text in the Humanities. I reworked it independently in 2026; the version shown here is that rework.",
-      "accent": "#9c2f55",
-      "summary": {
-        "brief": "Women authors are under-represented in the literary canon and in course readings.",
-        "role": "In a team of four: the TEI encoding of Claude Cahun’s L’Androgyne and Simone de Beauvoir’s Mémoires d’une jeune fille rangée, and work on the website; the 2026 rework on my own.",
-        "method": "TEI XML excerpts linked to VIAF, Wikidata and WorldCat; 300 passages tagged with 27 concepts, 128 of them in a 2026 review of every occurrence.",
-        "outcome": "A reading edition of nine authors from 1558 to 1958 that follows each concept across texts.",
-        "stack": "TEI, Python, JavaScript, Wikidata"
-      },
-      "facts": [
-        [
-          "9",
-          "women authors"
-        ],
-        [
-          "1558-1958",
-          "first editions"
-        ],
-        [
-          "300",
-          "passages tagged"
-        ],
-        [
-          "127",
-          "passages translated into English"
-        ]
-      ],
-      "shows": "Following a theme across five centuries, with every editorial choice kept visible.",
-      "cardImage": "/images/projects/21-card-v5.jpg",
-      "rank": 9,
-      "accentHC": "#70223d",
-      "cardWebp": "/images/projects/21-card-v5-800.webp",
-      "decisions": [
-        {
-          "choice": "Review every untagged occurrence of a concept word in context, and keep my tags apart from the original encoders’.",
-          "why": "The 2023 encoding left occurrences untagged, and the original team’s reading should stay visible.",
-          "result": "128 more passages tagged, with the reasons the other 59 were left out recorded."
-        },
-        {
-          "choice": "Highlight up to four concepts at once, never by colour alone.",
-          "why": "Colour alone fails readers who cannot tell the colours apart.",
-          "result": "Concepts can be compared within a passage without relying on colour vision."
-        },
-        {
-          "choice": "Translate all 127 French and Italian passages into English.",
-          "why": "So a concept can be followed across authors and languages in one reading."
         }
       ]
     }
