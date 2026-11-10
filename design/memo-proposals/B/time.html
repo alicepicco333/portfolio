@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>When memes appeared · The Meme Ontology (proposal B)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Martian+Mono:wdth,wght@75..112.5,400..600&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="b.css">
+<style>
+  .views { display: flex; gap: 2px; padding: 10px var(--pad); border-bottom: 1px solid var(--rule); overflow-x: auto; scrollbar-width: none; }
+  .views a { font-size: 13.5px; color: var(--ink-2); text-decoration: none; padding: 6px 8px; border-radius: 3px; white-space: nowrap; font-variation-settings: "wdth" 92; }
+  .views a:hover { color: var(--ink); background: var(--raise); }
+  .views a[aria-current] { color: var(--ground); background: var(--ink); }
+  .head { padding: 26px var(--pad) 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 40px; align-items: end; }
+  h1 { font-size: 34px; line-height: 1.05; letter-spacing: -0.02em; font-weight: 780; font-variation-settings: "wdth" 116; margin: 0 0 8px; }
+  .head p { color: var(--ink-2); margin: 0; max-width: 64ch; }
+  .controls { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  label.sel { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--ink-2); }
+  select { height: 38px; background: var(--raise); border: 1px solid var(--rule); border-radius: 4px; padding: 0 30px 0 10px; font-size: 14px; color: var(--ink); appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--ink-2) 50%), linear-gradient(135deg, var(--ink-2) 50%, transparent 50%);
+    background-position: calc(100% - 15px) 16px, calc(100% - 10px) 16px; background-size: 5px 5px; background-repeat: no-repeat; }
+  .chart { position: relative; padding: 22px var(--pad) 0; }
+  .chart canvas { display: block; }
+  .note {
+    position: absolute; max-width: 340px; font-size: 15px; line-height: 1.45; color: var(--ink);
+  }
+  .note b { font-weight: 650; }
+  .note small { display: block; color: var(--ink-2); font-size: 13px; margin-top: 4px; }
+  .read { padding: 18px var(--pad) 48px; display: flex; gap: 12px 40px; flex-wrap: wrap; color: var(--ink-2); font-size: 14px; }
+  .read span { display: inline-flex; gap: 8px; align-items: center; }
+  .read i.sq { width: 8px; height: 8px; background: #d08a4a; display: inline-block; }
+  @media (max-width: 900px) {
+    :root { --pad: 16px; }
+    .bar nav, .find { display: none; }
+    .menu-btn { display: grid; place-items: center; }
+    .head { grid-template-columns: 1fr; padding-top: 18px; }
+    h1 { font-size: 26px; }
+    .head p { font-size: 15px; }
+    .controls { gap: 10px; }
+    label.sel { flex: 1 1 140px; }
+    select { width: 100%; }
+    .note { position: static; margin: 0 0 12px; max-width: none; font-size: 14px; }
+    .chart { padding-top: 16px; }
+  }
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="index.html">The Meme Ontology</a>
+  <nav aria-label="Main">
+    <a href="index.html">Corpus</a>
+    <a href="time.html" aria-current="page">Visualizations</a>
+    <a href="#">Ontology</a>
+    <a href="#">SPARQL</a>
+    <a href="#">Thesis</a>
+    <a href="#">About</a>
+  </nav>
+  <label class="find"><i class="ph ph-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Find a meme" aria-label="Find a meme by name"></label>
+  <button class="menu-btn" aria-label="Open menu"><i class="ph ph-list"></i></button>
+</header>
+<nav class="views" aria-label="Visualizations">
+  <a href="time.html" aria-current="page">When memes appeared</a>
+  <a href="#">Popularity by format</a>
+  <a href="#">Platform by period</a>
+  <a href="#">Views against variants</a>
+  <a href="#">Variant gallery</a>
+  <a href="#">Variant family tree</a>
+  <a href="#">Colour spectrum</a>
+  <a href="#">Knowledge-graph walk</a>
+  <a href="#">Platform story</a>
+  <a href="#">Classifier confidence</a>
+  <a href="#">Property flow</a>
+</nav>
+
+<main>
+  <div class="head">
+    <div>
+      <h1>When the 5,000 memes appeared</h1>
+      <p>Each column is a year and each square one meme, in its average colour. Pick a platform or a format to bring its memes to the bottom of every column.</p>
+    </div>
+    <div class="controls">
+      <label class="sel">Platform
+        <select id="plat"></select>
+      </label>
+      <label class="sel">Format
+        <select id="fmt"></select>
+      </label>
+    </div>
+  </div>
+  <div class="chart" id="chart">
+    <p class="note" id="note" aria-live="polite"></p>
+    <canvas id="cv" role="img" aria-label="Unit chart of memes per year"></canvas>
+  </div>
+  <div class="read">
+    <span><i class="sq" aria-hidden="true"></i>One square is one meme</span>
+    <span>Rows of a column hold seven memes</span>
+    <span id="noyear"></span>
+    <a href="#">Read the method in the thesis, section 3.3.1</a>
+  </div>
+</main>
+
+<footer class="foot">
+  <span>Master's thesis by Alice Picco, University of Bologna, supervised by Fabio Vitali.</span>
+  <span>Data from Know Your Meme, released with the ontology under CC BY 4.0.</span>
+</footer>
+
+<script src="../assets/data.js"></script>
+<script src="b.js"></script>
+<script>
+(function () {
+  var rows = B.rows, M = B.M;
+  var cv = document.getElementById('cv'), ctx = cv.getContext('2d'), chart = document.getElementById('chart');
+  var q = new URLSearchParams(location.search);
+  var state = { plat: q.get('plat') || 'TikTok', fmt: q.get('fmt') || '' };
+
+  function opts(sel, list, cur) {
+    var count = {};
+    rows.forEach(function (r) { var k = sel === 'plat' ? r.platform : r.format; count[k] = (count[k] || 0) + 1; });
+    var keys = Object.keys(count).filter(function (k) { return k !== 'Unknown'; }).sort(function (a, b) { return count[b] - count[a]; });
+    document.getElementById(sel).innerHTML = '<option value="">None</option>' + keys.map(function (k) {
+      return '<option value="' + k + '"' + (k === cur ? ' selected' : '') + '>' + k + ' (' + B.fmt(count[k]) + ')</option>';
+    }).join('');
+  }
+  opts('plat', M.platforms, state.plat); opts('fmt', M.formats, state.fmt);
+
+  var cols = ['Before 1999'];
+  for (var y = 1999; y <= 2026; y++) cols.push(String(y));
+  cols.push('No year');
+  function colOf(r) { return r.year === 0 ? 'No year' : r.year < 1999 ? 'Before 1999' : String(r.year); }
+  function hit(r) { return !!((state.plat || state.fmt) && (!state.plat || r.platform === state.plat) && (!state.fmt || r.format === state.fmt)) ? 1 : 0; }
+
+  function draw() {
+    var W = chart.clientWidth - 2 * parseFloat(getComputedStyle(chart).paddingLeft);
+    var mobile = W < 600, P = 5, S = 4, dpr = Math.min(devicePixelRatio || 1, 2);
+    var by = {}; cols.forEach(function (c) { by[c] = []; });
+    rows.forEach(function (r) { by[colOf(r)].push(r); });
+    cols.forEach(function (c) {
+      by[c].sort(function (a, b) { return (hit(b) - hit(a)) || B.hueKey(a) - B.hueKey(b); });
+    });
+    var any = !!(state.plat || state.fmt);
+    ctx.font = '400 11px "Martian Mono", monospace';
+    if (!mobile) {
+      var N = 7, GAP = 8, colW = N * P, axisL = 34, H = Math.ceil(665 / N) * P + 6, top = 0;
+      var w = axisL + cols.length * (colW + GAP) + 12, h = H + 34;
+      cv.width = w * dpr; cv.height = h * dpr; cv.style.width = w + 'px'; cv.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+      // reference lines every 100 memes
+      ctx.strokeStyle = '#24242a'; ctx.fillStyle = '#a1a1a8'; ctx.lineWidth = 1; ctx.textAlign = 'right';
+      for (var v = 100; v <= 600; v += 100) {
+        var yy = top + H - Math.ceil(v / N) * P + 0.5;
+        ctx.beginPath(); ctx.moveTo(axisL, yy); ctx.lineTo(w, yy); ctx.stroke();
+        ctx.fillText(v, axisL - 6, yy + 4);
+      }
+      var x = axisL + 4, peak = { n: 0 }, first = null, total = 0;
+      cols.forEach(function (c, ci) {
+        if (c === 'No year') x += 12;
+        var list = by[c], nHit = 0;
+        list.forEach(function (r, k) {
+          var cx = x + (k % N) * P, cy = top + H - (Math.floor(k / N) + 1) * P;
+          var on = hit(r);
+          if (on) nHit++;
+          ctx.globalAlpha = !any || on ? 1 : 0.3;
+          ctx.fillStyle = B.colour(r); ctx.fillRect(cx, cy, S, S);
+        });
+        ctx.globalAlpha = 1;
+        if (nHit) { total += nHit; if (!first && c !== 'Before 1999' && c !== 'No year') first = c; if (nHit > peak.n) peak = { n: nHit, c: c, x: x }; }
+        ctx.fillStyle = '#a1a1a8'; ctx.textAlign = 'center';
+        var lab = c === 'Before 1999' ? '<1999' : c === 'No year' ? 'none' : (ci % 1 === 0 ? c.slice(2) : '');
+        ctx.fillText(c.length === 4 ? "'" + c.slice(2) : lab, x + colW / 2, top + H + 18);
+        x += colW + GAP;
+      });
+      note(total, first, peak, false);
+    } else {
+      var L = 46, perLine = Math.floor((W - L) / P), lines = 0;
+      cols.forEach(function (c) { lines += Math.max(1, Math.ceil(by[c].length / perLine)); });
+      var w2 = W, h2 = lines * P + cols.length * 7 + 8;
+      cv.width = w2 * dpr; cv.height = h2 * dpr; cv.style.width = w2 + 'px'; cv.style.height = h2 + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w2, h2);
+      var y0 = 0, total2 = 0, first2 = null, peak2 = { n: 0 };
+      cols.forEach(function (c) {
+        var list = by[c], nHit = 0;
+        ctx.fillStyle = '#a1a1a8'; ctx.textAlign = 'left';
+        ctx.fillText(c === 'Before 1999' ? '<1999' : c === 'No year' ? 'none' : c, 0, y0 + 8);
+        list.forEach(function (r, k) {
+          var on = hit(r); if (on) nHit++;
+          ctx.globalAlpha = !any || on ? 1 : 0.3;
+          ctx.fillStyle = B.colour(r); ctx.fillRect(L + (k % perLine) * P, y0 + Math.floor(k / perLine) * P, S, S);
+        });
+        ctx.globalAlpha = 1;
+        if (nHit) { total2 += nHit; if (!first2 && c.length === 4) first2 = c; if (nHit > peak2.n) peak2 = { n: nHit, c: c }; }
+        y0 += Math.max(1, Math.ceil(list.length / perLine)) * P + 7;
+      });
+      note(total2, first2, peak2, true);
+    }
+    var none = by['No year'].length;
+    document.getElementById('noyear').textContent = none + ' entries have no year and stand apart on the right';
+  }
+
+  function note(total, first, peak, mobile) {
+    var el = document.getElementById('note');
+    if (!state.plat && !state.fmt) { el.innerHTML = '<b>All 5,000 memes.</b> The corpus is thin before 2009 and peaks in 2019, with 665 entries.'; }
+    else {
+      var what = [state.plat, state.fmt].filter(Boolean).join(' and ');
+      el.innerHTML = '<b>' + what + ': ' + B.fmt(total) + ' memes.</b> ' +
+        (first ? 'The earliest is dated ' + first + '; the most, ' + peak.n + ', are from ' + peak.c + '.' : '') +
+        '<small>Dates are the origin year Know Your Meme records, which can precede the platform.</small>';
+    }
+    if (!mobile) { el.style.left = 'calc(var(--pad) + 60px)'; el.style.top = '40px'; }
+  }
+
+  document.getElementById('plat').addEventListener('change', function (e) { state.plat = e.target.value; draw(); });
+  document.getElementById('fmt').addEventListener('change', function (e) { state.fmt = e.target.value; draw(); });
+  var rt; addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(draw, 120); });
+  draw();
+  if (document.fonts) document.fonts.ready.then(draw);
+})();
+</script>
+</body>
+</html>

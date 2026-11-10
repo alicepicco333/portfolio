@@ -1,0 +1,34 @@
+/* Direction C: five levels. One meme taken apart the way the ontology takes it apart. */
+:root {
+  --paper: #f3f5f3;
+  --ink: #0b0f0c;
+  --ink-2: #4a524c;     /* 7.6:1 on paper */
+  --rule: #cdd3ce;
+  --key: #00b140;       /* chroma-key green, fill only; ink on it is 6.8:1 */
+  --key-ink: #006b27;   /* green that is safe as text on paper */
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --mono: "Spline Sans Mono", ui-monospace, monospace;
+  --pad: 40px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+::selection { background: var(--key); color: var(--ink); }
+a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--key-ink); }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+img { display: block; max-width: 100%; }
+button, input { font: inherit; color: inherit; }
+.mono { font-family: var(--mono); }
+
+.bar { height: 64px; display: flex; align-items: center; gap: 24px; padding: 0 var(--pad); }
+.brand { display: flex; align-items: baseline; gap: 9px; text-decoration: none; margin-right: auto; }
+.brand b { font-weight: 900; font-size: 19px; letter-spacing: -0.01em; }
+.brand span { color: var(--ink-2); font-size: 15px; }
+.bar nav { display: flex; gap: 22px; font-size: 15px; }
+.bar nav a { text-decoration: none; color: var(--ink-2); }
+.bar nav a:hover { color: var(--ink); }
+.bar nav a[aria-current] { color: var(--ink); font-weight: 650; box-shadow: inset 0 -2px 0 var(--key); padding-bottom: 2px; }
+.menu-btn { display: none; background: none; border: 1px solid var(--rule); border-radius: 8px; width: 40px; height: 40px; font-size: 20px; }
+
+.foot { border-top: 1px solid var(--rule); padding: 24px var(--pad) 36px; display: flex; gap: 24px; justify-content: space-between; color: var(--ink-2); font-size: 14px; flex-wrap: wrap; }

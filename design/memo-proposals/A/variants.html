@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Variant matrix · The Meme Ontology (proposal A)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="a.css">
+<style>
+  .head { padding: 26px var(--pad) 18px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px 40px; align-items: end; }
+  h1 { font-size: 36px; line-height: 1.05; letter-spacing: -0.025em; font-weight: 650; margin: 0 0 10px; }
+  .head p { margin: 0; color: var(--ink-2); max-width: 70ch; }
+  .views { display: flex; gap: 6px; }
+  .views a { font-size: 14px; text-decoration: none; padding: 7px 12px; border-radius: 6px; color: var(--ink-2); border: 1px solid var(--rule); white-space: nowrap; }
+  .views a[aria-current] { color: var(--ink); border-color: var(--ink); font-weight: 600; }
+  .tabs-row { padding: 0 var(--pad) 14px; border-bottom: 1px solid var(--rule); }
+
+  .mx { padding: 18px var(--pad) 8px; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 1100px; table-layout: fixed; }
+  th, td { padding: 0; }
+  col.lab { width: 180px; } col.v { width: auto; } col.tot { width: 156px; }
+  thead th { vertical-align: bottom; padding: 0 5px 10px; text-align: left; font-weight: 400; }
+  thead .im { aspect-ratio: 4 / 3; background: var(--well); border-radius: 3px; overflow: hidden; }
+  thead img { width: 100%; height: 100%; object-fit: cover; }
+  thead .t { display: block; font-size: 12.5px; line-height: 1.3; margin-top: 6px; height: 2.6em; overflow: hidden; color: var(--ink); }
+  thead .tpl .t { font-weight: 600; }
+  thead .lab { font-size: 13.5px; color: var(--ink-2); padding-left: 0; }
+  tbody th { text-align: left; font-weight: 600; font-size: 15px; padding: 0 12px 0 0; white-space: nowrap; }
+  tbody tr { height: 38px; border-top: 1px solid var(--rule); }
+  tbody tr.empty th { color: var(--ink-2); font-weight: 400; }
+  td.c { position: relative; text-align: center; }
+  td.c .dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: var(--change); position: relative; z-index: 1; }
+  td.c .v { position: absolute; left: 50%; width: 2px; margin-left: -1px; background: var(--change); }
+  td.c.tplcol { background: rgba(18,19,22,.035); }
+  td.tot { font: 400 13px/1.3 var(--mono); color: var(--ink-2); text-align: right; white-space: nowrap; }
+  td.tot b { color: var(--ink); font-weight: 500; }
+  tr.empty td.none { font-size: 13.5px; color: var(--ink-2); padding-left: 12px; }
+  tr.extent { border-top: 2px solid var(--ink); height: 44px; }
+  tr.extent td.c span { display: block; margin: 0 5px; height: 26px; border-radius: 3px; font-size: 12.5px; line-height: 26px; }
+  tr.extent td.c span.ex-Substantial { color: #fff; }
+  tr.clip td.c { font-size: 12.5px; color: var(--ink-2); }
+  tr.clip td.c.diffr { color: var(--ink); font-weight: 600; }
+  .legend { padding: 10px var(--pad) 48px; display: flex; flex-wrap: wrap; gap: 10px 32px; font-size: 14px; color: var(--ink-2); }
+  .legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .legend i.d { width: 12px; height: 12px; border-radius: 50%; background: var(--change); display: inline-block; }
+
+  /* Phone: the matrix turns into one row per variant */
+  .list { display: none; list-style: none; margin: 0; padding: 8px var(--pad) 24px; }
+  .list li { display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 12px 0; border-top: 1px solid var(--rule); }
+  .list .im { aspect-ratio: 4 / 3; background: var(--well); border-radius: 3px; overflow: hidden; }
+  .list img { width: 100%; height: 100%; object-fit: cover; }
+  .list b { display: block; font-weight: 600; font-size: 15px; line-height: 1.3; }
+  .list .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+  .list .chips span { font-size: 12.5px; border: 1px solid var(--change); color: var(--change); border-radius: 4px; padding: 1px 6px; }
+  .list .ext { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-2); margin-top: 6px; }
+  .list .ext i { width: 16px; height: 6px; border-radius: 2px; display: inline-block; }
+  .summary { display: none; padding: 4px var(--pad) 0; font-size: 14px; color: var(--ink-2); }
+
+  @media (max-width: 860px) {
+    :root { --pad: 16px; }
+    .bar { height: 54px; }
+    .bar nav, .brand span { display: none; }
+    .menu-btn { display: grid; place-items: center; }
+    .head { grid-template-columns: 1fr; padding-top: 18px; }
+    h1 { font-size: 28px; }
+    .head p { font-size: 15px; }
+    .views { overflow-x: auto; }
+    .mx, .legend { display: none; }
+    .list, .summary { display: block; }
+  }
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="index.html"><b>MEMO</b><span>The Meme Ontology</span></a>
+  <nav aria-label="Main">
+    <a href="index.html" aria-current="page">Variants</a>
+    <a href="#">Corpus</a>
+    <a href="#">Ontology</a>
+    <a href="#">SPARQL</a>
+    <a href="#">Thesis</a>
+    <a href="#">About</a>
+  </nav>
+  <button class="menu-btn" aria-label="Open menu"><i class="ph ph-list"></i></button>
+</header>
+
+<main>
+  <div class="head">
+    <div>
+      <h1>Ten variants of Stonks, eight ways to change</h1>
+      <p>Each column is one annotated variant and each row a transformation dimension. A filled mark means the annotation asserts it; marks in one column are joined, because most variants change several things at once.</p>
+    </div>
+    <nav class="views" aria-label="Variant views">
+      <a href="index.html">Compare</a>
+      <a href="variants.html" aria-current="page">Matrix</a>
+      <a href="#">Family tree</a>
+      <a href="#">Gallery</a>
+    </nav>
+  </div>
+  <div class="tabs-row"><div class="tabs" role="tablist" aria-label="Template" id="tabs"></div></div>
+
+  <div class="mx"><table id="mx"></table></div>
+  <div class="legend">
+    <span><i class="d" aria-hidden="true"></i>dimension asserted for this variant</span>
+    <span>Right column: this template, then all 50 annotated variants</span>
+    <span id="noParody"></span>
+  </div>
+
+  <p class="summary" id="summary"></p>
+  <ul class="list" id="list"></ul>
+</main>
+
+<footer class="foot">
+  <span>Master's thesis by Alice Picco, University of Bologna, supervised by Fabio Vitali.</span>
+  <span>Images belong to their creators and are shown as research objects, from Know Your Meme.</span>
+</footer>
+
+<script src="../assets/data.js"></script>
+<script>
+(function () {
+  var T = MEMO.templates;
+  var DIMS = ['CaptionChange','CompositionShift','StyleShift','MediumShift','CrossoverMerge','VisualSubstrate','LanguageShift','Localization'];
+  var ORDER = { Minimal: 0, Moderate: 1, Substantial: 2, Parody: 3 };
+  var state = { t: 0 };
+  var all = {}, extAll = {};
+  T.forEach(function (t) { t.variants.forEach(function (v) { extAll[v.extent] = 1; v.dims.forEach(function (d) { all[d] = (all[d] || 0) + 1; }); }); });
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+  function render() {
+    var t = T[state.t];
+    var vs = t.variants.slice().sort(function (a, b) { return ORDER[a.extent] - ORDER[b.extent]; });
+    document.querySelector('h1').textContent = (vs.length === 10 ? 'Ten' : vs.length) + ' variants of ' + t.name + ', eight ways to change';
+    document.getElementById('tabs').innerHTML = T.map(function (x, i) {
+      return '<button class="tab" role="tab" aria-selected="' + (i === state.t) + '" data-i="' + i + '">' + x.name + '</button>';
+    }).join('');
+
+    var h = '<colgroup><col class="lab"><col class="v">' + vs.map(function () { return '<col class="v">'; }).join('') + '<col class="tot"></colgroup>';
+    h += '<thead><tr><th class="lab" scope="col">Dimension</th><th class="tpl" scope="col"><div class="im"><img src="../assets/img/' + t.img + '" alt=""></div><span class="t">Template</span></th>';
+    h += vs.map(function (v) { return '<th scope="col"><div class="im"><img src="../assets/img/' + v.img + '" alt=""></div><span class="t">' + esc(v.title) + '</span></th>'; }).join('');
+    h += '<th class="lab" scope="col" style="text-align:right">Asserted</th></tr></thead><tbody>';
+
+    // index of first and last asserted row per column, to draw the joining line
+    var span = vs.map(function (v) {
+      var idx = DIMS.map(function (d, i) { return v.dims.indexOf(d) > -1 ? i : -1; }).filter(function (i) { return i > -1; });
+      return [Math.min.apply(null, idx), Math.max.apply(null, idx)];
+    });
+    DIMS.forEach(function (d, ri) {
+      var here = vs.filter(function (v) { return v.dims.indexOf(d) > -1; }).length;
+      var empty = !all[d];
+      h += '<tr class="' + (empty ? 'empty' : '') + '"><th scope="row">' + d + '</th>';
+      if (empty) {
+        h += '<td class="c tplcol"></td><td class="none" colspan="' + vs.length + '">Not asserted for any of the 50 annotated variants</td>';
+      } else {
+        h += '<td class="c tplcol"></td>';
+        h += vs.map(function (v, ci) {
+          var on = v.dims.indexOf(d) > -1, s = span[ci], line = '';
+          if (s[0] < s[1] && ri >= s[0] && ri <= s[1]) {
+            var top = ri === s[0] ? '50%' : '0', bot = ri === s[1] ? '50%' : '0';
+            line = '<i class="v" style="top:' + top + ';bottom:' + bot + '"></i>';
+          }
+          return '<td class="c">' + line + (on ? '<span class="dot" role="img" aria-label="asserted"></span>' : '') + '</td>';
+        }).join('');
+      }
+      h += '<td class="tot"><b>' + here + '</b> of ' + vs.length + ' &nbsp; ' + (all[d] || 0) + ' of 50</td></tr>';
+    });
+    h += '<tr class="extent"><th scope="row">Extent</th><td class="c tplcol"></td>' + vs.map(function (v) {
+      return '<td class="c"><span class="ex-' + v.extent + '">' + v.extent + '</span></td>';
+    }).join('') + '<td class="tot"></td></tr>';
+    h += '<tr class="clip"><th scope="row" style="font-weight:400;color:var(--ink-2)">CLIP image type</th><td class="c tplcol">' + t.imageType + '</td>' + vs.map(function (v) {
+      return '<td class="c' + (v.typeTo !== v.typeFrom ? ' diffr' : '') + '">' + v.typeTo + '</td>';
+    }).join('') + '<td class="tot"></td></tr></tbody>';
+    document.getElementById('mx').innerHTML = h;
+    document.getElementById('noParody').textContent = extAll.Parody ? '' : 'No annotated variant was classified as Parody';
+
+    document.getElementById('summary').textContent = t.name + ': ' + vs.length + ' annotated variants, from least to most change.';
+    document.getElementById('list').innerHTML = vs.map(function (v) {
+      return '<li><div class="im"><img src="../assets/img/' + v.img + '" alt=""></div><div><b>' + esc(v.title) + '</b><div class="chips">' +
+        v.dims.map(function (d) { return '<span>' + d + '</span>'; }).join('') + '</div><span class="ext"><i class="ex-' + v.extent + '"></i>' + v.extent + '</span></div></li>';
+    }).join('');
+  }
+  document.getElementById('tabs').addEventListener('click', function (e) {
+    var b = e.target.closest('.tab'); if (!b) return; state.t = +b.dataset.i; render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>

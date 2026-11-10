@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Meme Ontology: three redesign directions</title>
+<style>
+  body { margin: 0; background: #e9eaec; color: #121316; font: 400 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1320px; margin: 0 auto; padding: 40px 24px 64px; }
+  h1 { font-size: 30px; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .sub { color: #4a4e55; margin: 0 0 32px; max-width: 70ch; }
+  .dirs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  article { background: #fff; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+  article img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; display: block; border-bottom: 1px solid #d9dbdf; }
+  .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  h2 { font-size: 20px; margin: 0; letter-spacing: -0.01em; }
+  p { margin: 0; color: #4a4e55; font-size: 15px; }
+  .links { margin-top: auto; padding-top: 8px; display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 15px; }
+  a { color: #121316; text-underline-offset: 3px; }
+  .rec { font-size: 13px; font-weight: 600; background: #121316; color: #fff; border-radius: 4px; padding: 2px 8px; align-self: start; }
+  @media (max-width: 900px) { .dirs { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>The Meme Ontology: three redesign directions</h1>
+  <p class="sub">Static mockups with the site's real data. Each has a home page and one inner page; screenshots at 1440 x 900 and 390 x 844 are in each folder's shots. The reasoning and the recommendation are in README.md.</p>
+  <div class="dirs">
+    <article>
+      <img src="A/shots/home-1440x900.png" alt="Direction A home page">
+      <div class="body">
+        <span class="rec">Recommended</span>
+        <h2>A. Swipe</h2>
+        <p>Every variant held against its template, with the annotation beside it. Swipe, Difference and Side by side views; a matrix of eight dimensions by fifty variants.</p>
+        <div class="links"><a href="A/index.html">Home</a><a href="A/variants.html">Variant matrix</a><a href="A/index.html?mode=diff">Difference view</a></div>
+      </div>
+    </article>
+    <article>
+      <img src="B/shots/home-1440x900.png" alt="Direction B home page">
+      <div class="body">
+        <h2>B. One square per meme</h2>
+        <p>All 5,000 entries as squares in their average colour; every view is made of the same squares, which move when the view changes.</p>
+        <div class="links"><a href="B/index.html">Home</a><a href="B/time.html">When memes appeared</a></div>
+      </div>
+    </article>
+    <article>
+      <img src="C/shots/home-1440x900.png" alt="Direction C home page">
+      <div class="body">
+        <h2>C. Five levels</h2>
+        <p>Stonks taken apart into idea, template, variant, file and copy, the levels the ontology keeps separate, on a chroma-key green stage.</p>
+        <div class="links"><a href="C/index.html">Home</a><a href="C/thesis.html">Thesis reader</a></div>
+      </div>
+    </article>
+  </div>
+</main>
+</body>
+</html>

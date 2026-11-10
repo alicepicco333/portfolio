@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Meme Ontology (proposal C: Five levels)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=Spline+Sans+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="c.css">
+<style>
+  .home { display: grid; grid-template-columns: 560px minmax(0, 1fr); min-height: 100dvh; }
+  .left { display: flex; flex-direction: column; min-width: 0; }
+  .left .bar nav { gap: 20px; }
+  .left .brand span { display: none; }
+  .intro { padding: 30px var(--pad) 0; }
+  h1 { font-size: 48px; line-height: 1; letter-spacing: -0.03em; font-weight: 850; margin: 0 0 16px; text-wrap: balance; }
+  .lead { font-size: 17px; color: var(--ink-2); margin: 0 0 22px; max-width: 42ch; }
+  .levels { list-style: none; margin: 0; padding: 0 var(--pad); }
+  .levels button {
+    width: 100%; display: grid; grid-template-columns: 22px 150px 1fr; align-items: baseline; gap: 10px; text-align: left;
+    background: none; border: 0; border-top: 1px solid var(--rule); padding: 10px 10px; cursor: pointer; border-radius: 0;
+  }
+  .levels .n { font: 500 13px/1 var(--mono); color: var(--ink-2); }
+  .levels .name { font-size: 19px; font-weight: 750; letter-spacing: -0.01em; }
+  .levels .cls { font: 400 13px/1.4 var(--mono); color: var(--ink-2); }
+  .levels .cls em { font-style: normal; font-family: var(--sans); font-size: 13.5px; }
+  .levels button:hover { background: #e7ebe7; }
+  .levels button[aria-pressed="true"] { background: var(--key); border-top-color: var(--key); }
+  .levels button[aria-pressed="true"] .n, .levels button[aria-pressed="true"] .cls { color: var(--ink); }
+  .readout { display: none; background: var(--ink); color: #f3f5f3; padding: 14px 16px 14px 42px; }
+  .levels li.on .readout { display: block; }
+  .readout p { margin: 0 0 10px; font-size: 15px; line-height: 1.5; color: #d6dcd7; }
+  .readout pre { margin: 0; font: 400 12.5px/1.6 var(--mono); color: #f3f5f3; white-space: pre-wrap; }
+  .readout pre i { font-style: normal; color: #7fe0a3; }
+  .levels li:last-child { border-bottom: 1px solid var(--rule); }
+  .more { margin-top: auto; padding: 22px var(--pad) 26px; display: flex; gap: 22px; font-size: 15px; }
+  .more a { font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+
+  .stage { background: var(--key); position: relative; overflow: hidden; min-height: 640px; }
+  .scene { position: absolute; inset: 0; perspective: 2400px; perspective-origin: 50% 30%; }
+  .stack {
+    position: absolute; left: 47%; top: 75%; width: 0; height: 0; transform-style: preserve-3d;
+    transform: rotateX(56deg) rotateZ(-36deg) scale(var(--s, 1));
+  }
+  .plane {
+    position: absolute; width: 400px; height: 225px; left: -200px; top: -112px; transform-style: preserve-3d;
+    transform: translateZ(calc(var(--z) * var(--ex, 1) * var(--gap, 1) * 1px));
+  }
+  .plane.on { transform: translateZ(calc((var(--z) * var(--ex, 1) * var(--gap, 1) + 40) * 1px)); }
+  .plane .face { position: absolute; inset: 0; border-radius: 2px; overflow: hidden; box-shadow: 0 16px 34px rgba(0, 50, 18, .24); }
+  .plane.on .face { outline: 3px solid var(--ink); }
+  .plane.above { opacity: .2; }
+  .plane .tag { position: absolute; left: 0; top: -30px; font: 500 14px/1 var(--mono); color: var(--ink); white-space: nowrap; display: flex; gap: 10px; align-items: baseline; }
+  .plane .tag b { font: 800 19px/1 var(--sans); letter-spacing: -0.01em; }
+
+  .p-idea .face { background: rgba(255, 255, 255, .92); padding: 22px 26px; display: flex; align-items: center; }
+  .p-idea p { margin: 0; font-size: 25px; line-height: 1.15; font-weight: 700; letter-spacing: -0.015em; }
+  .p-work .face { background: var(--ink); color: #f3f5f3; padding: 20px 24px; display: flex; flex-direction: column; justify-content: space-between; }
+  .p-work .face strong { font-size: 76px; font-weight: 900; letter-spacing: -0.04em; line-height: .9; }
+  .p-work .face span { font: 400 13.5px/1.5 var(--mono); color: #c7cec8; }
+  .p-expr .face img { width: 100%; height: 100%; object-fit: cover; }
+  .p-expr .vars { position: absolute; left: calc(100% + 14px); top: 0; display: grid; gap: 7px; }
+  .p-expr .vars img { width: 100px; height: 70px; object-fit: cover; border-radius: 2px; box-shadow: 0 10px 22px rgba(0, 50, 18, .22); }
+  .p-man .face { outline: 2px dashed rgba(11, 15, 12, .75); outline-offset: 4px; overflow: visible; }
+  .p-man canvas { width: 100%; height: 100%; image-rendering: pixelated; display: block; border-radius: 2px; }
+  .p-man .meta { position: absolute; right: 0; bottom: 0; background: var(--ink); color: #f3f5f3; font: 500 13.5px/1 var(--mono); padding: 8px 10px; }
+  .p-item .face { background: rgba(243, 245, 243, .3); outline: 2px dashed rgba(11, 15, 12, .75); outline-offset: -2px; box-shadow: none; padding: 22px 24px; font: 400 14px/1.5 var(--mono); word-break: break-all; display: flex; flex-direction: column; justify-content: space-between; }
+  .plane.on.p-man .face, .plane.on.p-item .face { outline-style: solid; outline-width: 3px; }
+  .credit { position: absolute; right: 28px; bottom: 22px; margin: 0; font-size: 13px; color: var(--ink); max-width: 250px; text-align: right; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .plane { transition: transform .9s cubic-bezier(.16, 1, .3, 1), opacity .3s ease; }
+  }
+  @media (max-width: 1180px) {
+    .home { grid-template-columns: 460px minmax(0, 1fr); }
+    h1 { font-size: 40px; }
+    .stack { --s: .78; }
+    .left .bar nav { display: none; }
+    .left .menu-btn { display: grid; place-items: center; }
+  }
+  @media (max-width: 760px) {
+    :root { --pad: 16px; }
+    .home { display: flex; flex-direction: column; }
+    .left { display: contents; }
+    .bar { order: 0; height: 56px; }
+    .intro { order: 1; padding-top: 10px; }
+    .stage { order: 2; min-height: 0; height: 430px; }
+    .levels { order: 3; }
+    .more { order: 4; margin-top: 0; }
+    .bar nav { display: none; }
+    .menu-btn { display: grid; place-items: center; }
+    h1 { font-size: 32px; margin-bottom: 10px; }
+    .lead { font-size: 15.5px; margin-bottom: 14px; }
+    .stack { --s: .52; --gap: .55; top: 74%; left: 46%; }
+    .scene { perspective: 3200px; }
+    .plane .tag { font-size: 24px; top: -42px; }
+    .plane .tag b { font-size: 30px; }
+    .plane .tag span { display: none; }
+    .p-expr .vars { display: none; }
+    .credit { position: absolute; left: var(--pad); top: 12px; right: auto; bottom: auto; font-size: 12.5px; max-width: 220px; text-align: left; color: var(--ink); }
+    .levels { padding-top: 6px; }
+    .levels button { grid-template-columns: 22px 1fr; padding: 9px 8px; }
+    .levels .cls { grid-column: 2; font-size: 12px; }
+    .readout { padding-left: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="home">
+  <div class="left">
+    <header class="bar">
+      <a class="brand" href="index.html"><b>MEMO</b><span>The Meme Ontology</span></a>
+      <nav aria-label="Main">
+        <a href="index.html" aria-current="page">Levels</a>
+        <a href="#">Corpus</a>
+        <a href="#">Ontology</a>
+        <a href="#">SPARQL</a>
+        <a href="thesis.html">Thesis</a>
+      </nav>
+      <button class="menu-btn" aria-label="Open menu"><i class="ph ph-list"></i></button>
+    </header>
+    <div class="intro">
+      <h1>A meme is an idea, a template, a variant, a file and a copy.</h1>
+      <p class="lead">MEMO, an ontology of 5,000 Know Your Meme entries, keeps the five apart. Pick a level to see what it records for Stonks.</p>
+    </div>
+    <ul class="levels" id="levels" aria-label="Levels"></ul>
+    <div class="more">
+      <a href="thesis.html">Read the thesis <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+      <a href="#">Browse the 5,000 entries <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+    </div>
+  </div>
+
+  <div class="stage" role="img" aria-label="Stonks taken apart into five stacked levels: idea, work, expression, manifestation and item">
+    <div class="scene">
+      <div class="stack" id="stack">
+        <div class="plane p-item" data-l="item" style="--z:0">
+          <div class="tag"><b>Item</b><span>memo:imageFilePath</span></div>
+          <div class="face"><span>i.kym-cdn.com/entries/icons/original/000/029/959/Screen_Shot_2019-06-05_at_1.26.32_PM.jpg</span><span>scraped 2026-04-28, 09:39 UTC</span></div>
+        </div>
+        <div class="plane p-man" data-l="man" style="--z:128">
+          <div class="tag"><b>Manifestation</b><span>dcterms:format</span></div>
+          <div class="face"><canvas id="px" width="44" height="25"></canvas><span class="meta">JPEG, 792 x 446</span></div>
+        </div>
+        <div class="plane p-expr" data-l="expr" style="--z:256">
+          <div class="tag"><b>Expression</b><span>memo:VariantInstance</span></div>
+          <div class="face"><img id="tImg" src="../assets/img/t-stonks.jpg" alt=""></div>
+          <div class="vars">
+            <img src="../assets/img/v-2163672.jpg" alt="">
+            <img src="../assets/img/v-3039073.jpg" alt="">
+            <img src="../assets/img/v-2694210.jpg" alt="">
+          </div>
+        </div>
+        <div class="plane p-work" data-l="work" style="--z:384">
+          <div class="tag"><b>Work</b><span>memo:MemeConcept</span></div>
+          <div class="face"><strong>Stonks</strong><span>Know Your Meme entry, 2017<br>Character, Reaction, Slang</span></div>
+        </div>
+        <div class="plane p-idea" data-l="idea" style="--z:512">
+          <div class="tag"><b>Idea</b><span>memo:MemeIdea</span></div>
+          <div class="face"><p>A deliberate misspelling of &ldquo;stocks&rdquo;, for jokes about poor financial decisions.</p></div>
+        </div>
+      </div>
+    </div>
+    <p class="credit">Images from Know Your Meme, shown as research objects.</p>
+  </div>
+</div>
+
+<footer class="foot">
+  <span>Master's thesis by Alice Picco, University of Bologna, supervised by Fabio Vitali.</span>
+  <span>Ontology and data under CC BY 4.0. Memes belong to their creators.</span>
+</footer>
+
+<script>
+(function () {
+  var LV = [
+    { id: 'idea', name: 'Idea', cls: 'memo:MemeIdea',
+      text: 'The concept a template carries, before any picture. MEMO adds this level above the Work, written by hand for the 50 memes of the annotated sample. Stonks is one of them.' },
+    { id: 'work', name: 'Work', cls: 'memo:MemeConcept',
+      text: 'The template as a named format: what every variant is a variant of. One per Know Your Meme entry, 5,000 in all.',
+      ttl: 'memo:stonks a memo:MemeConcept ;\n  rdfs:label "Stonks" .' },
+    { id: 'expr', name: 'Expression', cls: 'memo:VariantInstance',
+      text: 'Each realisation of the template as a picture. The canonical image is the first; 10 annotated variants record how far each departs from it.',
+      ttl: 'memo:photo_2163672 a memo:VariantInstance ;\n  wdp:P361 memo:stonks ;\n  memo:hasTransformationExtent <i>memo:Moderate</i> .' },
+    { id: 'man', name: 'Manifestation', cls: 'dcterms:format', prop: true,
+      text: 'The picture in a file format and size. MEMO keeps this as a property, not a class: here, a JPEG.',
+      ttl: 'memo:stonks dcterms:format <i>memo:JPEG</i> .' },
+    { id: 'item', name: 'Item', cls: 'path, URL, date', prop: true,
+      text: 'One copy, at one address, at one moment. Also kept as properties: the file path, the image URL and when it was scraped.',
+      ttl: 'memo:stonks memo:imageFilename "4661_stonks.jpg" .' }
+  ];
+  var sel = new URLSearchParams(location.search).get('level') || 'expr';
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stack = document.getElementById('stack');
+
+  document.getElementById('levels').innerHTML = LV.map(function (l, i) {
+    return '<li data-l="' + l.id + '"><button type="button" data-l="' + l.id + '" aria-pressed="false" aria-controls="ro-' + l.id + '"><span class="n">' + (i + 1) + '</span><span class="name">' + l.name + '</span><span class="cls">' + l.cls + (l.prop ? ' <em>(property)</em>' : '') + '</span></button>' +
+      '<div class="readout" id="ro-' + l.id + '"><p>' + l.text + '</p>' + (l.ttl ? '<pre>' + l.ttl + '</pre>' : '') + '</div></li>';
+  }).join('');
+
+  function select(id) {
+    sel = id;
+    document.querySelectorAll('#levels li').forEach(function (li) { li.classList.toggle('on', li.dataset.l === id); });
+    document.querySelectorAll('#levels button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.l === id)); });
+    var zSel = +document.querySelector('.plane[data-l="' + id + '"]').style.getPropertyValue('--z');
+    document.querySelectorAll('.plane').forEach(function (p) {
+      p.classList.toggle('on', p.dataset.l === id);
+      // levels above the chosen one step back, so the chosen one can be read
+      p.classList.toggle('above', +p.style.getPropertyValue('--z') > zSel);
+    });
+  }
+  document.getElementById('levels').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (b) select(b.dataset.l);
+  });
+  select(sel);
+
+  // Manifestation: the same picture at file resolution, drawn as blocks
+  var img = document.getElementById('tImg'), cv = document.getElementById('px');
+  function pixel() { cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height); }
+  if (img.complete) pixel(); else img.addEventListener('load', pixel);
+
+  // On arrival the levels separate: the one movement on the page, and the page's claim
+  if (!reduce && !new URLSearchParams(location.search).has('still')) {
+    stack.style.setProperty('--ex', 0);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { stack.style.setProperty('--ex', 1); }); });
+  }
+})();
+</script>
+</body>
+</html>

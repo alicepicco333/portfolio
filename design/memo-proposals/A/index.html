@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Meme Ontology (proposal A: Swipe)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="a.css">
+<style>
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) 452px; gap: 0 48px; padding: 22px var(--pad) 28px; }
+  .work { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .side { display: flex; flex-direction: column; min-width: 0; }
+  .legend-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; font-size: 14px; color: var(--ink-2); }
+  .legend-row b { color: var(--ink); font-weight: 600; }
+  .legend-row #legR { text-align: right; }
+  .note { margin: -6px 0 0; }
+  .thumb { width: 70px; }
+  .thumb .im { height: 52px; }
+  h1 { font-size: 44px; line-height: 1.04; letter-spacing: -0.025em; font-weight: 650; margin: 2px 0 16px; text-wrap: balance; }
+  .lead { font-size: 17px; line-height: 1.5; color: var(--ink-2); margin: 0 0 24px; max-width: 40ch; }
+  .rec-block { border-top: 1px solid var(--rule); padding-top: 18px; }
+  .vt { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+  .vt h2 { font-size: 24px; letter-spacing: -0.015em; margin: 0; font-weight: 650; }
+  .vt a { font-size: 14px; color: var(--ink-2); white-space: nowrap; }
+  .by { color: var(--ink-2); font-size: 15px; margin: -10px 0 18px; }
+  .rec section + section { margin-top: 18px; }
+  .clip { font-size: 14px; color: var(--ink-2); margin: 16px 0 0; }
+  .note { font-size: 14px; color: var(--ink-2); margin: 8px 0 0; min-height: 21px; }
+  .strip-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 6px 0 10px; font-size: 14px; color: var(--ink-2); }
+  .strip-head b { color: var(--ink); font-weight: 600; }
+  .key { display: flex; gap: 14px; align-items: center; }
+  .key span { display: inline-flex; align-items: center; gap: 6px; }
+  .key i { width: 16px; height: 4px; border-radius: 2px; display: inline-block; }
+  .thumb.is-template { cursor: default; }
+  .thumb .t { display: block; font-size: 12px; color: var(--ink-2); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .defs { padding: 56px var(--pad) 64px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 452px 1fr; gap: 48px; }
+  .defs h2 { font-size: 30px; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 12px; font-weight: 650; }
+  .defs p { color: var(--ink-2); margin: 0; max-width: 46ch; }
+  .defs dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 22px 40px; }
+  .defs dt { font-weight: 600; display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; margin-bottom: 6px; }
+  .defs dt span { font: 400 13px/1.6 var(--mono); color: var(--ink-2); }
+  .defs dd { margin: 0; color: var(--ink-2); font-size: 15px; }
+
+  @media (max-width: 1100px) {
+    .hero { grid-template-columns: minmax(0, 1fr) 360px; gap: 18px 32px; }
+    h1 { font-size: 36px; }
+  }
+  @media (max-width: 860px) {
+    :root { --pad: 16px; }
+    .bar { height: 54px; }
+    .bar nav, .brand span { display: none; }
+    .menu-btn { display: grid; place-items: center; }
+    .hero { display: flex; flex-direction: column; padding-top: 18px; gap: 14px; }
+    .work, .side { display: contents; }
+    .side > header { order: -1; }
+    h1 { font-size: 30px; margin-bottom: 10px; }
+    .lead { font-size: 16px; margin: 0; }
+    .legend-row { grid-template-columns: 1fr; gap: 8px; }
+    .legend-row #legR { text-align: left; }
+    .legend-row .seg { order: 3; justify-self: start; }
+    .strip-head .key { display: none; }
+    .rec { margin-top: 8px; }
+    .defs { grid-template-columns: 1fr; gap: 24px; padding-top: 40px; }
+    .defs dl { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="index.html"><b>MEMO</b><span>The Meme Ontology</span></a>
+  <nav aria-label="Main">
+    <a href="index.html" aria-current="page">Variants</a>
+    <a href="#">Corpus</a>
+    <a href="#">Ontology</a>
+    <a href="#">SPARQL</a>
+    <a href="#">Thesis</a>
+    <a href="#">About</a>
+  </nav>
+  <button class="menu-btn" aria-label="Open menu"><i class="ph ph-list"></i></button>
+</header>
+
+<main>
+  <div class="hero">
+   <div class="work">
+    <div class="tabs" role="tablist" aria-label="Template" id="tabs"></div>
+
+    <div class="cmp-wrap">
+      <div class="cmp" id="cmp" data-mode="swipe" style="--x:56%">
+        <img class="base" id="imgBase" src="../assets/img/t-stonks.jpg" alt="">
+        <img class="over" id="imgOver" src="../assets/img/va-2163672.jpg" alt="">
+        <div class="line" aria-hidden="true"></div>
+        <div class="grip" id="grip" role="slider" tabindex="0" aria-label="Swipe between template and variant" aria-valuemin="0" aria-valuemax="100" aria-valuenow="56"><i class="ph ph-arrows-left-right" aria-hidden="true"></i></div>
+      </div>
+    </div>
+
+    <div class="legend-row">
+      <span id="legL"></span>
+      <div class="seg" role="group" aria-label="Comparison view" id="modes">
+        <button type="button" data-mode="swipe" aria-pressed="true"><i class="ph ph-arrows-left-right"></i>Swipe</button>
+        <button type="button" data-mode="diff" aria-pressed="false"><i class="ph ph-circle-half"></i>Difference</button>
+        <button type="button" data-mode="side" aria-pressed="false"><i class="ph ph-columns"></i>Side by side</button>
+      </div>
+      <span id="legR"></span>
+    </div>
+    <p class="note" id="note" aria-live="polite"></p>
+
+    <div class="strip-wrap">
+      <div class="strip-head">
+        <span id="stripHead"></span>
+        <span class="key" aria-hidden="true"><span><i class="ex-Minimal"></i>Minimal</span><span><i class="ex-Moderate"></i>Moderate</span><span><i class="ex-Substantial"></i>Substantial</span></span>
+      </div>
+      <div class="strip" id="strip" role="group" aria-label="Annotated variants"></div>
+    </div>
+   </div>
+
+   <div class="side">
+    <header>
+      <h1>MEMO records how each variant changes its template.</h1>
+      <p class="lead">An ontology of 5,000 Know Your Meme entries. Drag the line to compare a variant with its template.</p>
+    </header>
+
+    <aside class="rec" aria-labelledby="vTitle">
+      <div class="rec-block">
+        <div class="vt"><h2 id="vTitle"></h2><a id="vLink" href="#">On Know Your Meme <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></div>
+        <p class="by" id="vBy"></p>
+        <section>
+          <p class="label">Transformation dimensions</p>
+          <ul class="dims" id="dims"></ul>
+        </section>
+        <section>
+          <p class="label">Transformation extent</p>
+          <div class="scale" id="scale"></div>
+        </section>
+        <section>
+          <pre class="ttl" id="ttl"></pre>
+        </section>
+        <p class="clip" id="clip"></p>
+      </div>
+    </aside>
+   </div>
+  </div>
+
+  <section class="defs" aria-labelledby="defsTitle">
+    <div>
+      <h2 id="defsTitle">Eight ways a variant can change</h2>
+      <p>The dimensions are not exclusive: a variant redrawn as a cartoon with characters from another franchise carries both MediumShift and CrossoverMerge. Counts are over the 50 annotated variants.</p>
+    </div>
+    <dl id="defs"></dl>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Master's thesis by Alice Picco, University of Bologna, supervised by Fabio Vitali.</span>
+  <span>Images belong to their creators and are shown as research objects, from Know Your Meme.</span>
+</footer>
+
+<script src="../assets/data.js"></script>
+<script src="../assets/align.js"></script>
+<script>
+(function () {
+  var T = MEMO.templates, AL = window.MEMO_ALIGN || {};
+  var DIMS = ['CaptionChange','VisualSubstrate','MediumShift','StyleShift','CompositionShift','CrossoverMerge','LanguageShift','Localization'];
+  var DEF = {
+    CaptionChange: 'Only the caption text changes; the image underneath stays the same.',
+    VisualSubstrate: 'The image itself is degraded on purpose: heavy compression, extreme saturation or distortion, while the template keeps its structure.',
+    MediumShift: 'The medium changes, from photograph to drawing or the other way round.',
+    StyleShift: 'The visual style changes while the medium stays the same.',
+    CompositionShift: 'Elements are added, removed or moved within the frame.',
+    CrossoverMerge: 'Characters or elements from another meme, film, series, game or book enter the image. Caption-only references do not count.',
+    LanguageShift: 'The caption is translated; the picture stays.',
+    Localization: 'The template is adapted to a specific cultural context, beyond translation.'
+  };
+  var ORDER = { Minimal: 0, Moderate: 1, Substantial: 2, Parody: 3 };
+  var state = { t: 0, v: '2163672', mode: 'swipe', x: 56 };
+  var $ = function (id) { return document.getElementById(id); };
+  var cmp = $('cmp'), grip = $('grip');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function tmpl() { return T[state.t]; }
+  function variant() { return tmpl().variants.find(function (v) { return v.id === state.v; }); }
+  function sorted(t) { return t.variants.slice().sort(function (a, b) { return ORDER[a.extent] - ORDER[b.extent]; }); }
+  function aligned(v) { return AL[v.id] && AL[v.id].aligned; }
+
+  function renderTabs() {
+    $('tabs').innerHTML = T.map(function (t, i) {
+      return '<button class="tab" role="tab" aria-selected="' + (i === state.t) + '" data-i="' + i + '">' + t.name + '</button>';
+    }).join('');
+  }
+  function renderStrip() {
+    var t = tmpl();
+    $('stripHead').innerHTML = '<b>' + t.name + '</b>: template and its ' + t.variants.length + ' annotated variants, from least to most change';
+    var html = '<div class="thumb is-template"><div class="im"><img src="../assets/img/' + t.img + '" alt="' + t.name + ', template"></div><i class="ex ex-Template"></i><span class="t">Template</span></div>';
+    html += sorted(t).map(function (v) {
+      return '<button class="thumb" aria-pressed="' + (v.id === state.v) + '" data-v="' + v.id + '" title="' + v.title.replace(/"/g, '&quot;') + '"><div class="im"><img src="../assets/img/' + v.img + '" alt="' + v.title.replace(/"/g, '&quot;') + '"></div><i class="ex ex-' + v.extent + '"></i><span class="t">' + v.title + '</span></button>';
+    }).join('');
+    $('strip').innerHTML = html;
+  }
+  function renderCompare() {
+    var t = tmpl(), v = variant(), ok = aligned(v);
+    var mode = ok ? state.mode : 'side';
+    cmp.dataset.mode = mode;
+    $('imgBase').src = '../assets/img/' + t.img;
+    $('imgBase').alt = t.name + ', the template image';
+    $('imgOver').src = '../assets/img/' + (ok ? 'va-' + v.id + '.jpg' : v.img);
+    $('imgOver').alt = v.title + ', a variant of ' + t.name;
+    document.querySelectorAll('#modes button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.mode === mode));
+      b.disabled = !ok && b.dataset.mode !== 'side';
+    });
+    $('legL').innerHTML = '<b>Template</b> ' + t.name + ', ' + t.year;
+    $('legR').innerHTML = '<b>Variant</b> ' + v.title + ', uploaded by ' + v.by;
+    $('note').textContent = ok
+      ? (mode === 'diff' ? 'Difference view: pixels that match the template turn black, so whatever lights up is what the variant changed.' : '')
+      : 'This variant does not share the template’s frame, so it is shown side by side.';
+    setX(state.x);
+  }
+  function renderRecord() {
+    var v = variant(), t = tmpl();
+    $('vTitle').textContent = v.title;
+    $('vLink').href = v.url || t.kym;
+    $('vBy').textContent = 'Variant of ' + t.name + ', uploaded by ' + v.by;
+    $('dims').innerHTML = DIMS.map(function (d) {
+      var on = v.dims.indexOf(d) > -1;
+      return '<li class="' + (on ? 'on' : '') + '"><i aria-hidden="true"></i>' + d + '<span class="sr" style="position:absolute;left:-9999px">' + (on ? ' (asserted)' : ' (not asserted)') + '</span></li>';
+    }).join('');
+    var ext = ['Minimal', 'Moderate', 'Substantial'];
+    var s = ext.map(function (e) { return '<span class="' + (v.extent === e ? 'on' : '') + '">' + e + '</span>'; }).join('') + '<span class="gap"></span><span>Parody</span>';
+    s += ext.map(function (e) { return '<i class="c ex-' + e + (v.extent === e ? ' on' : '') + '"></i>'; }).join('') + '<i class="c parody" title="Parody records a different relation to the template, not a greater degree of change"></i>';
+    $('scale').innerHTML = s;
+    var dimsTtl = v.dims.map(function (d) { return '<span class="o">memo:' + d + '</span>'; }).join(',\n                                ');
+    $('ttl').innerHTML = 'memo:photo_' + v.id + '\n  <span class="p">memo:hasTransformationDimension</span> ' + dimsTtl + ' ;\n  <span class="p">memo:hasTransformationExtent</span>    <span class="o">memo:' + v.extent + '</span> .';
+    $('clip').textContent = v.typeFrom === v.typeTo
+      ? 'CLIP labelled both images ' + v.typeFrom + '.'
+      : 'CLIP labelled the template ' + v.typeFrom + ' and this variant ' + v.typeTo + '.';
+  }
+  function renderDefs() {
+    var count = {};
+    T.forEach(function (t) { t.variants.forEach(function (v) { v.dims.forEach(function (d) { count[d] = (count[d] || 0) + 1; }); }); });
+    $('defs').innerHTML = DIMS.map(function (d) {
+      return '<div><dt>' + d + '<span>' + (count[d] || 0) + ' of 50</span></dt><dd>' + DEF[d] + '</dd></div>';
+    }).join('');
+  }
+  function setX(x) {
+    state.x = Math.max(0, Math.min(100, x));
+    cmp.style.setProperty('--x', state.x + '%');
+    grip.setAttribute('aria-valuenow', Math.round(state.x));
+    grip.setAttribute('aria-valuetext', Math.round(state.x) + ' percent template, the rest variant');
+  }
+  function all() { renderTabs(); renderStrip(); renderCompare(); renderRecord(); }
+
+  // Interactions
+  $('tabs').addEventListener('click', function (e) {
+    var b = e.target.closest('.tab'); if (!b) return;
+    state.t = +b.dataset.i;
+    var s = sorted(tmpl()), firstAligned = s.find(aligned);
+    state.v = (firstAligned || s[0]).id;
+    all();
+  });
+  $('strip').addEventListener('click', function (e) {
+    var b = e.target.closest('button.thumb'); if (!b) return;
+    state.v = b.dataset.v; renderStrip(); renderCompare(); renderRecord();
+  });
+  $('modes').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b || b.disabled) return;
+    state.mode = b.dataset.mode; renderCompare();
+  });
+  var dragging = false;
+  function fromEvent(e) { var r = cmp.getBoundingClientRect(); setX((e.clientX - r.left) / r.width * 100); }
+  cmp.addEventListener('pointerdown', function (e) { if (cmp.dataset.mode !== 'swipe') return; dragging = true; cmp.setPointerCapture(e.pointerId); fromEvent(e); });
+  cmp.addEventListener('pointermove', function (e) { if (dragging) fromEvent(e); });
+  cmp.addEventListener('pointerup', function () { dragging = false; });
+  grip.addEventListener('keydown', function (e) {
+    var step = e.shiftKey ? 10 : 2;
+    if (e.key === 'ArrowLeft') setX(state.x - step);
+    else if (e.key === 'ArrowRight') setX(state.x + step);
+    else if (e.key === 'Home') setX(0);
+    else if (e.key === 'End') setX(100);
+    else return;
+    e.preventDefault();
+  });
+
+  renderDefs(); all();
+  var q = new URLSearchParams(location.search);
+  if (q.get('mode')) { state.mode = q.get('mode'); renderCompare(); }
+})();
+</script>
+</body>
+</html>

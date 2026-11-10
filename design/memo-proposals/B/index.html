@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Meme Ontology (proposal B: One square per meme)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Martian+Mono:wdth,wght@75..112.5,400..600&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="b.css">
+<style>
+  .hero { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 0 40px; padding: 26px var(--pad) 40px; }
+  h1 {
+    font-size: 38px; line-height: 1.04; letter-spacing: -0.02em; font-weight: 780;
+    font-variation-settings: "wdth" 116; margin: 0 0 10px; text-wrap: balance;
+  }
+  .lead { color: var(--ink-2); font-size: 17px; margin: 0 0 20px; max-width: 62ch; }
+  .controls { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; margin-bottom: 14px; }
+  .field { position: relative; }
+  .field canvas { display: block; cursor: crosshair; border-radius: 1px; }
+  .field canvas:focus-visible { outline-offset: 4px; }
+  .axis { position: relative; height: 30px; margin-top: 6px; font: 400 11.5px/1 var(--mono); color: var(--ink-2); }
+  .axis span { position: absolute; top: 0; padding-top: 8px; border-left: 1px solid var(--rule); padding-left: 4px; white-space: nowrap; }
+  .axis span.hi { color: var(--ink); border-left-color: var(--ink-2); }
+
+  .entry { padding-top: 4px; }
+  .entry .well { background: var(--raise); border-radius: 3px; display: grid; place-items: center; overflow: hidden; }
+  .entry .well img { width: 100%; height: auto; max-height: 300px; object-fit: contain; }
+  .entry .well span { display: block; aspect-ratio: 4 / 3; }
+  .entry .credit { font-size: 12.5px; color: var(--ink-2); margin: 8px 0 18px; }
+  .entry h2 { font-size: 28px; line-height: 1.05; letter-spacing: -0.015em; font-weight: 760; font-variation-settings: "wdth" 112; margin: 0 0 14px; }
+  .entry dl { display: grid; grid-template-columns: 112px 1fr; gap: 7px 12px; margin: 0 0 20px; font-size: 14px; }
+  .entry dt { color: var(--ink-2); }
+  .entry dd { margin: 0; font-family: var(--mono); font-variation-settings: "wdth" 87.5; font-size: 13px; line-height: 1.5; }
+  .entry dd i.sw { display: inline-block; width: 12px; height: 12px; vertical-align: -1px; margin-right: 7px; border-radius: 1px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); }
+  .entry .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .below { border-top: 1px solid var(--rule); padding: 48px var(--pad) 56px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 32px; }
+  .below h2 { grid-column: 1 / span 5; font-size: 28px; line-height: 1.1; letter-spacing: -0.015em; font-variation-settings: "wdth" 112; font-weight: 760; margin: 0; }
+  .below .views { grid-column: 6 / span 7; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  .below .views a { display: block; text-decoration: none; padding: 12px 0; border-top: 1px solid var(--rule); }
+  .below .views a b { display: block; font-weight: 650; }
+  .below .views a span { color: var(--ink-2); font-size: 14px; }
+  .below .views a:hover b { text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 900px) {
+    :root { --pad: 16px; }
+    .bar nav, .find { display: none; }
+    .menu-btn { display: grid; place-items: center; }
+    .bar { gap: 12px; }
+    .find-m { display: grid !important; }
+    .hero { grid-template-columns: minmax(0, 1fr); padding-top: 18px; }
+    h1 { font-size: 27px; }
+    .lead { font-size: 15.5px; margin-bottom: 14px; }
+    .controls { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 calc(var(--pad) * -1) 12px; padding: 0 var(--pad); }
+    .controls .ctl > span { display: none; }
+    .entry { margin-top: 18px; display: grid; grid-template-columns: 112px 1fr; gap: 0 16px; border-top: 1px solid var(--rule); padding-top: 16px; }
+    .entry .well { grid-row: span 2; }
+    .entry .credit { grid-column: 1; grid-row: 3; margin: 6px 0 0; font-size: 11.5px; }
+    .entry h2 { font-size: 22px; margin-bottom: 8px; }
+    .entry dl { grid-template-columns: 1fr; gap: 0; font-size: 13px; }
+    .entry dl dt { display: none; }
+    .entry .actions { grid-column: 1 / -1; margin-top: 12px; }
+    .below { grid-template-columns: 1fr; }
+    .below h2, .below .views { grid-column: 1; }
+    .below .views { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="index.html">The Meme Ontology</a>
+  <nav aria-label="Main">
+    <a href="index.html" aria-current="page">Corpus</a>
+    <a href="time.html">Visualizations</a>
+    <a href="#">Ontology</a>
+    <a href="#">SPARQL</a>
+    <a href="#">Thesis</a>
+    <a href="#">About</a>
+  </nav>
+  <label class="find"><i class="ph ph-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Find a meme" aria-label="Find a meme by name" id="find"></label>
+  <button class="menu-btn find-m" style="display:none" aria-label="Find a meme"><i class="ph ph-magnifying-glass"></i></button>
+  <button class="menu-btn" aria-label="Open menu"><i class="ph ph-list"></i></button>
+</header>
+
+<main>
+  <div class="hero">
+    <div>
+      <h1>5,000 memes from Know Your Meme, one square each.</h1>
+      <p class="lead">Each square is one meme in its average colour, placed by the year it appeared. Select a square to open its entry.</p>
+      <div class="controls">
+        <div class="ctl"><span>Arrange</span>
+          <div class="seg" role="group" aria-label="Arrange the squares" id="arrange">
+            <button type="button" data-a="year" aria-pressed="true">Year</button>
+            <button type="button" data-a="colour" aria-pressed="false">Colour</button>
+            <button type="button" data-a="format" aria-pressed="false">Format</button>
+            <button type="button" data-a="platform" aria-pressed="false">Platform</button>
+          </div>
+        </div>
+        <div class="ctl" id="count" aria-live="polite"></div>
+      </div>
+      <div class="field" id="field">
+        <canvas id="cv" tabindex="0" role="img" aria-label="5,000 squares, one per meme, in each meme's average colour. Use the arrow keys to move between memes and Enter to open one."></canvas>
+        <div class="axis" id="axis" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <aside class="entry" id="entry" aria-live="polite"></aside>
+  </div>
+
+  <section class="below" aria-labelledby="moreTitle">
+    <h2 id="moreTitle">The same squares, read eleven ways</h2>
+    <div class="views">
+      <a href="time.html"><b>When memes appeared</b><span>Each year a column of squares</span></a>
+      <a href="#"><b>Popularity by format</b><span>Views against format</span></a>
+      <a href="#"><b>Platform story</b><span>Where memes came from, 2004 to 2025</span></a>
+      <a href="#"><b>Classifier confidence</b><span>How sure CLIP was, square by square</span></a>
+      <a href="#"><b>Property flow</b><span>Platform to format to image type</span></a>
+      <a href="#"><b>Variant family tree</b><span>Fifty annotated variants</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Master's thesis by Alice Picco, University of Bologna, supervised by Fabio Vitali.</span>
+  <span>Images belong to their creators and are shown as research objects, from Know Your Meme.</span>
+</footer>
+
+<script src="../assets/data.js"></script>
+<script src="b.js"></script>
+<script>
+(function () {
+  var rows = B.rows, M = B.M;
+  var cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+  var field = document.getElementById('field'), axis = document.getElementById('axis');
+  var state = { arrange: 'year', sel: rows.findIndex(function (r) { return r.slug === 'me-gusta'; }) };
+  var C, R, P, S; // columns, rows, pitch, square
+  var pos = new Float32Array(rows.length * 2), from = null, slotOf = new Int32Array(rows.length), atSlot = [];
+  var groups = [];
+  var QS = new URLSearchParams(location.search);
+  var WITHIN = QS.get('within') === 'hue' ? B.colKey : function (r) { return r.l; };
+  if (QS.get('arrange')) state.arrange = QS.get('arrange');
+
+  function layoutSize() {
+    var w = field.clientWidth, mobile = w < 600;
+    C = mobile ? 70 : 100;
+    P = Math.floor(w / C); S = P - 1;
+    R = Math.ceil(rows.length / C);
+    var dpr = Math.min(devicePixelRatio || 1, 2);
+    cv.width = C * P * dpr; cv.height = R * P * dpr;
+    cv.style.width = C * P + 'px'; cv.style.height = R * P + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function groupKey(r) {
+    if (state.arrange === 'year') return r.year === 0 ? 'No year' : r.year < 1999 ? 'Before 1999' : String(r.year);
+    if (state.arrange === 'format') return r.format;
+    if (state.arrange === 'platform') return r.platform;
+    return '';
+  }
+  function order() {
+    var list = rows.slice(), a = state.arrange;
+    if (a === 'year') {
+      list.sort(function (x, y) { return (x.year || 99999) - (y.year || 99999) || x.i - y.i; });
+    } else if (a === 'colour') {
+      list.sort(function (x, y) { return B.hueKey(x) - B.hueKey(y) || x.l - y.l; });
+    } else {
+      var count = {};
+      list.forEach(function (r) { var k = groupKey(r); count[k] = (count[k] || 0) + 1; });
+      list.sort(function (x, y) {
+        var kx = groupKey(x), ky = groupKey(y);
+        if (kx !== ky) {
+          if (kx === 'Unknown') return 1; if (ky === 'Unknown') return -1;
+          return count[ky] - count[kx] || (kx < ky ? -1 : 1);
+        }
+        return B.colKey(x) - B.colKey(y);
+      });
+    }
+    // fill column by column; within a column, sort by hue so each column reads as a gradient
+    var out = [], rank = new Int32Array(rows.length);
+    list.forEach(function (r, k) { rank[r.i] = k; });
+    for (var c = 0; c < C; c++) {
+      var col = list.slice(c * R, c * R + R);
+      if (a === 'year' || a === 'format' || a === 'platform') {
+        // keep group order inside a column when a boundary falls in it
+        col.sort(function (x, y) {
+          var gx = groupKey(x), gy = groupKey(y);
+          if (gx !== gy) return rank[x.i] - rank[y.i];
+          return WITHIN(x) - WITHIN(y);
+        });
+      }
+      out = out.concat(col);
+    }
+    groups = [];
+    var last = null;
+    out.forEach(function (r, k) {
+      var g = groupKey(r);
+      if (g !== last) { groups.push({ key: g, col: Math.floor(k / R), n: 0 }); last = g; }
+      groups[groups.length - 1].n++;
+    });
+    return out;
+  }
+
+  function place(animate) {
+    var list = order();
+    if (animate && !B.reduce) from = pos.slice(); else from = null;
+    atSlot = [];
+    list.forEach(function (r, k) {
+      var c = Math.floor(k / R), rr = k % R;
+      pos[r.i * 2] = c * P; pos[r.i * 2 + 1] = rr * P;
+      slotOf[r.i] = k; atSlot[k] = r.i;
+    });
+    drawAxis();
+    if (from) tween(); else { draw(1);  }
+    document.querySelectorAll('#arrange button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.a === state.arrange)); });
+  }
+
+  function ease(t) { return 1 - Math.pow(1 - t, 3); }
+  function tween() {
+    var t0 = performance.now(), dur = 700;
+    function frame(now) {
+      var t = Math.min(1, (now - t0) / (dur + 260));
+      draw(t);
+      if (t < 1) requestAnimationFrame(frame); else { from = null; draw(1); }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, C * P, R * P);
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i], x = pos[i * 2], y = pos[i * 2 + 1];
+      if (from) {
+        // stagger by destination column so the field reads as data moving left to right
+        var d = (x / (C * P)) * 260 / (700 + 260);
+        var k = ease(Math.max(0, Math.min(1, (t - d) / (700 / 960))));
+        x = from[i * 2] + (x - from[i * 2]) * k; y = from[i * 2 + 1] + (y - from[i * 2 + 1]) * k;
+      }
+      ctx.fillStyle = B.colour(r);
+      ctx.fillRect(x, y, S, S);
+    }
+    if (!from && state.sel > -1) {
+      // the selected meme, lifted out of the field at three times its size
+      var sx = pos[state.sel * 2] + S / 2, sy = pos[state.sel * 2 + 1] + S / 2, L = Math.round(S * 3.2);
+      var lx = Math.max(2, Math.min(C * P - L - 2, sx - L / 2)), ly = Math.max(2, Math.min(R * P - L - 2, sy - L / 2));
+      ctx.fillStyle = 'rgba(0,0,0,.55)'; ctx.fillRect(lx - 1, ly + 3, L + 4, L + 4);
+      ctx.fillStyle = B.colour(rows[state.sel]); ctx.fillRect(lx, ly, L, L);
+      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.strokeRect(lx, ly, L, L);
+    }
+  }
+
+  function drawAxis() {
+    var yr = state.arrange === 'year', minGap = yr ? 40 : 96;
+    var selKey = groupKey(rows[state.sel]);
+    var cand = groups.filter(function (g) { return g.key === selKey || g.n >= (yr ? 1 : R * 0.6); });
+    var sel = cand.find(function (g) { return g.key === selKey; });
+    var picked = [], lastX = -999;
+    cand.forEach(function (g) {
+      var x = g.col * P;
+      if (g !== sel && sel && Math.abs(x - sel.col * P) < minGap) return;
+      if (g === sel || x - lastX >= minGap) { picked.push(g); lastX = x; }
+    });
+    axis.innerHTML = picked.map(function (g) {
+      var label = g.key === 'Before 1999' ? '<1999' : g.key === 'No year' ? 'none' : yr && g !== sel ? "'" + g.key.slice(2) : g.key;
+      return '<span class="' + (g === sel ? 'hi' : '') + '" style="left:' + g.col * P + 'px">' + label.replace('<', '&lt;') + '</span>';
+    }).join('');
+    var n = groups.length;
+    document.getElementById('count').textContent = state.arrange === 'year' ? '' :
+      state.arrange === 'colour' ? 'Reds to purples, then greys' : n + ' groups, largest first';
+  }
+
+  function renderEntry() {
+    var r = rows[state.sel], ex = M.extra[r.slug];
+    var name = B.title(r.slug);
+    var img = ex ? '<img src="../assets/img/' + ex.img + '" alt="' + name + ', the image of the Know Your Meme entry">' :
+      '<span style="width:100%;height:100%;background:' + B.colour(r) + '" aria-hidden="true"></span>';
+    var formats = ex ? ex.formats.join(', ') : r.format;
+    var clip = ex ? ex.imageType + ', ' + ex.clipScore.toFixed(2) : r.type;
+    document.getElementById('entry').innerHTML =
+      '<div class="well">' + img + '</div>' +
+      '<p class="credit">' + (ex ? 'Image from Know Your Meme, shown small as a research object.' : 'Average colour shown; the image opens with the entry.') + '</p>' +
+      '<h2>' + name + '</h2>' +
+      '<dl>' +
+      '<dt>Year</dt><dd>' + (r.year || 'not recorded') + '</dd>' +
+      '<dt>Format</dt><dd>' + formats + '</dd>' +
+      '<dt>Platform</dt><dd>' + r.platform + '</dd>' +
+      '<dt>Views</dt><dd>' + B.fmt(r.views) + '</dd>' +
+      '<dt>Image type</dt><dd>' + clip + ' <span style="color:var(--ink-2)">(CLIP)</span></dd>' +
+      '<dt>Average colour</dt><dd><i class="sw" style="background:' + B.colour(r) + '"></i>hsl(' + r.h + ' ' + r.s + '% ' + r.l + '%)</dd>' +
+      '</dl>' +
+      '<div class="actions"><a class="btn primary" href="#">Open entry</a><a class="btn" href="#"><i class="ph ph-code" aria-hidden="true"></i>SPARQL</a></div>';
+  }
+
+  function select(i) { state.sel = i; renderEntry(); draw(1); drawAxis();  }
+
+  cv.addEventListener('mousemove', function (e) {
+    var b = cv.getBoundingClientRect(), c = Math.floor((e.clientX - b.left) / P), rr = Math.floor((e.clientY - b.top) / P);
+    var k = c * R + rr, i = atSlot[k];
+    if (i === undefined || c >= C || rr >= R) return B.hideTip();
+    var r = rows[i];
+    B.showTip('<b>' + B.title(r.slug) + '</b>' + (r.year || 'no year') + ', ' + r.format + ', ' + r.platform, e.clientX, e.clientY);
+  });
+  cv.addEventListener('mouseleave', B.hideTip);
+  cv.addEventListener('click', function (e) {
+    var b = cv.getBoundingClientRect(), k = Math.floor((e.clientX - b.left) / P) * R + Math.floor((e.clientY - b.top) / P);
+    if (atSlot[k] !== undefined) select(atSlot[k]);
+  });
+  cv.addEventListener('keydown', function (e) {
+    var k = slotOf[state.sel], d = { ArrowUp: -1, ArrowDown: 1, ArrowLeft: -R, ArrowRight: R }[e.key];
+    if (d === undefined) return;
+    e.preventDefault();
+    var n = Math.max(0, Math.min(rows.length - 1, k + d));
+    select(atSlot[n]);
+  });
+  document.getElementById('arrange').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    state.arrange = b.dataset.a; place(true);
+  });
+  document.getElementById('find').addEventListener('change', function (e) {
+    var q = e.target.value.trim().toLowerCase().replace(/\s+/g, '-');
+    var i = rows.findIndex(function (r) { return r.slug.indexOf(q) > -1; });
+    if (i > -1) select(i);
+  });
+  var rt;
+  addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { layoutSize(); place(false); }, 120); });
+
+  layoutSize(); renderEntry(); place(false);
+  if (document.fonts) document.fonts.ready.then(function () { drawAxis();  });
+})();
+</script>
+</body>
+</html>

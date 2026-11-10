@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.3 The FRBR Model · Towards an Ontology of Memes (proposal C)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Spline+Sans+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="c.css">
+<style>
+  body { background: #f8f9f8; }
+  .bar { position: sticky; top: 0; z-index: 3; background: #f8f9f8; border-bottom: 1px solid var(--rule); }
+  .reader { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 48px; padding: 0 var(--pad); }
+  .index { position: sticky; top: 64px; align-self: start; height: calc(100dvh - 64px); overflow-y: auto; padding: 22px 0 24px; display: flex; flex-direction: column; scrollbar-width: thin; }
+  .search { position: relative; margin-bottom: 18px; }
+  .search input { width: 100%; height: 40px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; padding: 0 12px 0 36px; font-size: 15px; }
+  .search input::placeholder { color: var(--ink-2); }
+  .search i { position: absolute; left: 12px; top: 11px; color: var(--ink-2); font-size: 17px; }
+  .index h2 { font-size: 15px; font-weight: 750; margin: 0 0 8px; }
+  .toc { list-style: none; margin: 0; padding: 0; font-size: 14.5px; }
+  .toc a { display: block; text-decoration: none; padding: 4px 10px; border-radius: 6px; color: var(--ink); }
+  .toc a:hover { background: #e7ebe7; color: var(--ink); }
+  .toc .sub a { padding-left: 26px; color: var(--ink-2); font-size: 14px; }
+  .toc a[aria-current] { background: var(--key); color: var(--ink); font-weight: 650; }
+  .toc .ch > a { font-weight: 600; }
+  .where { font: 400 12.5px/1.5 var(--mono); color: var(--ink-2); margin: 14px 10px 0; }
+  .edition { margin-top: auto; padding-top: 20px; }
+  .edition h3 { font-size: 13.5px; font-weight: 700; margin: 0 0 8px; }
+  .edition dl { margin: 0; display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 4px 10px; font-size: 13px; }
+  .edition dt { color: var(--ink-2); }
+  .edition dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+
+  .text { padding: 0 0 80px; }
+  .runhead { position: sticky; top: 64px; z-index: 2; background: #f8f9f8; display: grid; grid-template-columns: 680px 260px; gap: 48px; padding: 16px 0 12px; border-bottom: 1px solid var(--rule); }
+  .runhead span { font-size: 14px; color: var(--ink-2); }
+  .runhead b { color: var(--ink); font-weight: 700; }
+  .runhead .prog { font: 400 12.5px/1.6 var(--mono); }
+  .row { display: grid; grid-template-columns: 680px 260px; gap: 48px; }
+  .row > :first-child { margin: 0 0 22px; }
+  h1.sec { font-size: 36px; letter-spacing: -0.025em; line-height: 1.05; font-weight: 850; margin: 40px 0 22px !important; }
+  .text p { font-size: 18.5px; line-height: 1.68; }
+  .cite { text-decoration: underline dotted; text-underline-offset: 4px; color: inherit; }
+  .margin { font-size: 13.5px; color: var(--ink-2); line-height: 1.45; padding-top: 5px; }
+  .pg { font: 500 12.5px/1 var(--mono); color: var(--ink); display: flex; align-items: center; gap: 8px; }
+  .pg::before { content: ""; width: 18px; height: 1px; background: var(--ink); }
+  .bib { margin-top: 14px; }
+  .bib b { color: var(--ink); font-weight: 600; }
+
+  .levels-fig { background: #fff; border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px 14px; margin-top: 0; }
+  .levels-fig p { margin: 0 0 10px; font-size: 13.5px; color: var(--ink); }
+  .levels-fig ol { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 3px; }
+  .levels-fig li { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; padding: 4px 8px; border-radius: 4px; background: #eef1ee; color: var(--ink); }
+  .levels-fig li span { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
+  .levels-fig li.on { background: var(--key); font-weight: 650; }
+  .levels-fig li.on span { color: var(--ink); }
+  .levels-fig li.prop { background: none; outline: 1px dashed #9aa39c; outline-offset: -1px; }
+  .levels-fig a { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+
+  .def { display: grid; grid-template-columns: 132px 1fr; gap: 16px; }
+  .def .chip { align-self: start; margin-top: 6px; font-size: 14px; font-weight: 700; background: #e3e8e3; border-radius: 6px; padding: 3px 9px; justify-self: start; }
+  .def p { margin: 0; }
+  .def .chip.on { background: var(--key); }
+  .term { font: 400 12.5px/1.5 var(--mono); color: var(--ink); padding-top: 9px; }
+  .term small { display: block; font-family: var(--sans); font-size: 13px; color: var(--ink-2); }
+  mark { background: none; box-shadow: inset 0 -0.42em 0 rgba(0, 177, 64, .35); color: inherit; }
+
+  @media (max-width: 1240px) {
+    .reader { grid-template-columns: 260px minmax(0, 1fr); gap: 36px; }
+    .row, .runhead { grid-template-columns: minmax(0, 1fr) 220px; gap: 32px; }
+  }
+  @media (max-width: 860px) {
+    :root { --pad: 16px; }
+    .bar { height: 56px; }
+    .bar nav, .brand span { display: none; }
+    .menu-btn { display: grid; place-items: center; }
+    .reader { grid-template-columns: 1fr; }
+    .index { display: none; }
+    .runhead { top: 56px; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; padding: 8px 0; align-items: center; }
+    .runhead .in { display: none; }
+    .runhead .toc-btn { display: inline-flex !important; }
+    .row { grid-template-columns: 1fr; gap: 0; }
+    .row > :first-child { margin-bottom: 10px; }
+    .margin { padding: 0 0 18px; }
+    .margin:empty { display: none; }
+    .text p { font-size: 17px; line-height: 1.62; }
+    h1.sec { font-size: 28px; margin-top: 24px !important; }
+    .def { grid-template-columns: 1fr; gap: 6px; }
+    .def .chip { margin-top: 0; }
+    .term { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="index.html"><b>MEMO</b><span>The Meme Ontology</span></a>
+  <nav aria-label="Main">
+    <a href="index.html">Levels</a>
+    <a href="#">Corpus</a>
+    <a href="#">Ontology</a>
+    <a href="#">SPARQL</a>
+    <a href="thesis.html" aria-current="page">Thesis</a>
+  </nav>
+  <button class="menu-btn" aria-label="Open menu"><i class="ph ph-list"></i></button>
+</header>
+
+<div class="reader">
+  <aside class="index" aria-label="Thesis contents">
+    <label class="search"><i class="ph ph-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Search 32,812 words" aria-label="Search the thesis"></label>
+    <h2>Towards an Ontology of Memes</h2>
+    <ul class="toc">
+      <li><a href="#">Abstract</a></li>
+      <li class="ch"><a href="#">1 Introduction</a></li>
+      <li class="ch"><a href="#">2 Theoretical framework</a></li>
+      <li class="sub"><a href="#">2.1 Web archives</a></li>
+      <li class="sub"><a href="#">2.2 Archival practices of visual content</a></li>
+      <li class="sub"><a href="#s23" aria-current="location">2.3 The FRBR model</a></li>
+      <li class="sub"><a href="#">2.4 Ontologies</a></li>
+      <li class="sub"><a href="#">2.5 Cultural analytics and the digital humanities</a></li>
+      <li class="ch"><a href="#">3 Methodology</a></li>
+      <li class="ch"><a href="#">4 Findings: visualizations</a></li>
+      <li class="ch"><a href="#">5 Future developments</a></li>
+      <li class="ch"><a href="#">6 Conclusion</a></li>
+      <li><a href="#">Bibliography</a></li>
+    </ul>
+    <p class="where">Page 32 of 125</p>
+    <div class="edition">
+      <h3>This copy, in FRBR terms</h3>
+      <dl>
+        <dt>Work</dt><dd>Towards an Ontology of Memes</dd>
+        <dt>Expression</dt><dd>Final text, in English</dd>
+        <dt>Manifestation</dt><dd>PDF, 125 pages, and this web edition with the same page numbers</dd>
+        <dt>Item</dt><dd class="mono" style="font-size:12px">thememeontology.netlify.app/thesis</dd>
+      </dl>
+    </div>
+  </aside>
+
+  <main class="text" id="text">
+    <div class="runhead">
+      <span><b>2.3 The FRBR model</b><span class="in"> in 2 Theoretical framework</span></span>
+      <span class="prog">p. 31</span>
+      <button class="menu-btn toc-btn" style="display:none" aria-label="Contents and search"><i class="ph ph-list-magnifying-glass"></i></button>
+    </div>
+
+    <div class="row"><h1 class="sec" id="s23">2.3 The FRBR model</h1><div class="margin"></div></div>
+
+    <div class="row"><p>While archival practices for visual content establish what needs to be classified and the different levels of visual meaning that an adequate ontology of memes must capture, the FRBR model provides a formal model for expressing the relationships between abstract cultural objects and their concrete realizations, grounding the analysis of visual material in a structural hierarchy. As anticipated in both the introduction and the previous section, KnowYourMeme's community archive independently reached an organizational logic that mirrors FRBR's core categories.</p><div class="margin"></div></div>
+
+    <div class="row"><p>Functional Requirements for Bibliographic Records emerged from a crisis in bibliographic control. By the 1990s, the proliferation of formats, editions, translations and versions of cultural works exposed the inadequacy of traditional catalog records and archival practices <a class="cite" href="#">(IFLA 1998, 1)</a>. Traditional cataloging described physical items without adequate specificity for expressing the relationships between those items and the abstract intellectual works they represent and embody.</p><div class="margin"></div></div>
+
+    <div class="row"><p>In 1992 the IFLA study group was tasked with producing a conceptual model <a class="cite" href="#">(IFLA 1998, 2)</a> that could capture these relationships. The FRBR model was published in 1998 as a fundamental rethinking of what bibliographic description consists of. The model was organized around user tasks rather than cataloging convenience <a class="cite" href="#">(IFLA 1998, 3)</a>. The actions of finding, identifying, selecting and obtaining cultural objects became the center of the documentation process and shifted the focus from describing items to describing works and their relationships.</p><div class="margin"></div></div>
+
+    <div class="row"><p>FRBR's most important theoretical contribution is the distinction between the Work as an abstract intellectual entity and its concrete physical or digital realizations. Before FRBR, bibliographic description focused on the physical item without adequate tools for expressing its relationship to the abstract work it embodied. This limitation meant that catalog records for different editions of the same novel, different recordings of the same symphony or different translations of the same text appeared as unrelated objects rather than as related realizations of a single intellectual creation. FRBR provided the conceptual tools to make these relationships explicit and formal, transforming the catalog from a list of items into a map of intellectual relationships <a class="cite" href="#">(IFLA 1998, 7)</a>.</p>
+      <div class="margin"><span class="pg" id="p-31">p. 31</span><div class="bib"><b>IFLA 1998.</b> IFLA Study Group on the Functional Requirements for Bibliographic Records. <i>Functional Requirements for Bibliographic Records.</i> München: K.G. Saur.</div></div></div>
+
+    <div class="row"><p>Since its publication FRBR has been applied well beyond library cataloging demonstrating that its underlying logic captures something general about the nature of cultural objects rather than something specific to bibliographic records.</p><div class="margin"></div></div>
+
+    <div class="row"><p>If we think of a musical piece, for example, the work/expression/manifestation hierarchy maps naturally onto the relationships between a musical composition, a specific performance and a specific recording. For moving image, the distinction is between a film as an intellectual work, a specific cut or version as an expression and a specific screening of it as a manifestation. Cultural heritage institutions and museum collections increasingly use FRBR-derived models <a class="cite" href="#">(Riva, Le Bœuf, and Žumer 2017, 12)</a> to express the relationships between original artworks, reproductions and digital copies. These applications demonstrate that FRBR is not a library-specific technical standard but a general model for the ontological structure of cultural objects.</p><div class="margin"></div></div>
+
+    <div class="row" id="anchor"><p>As established, a rudimentary and community-driven version of a FRBR mapping on viral images is already implemented on Know Your Meme. The decisive criterion for applying the hierarchy is the identity-bearing role of the Work: in FRBR, the Work is what individuates a cultural object, so that two objects realizing the same Work are realizations of the same thing. For memes, the entity that satisfies this criterion is the template itself: a hand-drawn redraw of Distracted Boyfriend shares no pixels with the original stock photograph, yet it is unmistakably the same meme. What all such realizations share is not an image but an abstract creation: the template as a recognizable format. <mark>The template, therefore, is the Work.</mark></p>
+      <div class="margin">
+        <div class="levels-fig">
+          <p>In MEMO the Work is <span class="mono">memo:MemeConcept</span>, one per Know Your Meme entry.</p>
+          <ol>
+            <li>Idea <span>MemeIdea</span></li>
+            <li class="on">Work <span>MemeConcept</span></li>
+            <li>Expression <span>VariantInstance</span></li>
+            <li class="prop">Manifestation <span>property</span></li>
+            <li class="prop">Item <span>property</span></li>
+          </ol>
+          <a href="index.html?level=work">See the five levels for Stonks <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </div></div>
+
+    <div class="row"><p>To take Distracted Boyfriend as an example:</p><div class="margin"><span class="pg" id="p-32">p. 32</span></div></div>
+
+    <div class="row"><div class="def"><span class="chip on">Work</span><p>The Distracted Boyfriend template as an abstract creation: the named, community-recognized format that all its realizations share, documented by the KnowYourMeme entry. The Work is what makes two visually different images instances of the same meme.</p></div><div class="margin term">memo:MemeConcept<small>a class, 5,000 individuals</small></div></div>
+
+    <div class="row"><div class="def"><span class="chip">Expression</span><p>Each distinct creative realization of the template in perceivable signs. The original uncaptioned stock photograph is itself an Expression: the originating Expression of the Work, the first realization through which the Work came into existence. Every captioned variant, redraw, crossover or localization is a further Expression of the same Work: a specific combination of image and text that realizes the template in a distinct creative form.</p></div><div class="margin term">memo:VariantInstance<small>a class, for the variants</small></div></div>
+
+    <div class="row"><div class="def"><span class="chip">Manifestation</span><p>The embodiment of an Expression in a specific digital form. The same captioned variant circulating as a 1200×800 JPEG, as a PNG, or as a recompressed re-upload constitutes different Manifestations of the same Expression: different file formats and resolutions of one and the same creative realization.</p></div><div class="margin term">dcterms:format<small>a property, not a class</small></div></div>
+
+    <div class="row"><div class="def"><span class="chip">Item</span><p>A single localized copy of a Manifestation: the file hosted at a specific URL on a specific platform at a specific moment (one Reddit upload, one Twitter/X post, one copy on KnowYourMeme's content delivery network).</p></div><div class="margin term">memo:imageFilePath<small>with the image URL and scrape date</small></div></div>
+  </main>
+</div>
+
+<script>
+  // The mark in the text and the lit level in the margin are the same claim, drawn twice.
+  if (new URLSearchParams(location.search).has('at')) {
+    var a = document.getElementById('anchor');
+    window.scrollTo(0, a.getBoundingClientRect().top + scrollY - (innerWidth < 860 ? 108 : 122));
+  }
+</script>
+</body>
+</html>
