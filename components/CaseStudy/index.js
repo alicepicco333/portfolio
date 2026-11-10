@@ -10,7 +10,7 @@ import MethodStrip, { verbOf } from "../Method";
 // with the current one marked. Each section carries its own copy, so no scroll tracking is needed.
 function Section({ id, index, title, verb, toc = [], children }) {
   return (
-    <section id={id} className="scroll-mt-[132px] grid gap-x-4 gap-y-6 border-t border-ink/15 px-4 py-14 tablet:px-10 laptop:grid-cols-4 laptop:py-[88px]">
+    <section id={id} className="scroll-mt-[132px] grid gap-x-4 gap-y-6 px-4 py-14 tablet:px-10 laptop:grid-cols-4 laptop:py-[88px]">
       <div className="flex flex-col gap-1 laptop:sticky laptop:top-[140px] laptop:self-start">
         {verb && <MethodStrip current={verb} arrows={false} className="mb-3 hidden text-[12px] laptop:flex" />}
         <span className="fu-meta text-fieldgrey">{index}</span>
@@ -80,7 +80,7 @@ function Figure({ src, alt, caption, strings, lang = "it", className = "" }) {
         <figcaption className="flex flex-col gap-3">
           {caption && <span className="fu-meta text-fieldgrey">{caption}</span>}
           {strings && (
-            <dl className="grid gap-x-8 gap-y-2 border-t border-ink/15 pt-3 tablet:grid-cols-2 laptop:grid-cols-3">
+            <dl className="grid gap-x-8 gap-y-2 pt-1 tablet:grid-cols-2 laptop:grid-cols-3">
               {strings.map(([original, english]) => (
                 <div key={original} className="flex flex-col">
                   <dt lang={lang} className="text-[15px] font-medium leading-snug">{original}</dt>

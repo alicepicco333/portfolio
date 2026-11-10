@@ -19,20 +19,20 @@ const ProjectGraph = ({ projectId }) => {
   return (
     <div className="flex max-w-[320px] flex-col gap-4">
       <Sigil skills={used.map((n) => n.id)} size={200} width={2.5} />
-      <ul className="flex flex-col border-t border-ink/30" aria-label="Skills in this project">
+      <ul className="flex flex-col" aria-label="Skills in this project">
         {used.map((n) => (
-          <li key={n.id}>
+          <li key={n.id} className="border-t border-ink/30 first:border-t-0">
             <button
               type="button"
               aria-expanded={picked === n.id}
               onClick={() => setPicked((v) => (v === n.id ? null : n.id))}
-              className="flex min-h-[44px] w-full items-center justify-between border-b border-ink/30 text-left text-[16px] hover:text-olive"
+              className="flex min-h-[44px] w-full items-center justify-between text-left text-[16px] hover:text-olive"
             >
               <span className={picked === n.id ? "font-semibold text-olive" : ""}>{n.label}</span>
               <span className="font-mono text-[14px] text-graphite">{clusterOf(n.id).label.toUpperCase()}</span>
             </button>
             {picked === n.id && (
-              <div className="flex flex-col gap-1.5 border-b border-ink/30 py-3 text-[16px] leading-snug" aria-live="polite">
+              <div className="flex flex-col gap-1.5 pb-3 text-[16px] leading-snug" aria-live="polite">
                 <span className="font-mono text-[14px] text-graphite">{n.tools.join(", ")}</span>
                 {others.length > 0 && (
                   <span>

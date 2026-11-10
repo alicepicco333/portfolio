@@ -451,7 +451,7 @@ export function Cast({ data }) {
           <SubHead meta="From the cast card">Requirements the cast adds up to</SubHead>
           <ol className="grid gap-x-6 tablet:grid-cols-2">
             {requirements.map((r) => (
-              <li key={r.id} className="grid grid-cols-[64px_1fr] gap-2 border-b border-ink/10 py-2 text-[16px]">
+              <li key={r.id} className="grid grid-cols-[64px_1fr] gap-2 py-1.5 text-[16px]">
                 <span className="fu-meta pt-[3px] text-fieldgrey">{r.id}</span>
                 <span>{r.title}</span>
               </li>
@@ -596,11 +596,11 @@ export function UrgencyExplorer({ data }) {
 
         <div className="flex flex-col gap-4">
           <p className="text-[16px] leading-relaxed">{version.note}</p>
-          <ol className="flex flex-col border-t border-ink/15">
+          <ol className="flex flex-col">
             {version.issues.map((i) => {
               const on = active === i.id;
               return (
-                <li key={i.id} className="border-b border-ink/10">
+                <li key={i.id} className="border-t border-ink/10 first:border-t-0">
                   <button
                     type="button"
                     onClick={() => setActive(on ? null : i.id)}

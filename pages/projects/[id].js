@@ -264,7 +264,7 @@ export default function ProjectPage({ project, number, next }) {
 
         <Link
           href={`/projects/${next.id}`}
-          className="group mt-16 grid gap-x-4 gap-y-2 border-t border-ink px-4 pb-16 pt-4 tablet:px-10 laptop:grid-cols-4"
+          className="group mt-16 grid gap-x-4 gap-y-2 px-4 pb-16 pt-4 tablet:px-10 laptop:grid-cols-4"
         >
           <span className="fu-meta text-fieldgrey">Next work →</span>
           <span className="fu-display text-[36px] group-hover:underline tablet:text-phi2 laptop:col-span-3">{next.title}</span>
