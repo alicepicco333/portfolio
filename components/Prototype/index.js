@@ -52,17 +52,32 @@ export const Clip = ({ data, title }) => {
   const ref = useRef(null);
   const trackRef = useRef(null);
   const [line, setLine] = useState(-1);
+  const [sound, setSound] = useState(false);
   const lines = data.transcript || [];
+
+  // the loop starts silent (browsers only autoplay muted video); sound comes on with a click, and the
+  // recording starts again from the first command so the words are heard in order
+  const toggleSound = () => {
+    const v = ref.current;
+    if (!v) return;
+    const on = !sound;
+    v.muted = !on;
+    if (on) {
+      v.currentTime = 0;
+      v.play().catch(() => {});
+    }
+    setSound(on);
+  };
 
   // a GIF-like clip plays only while it is on screen
   useEffect(() => {
     const v = ref.current;
     if (!v || !gif) return undefined;
-    v.muted = true; // React does not write `muted` into the server HTML, and browsers only autoplay muted video
+    v.muted = !sound; // React does not write `muted` into the server HTML, and browsers only autoplay muted video
     const io = new IntersectionObserver(([e]) => (e.isIntersecting ? v.play().catch(() => {}) : v.pause()), { threshold: 0.25 });
     io.observe(v);
     return () => io.disconnect();
-  }, [gif]);
+  }, [gif]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // light the line being spoken: the captions' cues, in order, are the transcript's lines
   useEffect(() => {
@@ -87,6 +102,7 @@ export const Clip = ({ data, title }) => {
         {data.caption && <p className="max-w-[720px] text-[19px] leading-relaxed laptop:col-span-3">{data.caption}</p>}
       </div>
       <div className="grid w-full max-w-[1440px] overflow-hidden border border-ink bg-[#0E0E10] tablet:h-[clamp(620px,88vh,960px)] tablet:grid-cols-[auto_1fr] tablet:grid-rows-[minmax(0,1fr)]">
+        <div className="relative tablet:h-full">
         <video
           key={gif ? "gif" : "player"}
           ref={ref}
@@ -95,12 +111,24 @@ export const Clip = ({ data, title }) => {
           aria-label={`${title}: ${data.title || "recording"}`}
           poster={data.poster ? withBase(data.poster) : undefined}
           playsInline
-          {...(gif ? { muted: true, loop: true, autoPlay: true, preload: "auto" } : { controls: true, preload: "none", muted: Boolean(data.loop) })}
+          {...(gif ? { muted: true, loop: true, autoPlay: true, preload: "auto" } : { controls: true, preload: "none" })}
         >
           {data.webm && <source src={withBase(data.webm)} type="video/webm" />}
           <source src={withBase(data.src)} type="video/mp4" />
           {data.captions && <track ref={trackRef} kind="captions" src={withBase(data.captions)} srcLang="en" label="English" default />}
         </video>
+        {gif && (
+          <button
+            type="button"
+            onClick={toggleSound}
+            aria-pressed={sound}
+            className="absolute bottom-4 left-4 inline-flex min-h-[44px] items-center gap-2 border border-[rgba(213,214,219,0.6)] bg-[rgba(14,14,16,0.82)] px-4 font-mono text-[14px] uppercase tracking-[0.12em] text-[#D5D6DB] hover:bg-[#0E0E10] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8FD9A4]"
+          >
+            <span aria-hidden="true">{sound ? "◼" : "▶"}</span>
+            {sound ? "Sound off" : "Sound on"}
+          </button>
+        )}
+        </div>
         {lines.length > 0 && (
           <div className="flex flex-col justify-center gap-4 px-6 py-8 tablet:px-12">
             <p className="font-mono text-[14px] uppercase tracking-[0.12em] text-[rgba(213,214,219,0.7)]">Spoken to the car</p>
