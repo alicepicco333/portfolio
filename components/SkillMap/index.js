@@ -101,9 +101,7 @@ function fitAxis(ITEMS, key, lo, hi, size) {
 }
 
 // ——— links ———
-// The map grows out of HCI: links are drawn from the end nearer to it. Every label sits to the right of
-// its skill, so each link leaves its left-hand skill steeply (up or down, clear of the label) and reaches
-// its right-hand skill level, from the left: one family of curves. A level link sags away from the middle.
+// The map grows out of HCI: links are drawn from the end nearer to it. Links are straight lines.
 const dist = ([a, b], [c, d]) => Math.hypot(a - c, b - d);
 const RANK = Object.fromEntries([...NODES].sort((a, b) => dist(MAP.pos[a.id], MAP.pos.hci) - dist(MAP.pos[b.id], MAP.pos.hci)).map((n, i) => [n.id, i]));
 const LINKS = EDGES.map(([a, b]) => (RANK[a] <= RANK[b] ? { a, b, key: `${a}-${b}` } : { a: b, b: a, key: `${a}-${b}` }));
@@ -127,27 +125,9 @@ function curveOf(link, offs = ZERO) {
   const [x2, y2] = pos(link.b);
   const a = [x1 + offs[link.a][0], y1 + offs[link.a][1]];
   const b = [x2 + offs[link.b][0], y2 + offs[link.b][1]];
-  let cx = 0;
-  let cy = 0;
-  NODES.forEach((n) => {
-    const [x, y] = pos(n.id);
-    cx += x / NODES.length;
-    cy += y / NODES.length;
-  });
-  const [L, R] = a[0] <= b[0] ? [a, b] : [b, a];
-  const dx = R[0] - L[0];
-  const dy = R[1] - L[1];
-  const mx = (a[0] + b[0]) / 2;
-  const my = (a[1] + b[1]) / 2;
-  let c;
-  if (Math.abs(dy) < 0.3 * dx) {
-    c = [mx, my + (my > cy ? 1 : -1) * Math.min(0.2 * dx, 64)];
-  } else {
-    // towards the corner under (or over) the left end: steep out of it, level into the right end
-    const k = 0.62;
-    c = [mx + (L[0] - mx) * k, my + (R[1] - my) * k];
-  }
-  return [a, c, b];
+  // straight links (Alice prefers them to curves): the control point sits halfway, so the
+  // quadratic path, the pulses and the card placement all follow the straight line
+  return [a, [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2], b];
 }
 
 // ——— the card and the leaves ———
