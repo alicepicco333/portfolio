@@ -61,21 +61,27 @@ export const SKILL_NOTES = {
 };
 
 // The home map is a fixed, hand-placed 2D layout, drawn at 1440 × 920 and scaled to the screen,
-// so no node, label or card can leave the frame. `label` is [dx, dy, text-anchor] of the skill chip's text.
+// so no node, label or card can leave the frame. Every skill sits on a grid of five even columns, and no
+// two links cross: the ring of seven (ethnography, user research, HCI, UX design, visual design, data
+// visualization, digital archives) runs round the edge, the HCI path (HCI, interaction design, live
+// coding) down the middle, speculative design under interaction design, ontologies outside the archives.
+// The HCI side holds the centre column. Every label sits to the right of its skill.
 export const MAP = {
   W: 1440,
   H: 920,
-  // spread over the whole stage: Listening top left, Shaping top right, Ordering bottom left,
-  // Counting in the middle, Playing bottom right
   pos: {
-    anth: [150, 200], ur: [400, 165], hci: [650, 215], ux: [930, 140], vis: [1200, 205], ixd: [900, 400],
-    live: [1100, 610], spec: [1170, 360], dv: [700, 640], arch: [170, 560], onto: [400, 800],
+    anth: [40, 100], hci: [630, 100], vis: [1220, 100],
+    ur: [335, 305], ux: [925, 305],
+    ixd: [630, 510],
+    onto: [40, 715], spec: [630, 715], live: [925, 715],
+    arch: [335, 920], dv: [1220, 920],
   },
   label: {
     anth: [22, 6, "start"], ur: [22, 6, "start"], hci: [22, 6, "start"], ux: [22, 6, "start"], vis: [22, 6, "start"],
     ixd: [22, 6, "start"], spec: [22, 6, "start"], live: [22, 6, "start"], dv: [22, 6, "start"], arch: [22, 6, "start"], onto: [22, 6, "start"],
   },
-  clusters: { listening: [330, 330], shaping: [1010, 290], playing: [1130, 530], counting: [660, 730], ordering: [40, 900] },
+  // each verb sits with its step, as a line over (-1) or under (1) one of its skills, on the outer side
+  clusters: { listening: ["anth", -1], shaping: ["vis", -1], ordering: ["onto", -1], counting: ["dv", 1], playing: ["live", -1] },
   // the cropped top strip above the graph: nothing is placed there
   reserved: [[0, 0, 1440, 100]],
 };
