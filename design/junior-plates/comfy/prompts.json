@@ -1,0 +1,74 @@
+{
+  "about": "ComfyUI pictures for the plates of \"Glove, Visor, Rover\" (design/junior-plates). Generated only where the decks used generated or third-party pictures. SDXL base 1.0 on an RTX 4060 laptop GPU with 8 GB; this machine needs ComfyUI started with \"--fp8_e4m3fn-unet --fp8_e4m3fn-text-enc --cache-none\" (fp16 weights ran out of memory), so the seeds below reproduce the pictures with those flags. After generation every picture is graded by ../grade.py with the arguments in \"grade\" (grey, with the green glow as the only colour) and saved to ../img/<name>.jpg.",
+  "settings": {
+    "checkpoint": "sd_xl_base_1.0.safetensors",
+    "controlnet": "controlnet-depth-sdxl-small.safetensors",
+    "steps": 32,
+    "cfg": 6.0,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras",
+    "width": 1216,
+    "height": 832,
+    "negative": "text, letters, watermark, logo, signature, caption, frame, border, illustration, drawing, painting, sketch, cartoon, anime, 3d render, cgi, game screenshot, oversaturated, vivid colours, orange, red, blue, purple, magenta, face, deformed hands, extra fingers, blurry, lowres, jpeg artifacts"
+  },
+  "images": {
+    "postcard": {
+      "use": "plate 2, A postcard from Proxima b (replaces the midterm's generated postcard)",
+      "prompt": "wide landscape photograph of a desolate grey alien plain at dusk, in the middle distance a dense field of tall thin black stone spikes jutting from the ground like a warning monument, small patches of softly glowing green fungus on the dark ground between the spikes, a lone small figure in a sealed spacesuit seen from behind, two small domes of a colony far away on the horizon, a dim small sun low in a hazy sky, desaturated, neutral grey, near black, muted, documentary film still, 35mm, quiet",
+      "seed": 3012132044,
+      "settings": {
+        "width": 1216,
+        "height": 832
+      },
+      "grade": "--width 1216"
+    },
+    "fungus": {
+      "use": "plate 4, the native fungus that glows near danger (replaces the coral stand-in photo)",
+      "prompt": "macro photograph of a small cluster of glowing bioluminescent fungus growing in the cracks of dark grey volcanic rock at night, soft green glow is the only colour, the rock is neutral grey and near black, shallow depth of field, scientific documentary photography, muted, restrained, sharp detail, 100mm macro lens",
+      "seed": 2083504496,
+      "settings": {
+        "width": 1024,
+        "height": 1024
+      },
+      "grade": "--width 1000"
+    },
+    "marvin": {
+      "use": "plate 5, Marvin, 42, salvage worker (replaces the midterm's generated portrait)",
+      "prompt": "rear three-quarter view photograph of a salvage worker in a heavy sealed spacesuit standing on a grey rocky plain, rounded helmet seen from behind and the side, worn patched off-white and charcoal fabric layers, a hood and scarf around the helmet ring, harness straps and hoses, backlit by a hazy grey sky, rim light, head and shoulders, muted desaturated colours, documentary photography, 50mm, fine film grain",
+      "seed": 1301021048,
+      "settings": {
+        "width": 896,
+        "height": 1152
+      },
+      "negative": "text, letters, watermark, logo, signature, caption, frame, border, illustration, drawing, painting, sketch, cartoon, anime, 3d render, cgi, game screenshot, oversaturated, vivid colours, orange, red, blue, purple, magenta, face, deformed hands, extra fingers, blurry, lowres, jpeg artifacts, face visible, eyes, nose, mouth, skin, gas mask, front view",
+      "grade": "--width 700"
+    },
+    "suit": {
+      "use": "plate 6, the suit concept (replaces the midterm's generated suit sheet and the third-party moodboard photos)",
+      "prompt": "full body studio photograph of a worn heavy salvage spacesuit on a faceless mannequin, side three-quarter view, sealed rounded helmet with an opaque black visor, layered off-white canvas coat over charcoal padded underlayer, hood and scarf around the helmet ring, black harness straps with pouches, compact life support backpack with hoses, thick reinforced work gloves, heavy boots, dust and patches, plain light grey seamless studio background, soft even light, technical outerwear lookbook, muted desaturated colours, high detail",
+      "seed": 905090954,
+      "settings": {
+        "width": 832,
+        "height": 1216
+      },
+      "negative": "text, letters, watermark, logo, signature, caption, frame, border, illustration, drawing, painting, sketch, cartoon, anime, 3d render, cgi, game screenshot, oversaturated, vivid colours, orange, red, blue, purple, magenta, face, deformed hands, extra fingers, blurry, lowres, jpeg artifacts, flag, american flag, patch with flag, logo, insignia, NASA, face, mannequin face",
+      "grade": "--width 832"
+    }
+  },
+  "upscales": {
+    "car": {
+      "use": "plate 8, the real Arduino car: a crop of a frame (0.2 s) of the 8 Oct 2026 voice test video, enlarged 4x, then graded by ../grade.py",
+      "upscale": "../img/car-crop.png",
+      "model": "RealESRGAN_x4plus.pth",
+      "seed": 0,
+      "grade": "--width 1168 --gamma 1.15 --contrast 1.35 --quality 88"
+    }
+  },
+  "server_flags": "--windows-standalone-build --fp8_e4m3fn-unet --fp8_e4m3fn-text-enc --cache-none",
+  "not_comfyui": {
+    "about": "Real material used on the plates, graded with ../grade.py (colour only).",
+    "demo.jpg": "the final deck's real render of the 3D Junior (Presentation/deck/assets/demo-3d-poster.jpg); grade: --gamma 1.25 --contrast 1.08",
+    "m-arrive.jpg, m-notice.jpg, m-steer.jpg, m-home.jpg, m-close.jpg, m-top.jpg": "renders of the group's 3D Junior (Code/Visor/sim.html) made by ../sim/shots.js (sim-<name>.png); grade: --gamma 1.3 --contrast 1.1",
+    "car.jpg": "frame at 0.2 s of the 8 Oct 2026 voice test video (Downloads/Audio-Video/VIDEO-2026-10-08-20-51-04.mov) -> img/car-frame-0.2s.png -> crop 52,372,368x460 (img/car-crop.png) -> RealESRGAN x4 (upscales.car) -> grade"
+  }
+}

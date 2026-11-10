@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Glove, Visor, Rover: plates</title>
+<!-- 17 plates, 1600 x 900, rendered by render.js to public/images/projects/18-p01.jpg ... 18-p17.jpg.
+     Content: the midterm deck (22 Sep 2026) and the final deck (22 Oct 2026) of Group 8, MMID, UvA. -->
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="plates.css">
+<style>
+  .c { position: absolute; left: 72px; top: 60px; right: 72px; bottom: 72px; }
+  .col { position: absolute; top: 0; bottom: 0; display: flex; flex-direction: column; }
+  .stack > * + * { margin-top: var(--gap, 16px); }
+  .num { font: 700 13px/1 "JetBrains Mono", monospace; color: var(--green); }
+  .row { display: flex; gap: 16px; }
+  .marker p { margin: 0; font-size: 19px; line-height: 1.48; color: #B4B5BC; }
+  .steps { list-style: none; margin: 0; padding: 0; }
+  .steps li { display: grid; grid-template-columns: 112px 1fr; gap: 0 14px; padding: 15px 0; }
+  .steps li + li { border-top: 1px solid var(--concrete); }
+  .steps.why .body { font-size: 22px; }
+  .steps.why li { padding: 18px 0; }
+  .steps .k { font: 500 12.5px/1.45 "JetBrains Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--green); padding-top: 3px; }
+  .sig { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 34px; }
+  .sig .grp .lab { margin-bottom: 9px; }
+  .sig .it { display: grid; grid-template-columns: 30px 1fr; font-size: 16px; line-height: 1.32; margin-bottom: 9px; }
+  .sig .it b { font: 700 13px/1.6 "JetBrains Mono", monospace; color: var(--green); }
+  .persona dt { font: 500 12.5px/1.3 "JetBrains Mono", monospace; letter-spacing: .07em; text-transform: uppercase; color: var(--graphite); margin-bottom: 5px; }
+  .persona dd { margin: 0 0 18px; font-size: 16.5px; line-height: 1.42; }
+  .chan td { font-size: 17px; line-height: 1.3; }
+  .chan.big td { padding-top: 19px; padding-bottom: 19px; font-size: 18px; }
+  .chan.big td:nth-child(2) { font-size: 23px; }
+  .chan td:first-child { font-weight: 600; width: 120px; }
+  .chan td:nth-child(2) { font-size: 21px; font-weight: 500; letter-spacing: -.01em; width: 330px; }
+  .chan td:last-child { color: var(--graphite); }
+  .parts li { list-style: none; display: grid; grid-template-columns: 44px 1fr; padding: 10px 0; font-size: 20px; line-height: 1.35; }
+  .parts { margin: 0; padding: 0; counter-reset: p; }
+  .parts li::before { counter-increment: p; content: counter(p); width: 26px; height: 26px; border-radius: 50%; background: var(--green); color: #fff;
+    font: 700 13px/26px "JetBrains Mono", monospace; text-align: center; }
+  .callout { position: absolute; width: 26px; height: 26px; border-radius: 50%; background: var(--green); color: #fff; font: 700 13px/26px "JetBrains Mono", monospace;
+    text-align: center; box-shadow: 0 0 0 2px var(--bone); }
+  .sw { display: inline-block; width: 46px; height: 30px; margin-right: 6px; }
+  .flow { display: grid; align-items: stretch; }
+  .arrow { position: relative; }
+  .arrow::before { content: ""; position: absolute; left: 6px; right: 10px; top: 50%; height: 1.5px; background: var(--ink); }
+  .arrow::after { content: ""; position: absolute; right: 4px; top: calc(50% - 5px); border: 5px solid transparent; border-left: 8px solid var(--ink); border-right: 0; }
+  .arrow.both::before, .arrow.both::after { display: none; }
+  .arrow.both { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 12'%3E%3Cpath d='M7 6H37' stroke='%230E0E10' stroke-width='1.5'/%3E%3Cpath d='M36 1l7 5-7 5zM8 1L1 6l7 5z' fill='%230E0E10'/%3E%3C/svg%3E") center / 40px 12px no-repeat; }
+  .rel td { padding: 19px 18px 19px 0; font-size: 18px; line-height: 1.3; vertical-align: middle; }
+  .rel td.in { font-weight: 600; font-size: 20px; white-space: nowrap; }
+  .rel td.in svg { vertical-align: -6px; margin-right: 10px; }
+  .rel td.r { font: 500 14.5px/1.3 "JetBrains Mono", monospace; color: var(--green); white-space: nowrap; }
+  .rel td.by { color: var(--graphite); font-size: 16.5px; }
+  .moment { display: grid; grid-template-columns: 188px 1fr; gap: 16px; align-items: start; }
+  .moment .pic { width: 188px; height: 141px; }
+  .moment .k { font: 500 12.5px/1.3 "JetBrains Mono", monospace; letter-spacing: .07em; text-transform: uppercase; color: var(--green); margin: 2px 0 6px; }
+  .moment p { margin: 0; font-size: 17px; line-height: 1.32; }
+  .glbl { position: absolute; font: 500 12px/1.25 "JetBrains Mono", monospace; letter-spacing: .04em; color: var(--ink); background: var(--bone); padding: 5px 7px; white-space: nowrap; }
+  .gest { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .gest .box { display: flex; flex-direction: column; gap: 6px; padding: 24px 26px; min-height: 0; }
+  .gest .box svg { width: 92px; height: 92px; fill: currentColor; margin-bottom: auto; }
+  .gest .box b { font-size: 30px; font-weight: 700; letter-spacing: -.02em; }
+  .gest .box span { font-size: 19px; color: var(--graphite); }
+  .gest .box.ink span { color: #A5A6AE; }
+  .tl { display: grid; grid-template-columns: 92px 1fr; }
+  .tl > div { padding: 14px 0; font-size: 18.5px; line-height: 1.36; border-top: 1px solid var(--concrete); }
+  .tl.big > div { font-size: 21px; padding: 17px 0; }
+  .tl.big .k { font-size: 13px; padding-top: 21px; }
+  .tl .k { font: 500 12.5px/1.6 "JetBrains Mono", monospace; letter-spacing: .07em; text-transform: uppercase; color: var(--green); }
+  .bench td { vertical-align: top; padding: 24px 24px 24px 0; }
+  .lims h4 { font: 500 12.5px/1.3 "JetBrains Mono", monospace; letter-spacing: .07em; text-transform: uppercase; color: var(--graphite); margin: 0 0 12px; font-weight: 500; }
+  .lims ul { list-style: none; margin: 0; padding: 0; }
+  .lims li { font-size: 19px; line-height: 1.36; padding: 13px 0; border-top: 1px solid var(--concrete); }
+  .refs { columns: 3; column-gap: 40px; font-size: 13.3px; line-height: 1.4; }
+  .refs p { margin: 0 0 6.5px; padding-left: 14px; text-indent: -14px; break-inside: avoid; overflow-wrap: anywhere; }
+  .refs i { font-style: italic; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- Icons: Phosphor Icons 2.1.1, light weight (MIT, https://phosphoricons.com), copied from the final deck -->
+  <symbol id="i-palm" viewBox="0 0 256 256"><path d="M188,90a25.8,25.8,0,0,0-14,4.11V60a26,26,0,0,0-40.59-21.51A26,26,0,0,0,82,44V54.11A26,26,0,0,0,42,76v76a86,86,0,0,0,172,0V116A26,26,0,0,0,188,90Zm14,62a74,74,0,0,1-148,0V76a14,14,0,0,1,28,0v44a6,6,0,0,0,12,0V44a14,14,0,0,1,28,0v68a6,6,0,0,0,12,0V60a14,14,0,0,1,28,0v70.39A46.07,46.07,0,0,0,122,176a6,6,0,0,0,12,0,34,34,0,0,1,34-34,6,6,0,0,0,6-6V116a14,14,0,0,1,28,0Z"/></symbol>
+  <symbol id="i-fist" viewBox="0 0 256 256"><path d="M200,82H182V64a30,30,0,0,0-54-18A30,30,0,0,0,74,64v0A30,30,0,0,0,26,88v40a102,102,0,0,0,204,0V112A30,30,0,0,0,200,82ZM152,46a18,18,0,0,1,18,18V82H136a14.71,14.71,0,0,0-2,.16V64A18,18,0,0,1,152,46ZM86,64a18,18,0,0,1,36,0v40a18,18,0,0,1-36,0ZM38,88a18,18,0,0,1,36,0v16a18,18,0,0,1-36,0Zm180,40a90,90,0,0,1-180,0h0a30,30,0,0,0,42-6,30,30,0,0,0,45.12,3.3A30.18,30.18,0,0,0,140,139.51,45.92,45.92,0,0,0,122,176a6,6,0,0,0,12,0,34,34,0,0,1,34-34,6,6,0,0,0,0-12H152a18,18,0,0,1-18-18V96a2,2,0,0,1,2-2h64a18,18,0,0,1,18,18Z"/></symbol>
+  <symbol id="i-thumbdown" viewBox="0 0 256 256"><path d="M237.83,157.27l-12-96A22,22,0,0,0,204,42H32A14,14,0,0,0,18,56v88a14,14,0,0,0,14,14H76.29l38.34,76.68A6,6,0,0,0,120,238a38,38,0,0,0,38-38V182h58a22,22,0,0,0,21.83-24.73ZM74,146H32a2,2,0,0,1-2-2V56a2,2,0,0,1,2-2H74Zm149.5,20.62A9.89,9.89,0,0,1,216,170H152a6,6,0,0,0-6,6v24a26,26,0,0,1-22.42,25.75L86,150.58V54H204a10,10,0,0,1,9.92,8.76l12,96A9.89,9.89,0,0,1,223.5,166.62Z"/></symbol>
+  <symbol id="i-squeeze" viewBox="0 0 256 256"><path d="M188,82a25.85,25.85,0,0,0-14.59,4.49A26,26,0,0,0,128,75.41,26,26,0,0,0,82,92v22H68a26,26,0,0,0-26,26v12a86,86,0,0,0,172,0V108A26,26,0,0,0,188,82Zm14,70a74,74,0,0,1-148,0V140a14,14,0,0,1,14-14H82v26a6,6,0,0,0,12,0V92a14,14,0,0,1,28,0v28a6,6,0,0,0,12,0V92a14,14,0,0,1,28,0v28a6,6,0,0,0,12,0V108a14,14,0,0,1,28,0Z"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 256 256"><path d="M128,174a46.06,46.06,0,0,0,46-46V64a46,46,0,0,0-92,0v64A46.06,46.06,0,0,0,128,174ZM94,64a34,34,0,0,1,68,0v64a34,34,0,0,1-68,0Zm40,141.75V240a6,6,0,0,1-12,0V205.75A78.09,78.09,0,0,1,50,128a6,6,0,0,1,12,0,66,66,0,0,0,132,0,6,6,0,0,1,12,0A78.09,78.09,0,0,1,134,205.75Z"/></symbol>
+  <symbol id="i-point" viewBox="0 0 256 256"><path d="M196,90a25.87,25.87,0,0,0-14.59,4.49A26,26,0,0,0,142,78.1V44a26,26,0,0,0-52,0v87l-7.53-12.1a26,26,0,0,0-45,26.07l4.67,8.25c34,60,48.07,84.77,93.86,84.77a86.1,86.1,0,0,0,86-86V116A26,26,0,0,0,196,90Zm14,62a74.09,74.09,0,0,1-74,74c-38.8,0-50-19.83-83.42-78.69L47.89,139l0,0A14,14,0,0,1,53,119.88,13.87,13.87,0,0,1,60,118a14,14,0,0,1,12.15,7l.1.17,18.68,30A6,6,0,0,0,102,152V44a14,14,0,0,1,28,0v68a6,6,0,0,0,12,0V100a14,14,0,0,1,28,0v20a6,6,0,0,0,12,0v-4a14,14,0,0,1,28,0Z"/></symbol>
+  <symbol id="i-auto" viewBox="0 0 256 256"><path d="M200,170a30.05,30.05,0,0,0-29.4,24H72a34,34,0,0,1,0-68h96a38,38,0,0,0,0-76H72a6,6,0,0,0,0,12h96a26,26,0,0,1,0,52H72a46,46,0,0,0,0,92h98.6A30,30,0,1,0,200,170Zm0,48a18,18,0,1,1,18-18A18,18,0,0,1,200,218Z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 256 256"><path d="M245.48,125.57c-.34-.78-8.66-19.23-27.24-37.81C201,70.54,171.38,50,128,50S55,70.54,37.76,87.76c-18.58,18.58-26.9,37-27.24,37.81a6,6,0,0,0,0,4.88c.34.77,8.66,19.22,27.24,37.8C55,185.47,84.62,206,128,206s73-20.53,90.24-37.75c18.58-18.58,26.9-37,27.24-37.8A6,6,0,0,0,245.48,125.57ZM128,194c-31.38,0-58.78-11.42-81.45-33.93A134.77,134.77,0,0,1,22.69,128,134.56,134.56,0,0,1,46.55,95.94C69.22,73.42,96.62,62,128,62s58.78,11.42,81.45,33.94A134.56,134.56,0,0,1,233.31,128C226.94,140.21,195,194,128,194Zm0-112a46,46,0,1,0,46,46A46.06,46.06,0,0,0,128,82Zm0,80a34,34,0,1,1,34-34A34,34,0,0,1,128,162Z"/></symbol>
+</svg>
+
+<!-- ============================================================ 01 · midterm slides 1-2 -->
+<section class="plate dark" id="p01">
+  <div class="c">
+    <div class="col" style="left:0;width:880px">
+      <div class="kicker">Glove, Visor, Rover · Midterm, 22 September 2026</div>
+      <h1 class="d1" style="margin-top:34px;font-size:128px">This is not a place&nbsp;of&nbsp;honor.</h1>
+      <div class="marker" style="margin-top:auto">
+        <div class="lab" style="margin-bottom:14px">The marker message proposed in the Sandia report (Trauth et al., 1993)</div>
+        <p>This place is a message... and part of a system of messages... pay attention to it!</p>
+        <p>Sending this message was important to us. We considered ourselves to be a powerful culture.</p>
+        <p>This place is not a place of honor... no highly esteemed deed is commemorated here... nothing valued is here.</p>
+        <p>What is here was dangerous and repulsive to us. This message is a warning about danger.</p>
+        <p>The danger is in a particular location... it increases towards a center... the center of danger is here... of a particular size and shape, and below us.</p>
+        <p>The danger is still present, in your time, as it was in ours. The danger is to the body, and it can kill.</p>
+        <p>The form of the danger is an emanation of energy.</p>
+        <p>The danger is unleashed only if you substantially disturb this place physically.</p>
+        <p>This place is best shunned and left uninhabited.</p>
+      </div>
+    </div>
+    <div class="col" style="left:968px;right:0">
+      <h2 class="h3">Nuclear semiotics</h2>
+      <div class="stack" style="--gap:12px;margin-top:14px">
+        <p class="body" style="color:#C2C5CF;font-size:17.5px">Long-term warnings for nuclear waste try to keep people out of repositories in the far future, 10,000 years from now and more.</p>
+        <p class="body" style="color:#C2C5CF;font-size:17.5px">Nuclear semiotics designs those signs and messages. It began with the American Human Interference Task Force in 1981.</p>
+        <p class="body" style="color:#C2C5CF;font-size:17.5px">A 1993 Sandia National Laboratories report proposed sites that read at once as man-made and dangerous: spikes and hostile landscapes, pictographs of what the danger does, and written messages in layers, for those able to read them.</p>
+      </div>
+      <svg id="spikes" style="width:100%;height:330px;margin-top:auto"></svg>
+      <p class="cap" style="margin-top:10px">Spikes bursting through a grid: our drawing after one of the marker concepts in the Sandia report.</p>
+    </div>
+  </div>
+  <div class="folio"><span>Group 8 · Alice Picco, Alexis Xie, Bor Ipema, Bram Schoen · Multimedia Interaction Design, University of Amsterdam</span><span class="n">01 / 17</span></div>
+</section>
+
+<!-- ============================================================ 02 · midterm slides 3-4 -->
+<section class="plate" id="p02">
+  <div class="c">
+    <div class="col" style="left:0;width:828px">
+      <div class="kicker">The world</div>
+      <h2 class="d3" style="margin-top:22px">A postcard from Proxima&nbsp;b</h2>
+      <div class="pic" style="margin-top:auto;height:618px"><img src="img/postcard.jpg" alt=""></div>
+    </div>
+    <div class="col" style="left:884px;right:0">
+      <div class="kicker">Storyline</div>
+      <h2 class="d3" style="margin-top:22px">The warning we couldn't&nbsp;read</h2>
+      <p class="lab" style="margin-top:16px;color:var(--green)">Failed first contact, inherited hazard</p>
+      <ol class="steps" style="margin-top:auto">
+        <li><span class="k">01 Signal</span><span class="body">A signal was received from Proxima Centauri&nbsp;b. No reply followed it.</span></li>
+        <li><span class="k">02 Ship</span><span class="body">A colony ship was sent regardless, and reached the planet.</span></li>
+        <li><span class="k">03 Landing</span><span class="body">The planet was uninhabited. Its builders were gone, and no record of their departure survived.</span></li>
+        <li><span class="k">04 Markers</span><span class="body">Their hazardous sites stayed sealed, marked with warnings in infrared light, outside human sight.</span></li>
+        <li><span class="k">05 Digging</span><span class="body">Settlers dug into the sites for salvage without reading the markers as warnings. The danger was found only after exposure.</span></li>
+        <li><span class="k">06 Year 20</span><span class="body">No second ship. Resupply has not come, digging still sustains the colony, and what the first message meant is still disputed.</span></li>
+      </ol>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span><span class="n">02 / 17</span></div>
+</section>
+
+<!-- ============================================================ 03 · midterm slide 5 -->
+<section class="plate" id="p03">
+  <div class="c">
+    <div class="col" style="left:0;width:660px">
+      <div class="kicker">Signals map</div>
+      <h2 class="d3" style="margin-top:22px">Sixteen signals around&nbsp;now</h2>
+      <svg id="radar" style="width:660px;height:600px;margin-top:auto"></svg>
+    </div>
+    <div class="col" style="left:740px;right:0">
+      <p class="lead" style="max-width:690px">Present-day signals we built the world from, each placed on one of seven axes or under other. Sources on the references plate.</p>
+      <div class="sig" style="margin-top:auto">
+        <div class="grp"><div class="lab">Technological</div>
+          <div class="it"><b>1</b><span>AI-generated hazard-symbol and warning-design research</span></div>
+          <div class="it"><b>2</b><span>Gesture-controlled hazmat and EVA glove patents</span></div></div>
+        <div class="grp"><div class="lab">Environmental</div>
+          <div class="it"><b>15</b><span>Deep geological repository site disputes reopening</span></div>
+          <div class="it"><b>16</b><span>Exoplanet atmosphere-stripping and flare-star research</span></div></div>
+        <div class="grp"><div class="lab">Political</div>
+          <div class="it"><b>3</b><span>Space resource-rights treaty disputes (Artemis Accords)</span></div>
+          <div class="it"><b>4</b><span>Onkalo-style repositories going operational</span></div></div>
+        <div class="grp"><div class="lab">Economic</div>
+          <div class="it"><b>13</b><span>Speculative space-resource and mining economics</span></div>
+          <div class="it"><b>14</b><span>Small modular reactor investment boom</span></div></div>
+        <div class="grp"><div class="lab">Social</div>
+          <div class="it"><b>5</b><span>Public "long now" and deep-time discourse</span></div>
+          <div class="it"><b>6</b><span>Sign-language-inspired gesture systems in hazardous workplaces</span></div></div>
+        <div class="grp"><div class="lab">Historical</div>
+          <div class="it"><b>11</b><span>Renewed interest in oral-tradition knowledge transmission</span></div>
+          <div class="it"><b>12</b><span>Academic revival of Cold War-era nuclear semiotics proposals</span></div></div>
+        <div class="grp"><div class="lab">Cultural</div>
+          <div class="it"><b>7</b><span>Folk-horror aesthetics referencing warning monuments</span></div>
+          <div class="it"><b>8</b><span>Post-apocalyptic and deep-time speculative design and fiction wave</span></div></div>
+        <div class="grp"><div class="lab">Other</div>
+          <div class="it"><b>9</b><span>Symbol and meme virality and mutation research</span></div>
+          <div class="it"><b>10</b><span>Anthropology × HCI cross-pollination in speculative design</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span><span class="n">03 / 17</span></div>
+</section>
+
+<!-- ============================================================ 04 · midterm slides 6-7 (and the sunset reference of slide 3) -->
+<section class="plate" id="p04">
+  <div class="c">
+    <div class="col" style="left:0;width:500px">
+      <div class="kicker">Light and the fungus</div>
+      <h2 class="d3" style="margin-top:22px">Each species saw a different&nbsp;light</h2>
+      <p class="body" style="margin-top:22px">Proxima's light peaks in near-infrared, ours in visible light. The planet's builders saw there and marked danger there. We never saw their marks, so we dug.</p>
+      <p class="body" style="margin-top:12px">A native fungus glows near danger, in light we can see: a living warning sign, after the ray cats (Fabbri &amp; Bastide, 1984/2024).</p>
+      <div class="pic" style="margin-top:auto;height:392px"><img src="img/fungus.jpg" alt="" style="object-position:60% 50%"></div>
+    </div>
+    <div class="col" style="left:556px;right:0">
+      <div class="lab">Light at the planet: the Sun at Earth, Proxima Centauri at planet b</div>
+      <svg id="spectrum" style="width:100%;height:290px;margin-top:6px"></svg>
+      <p class="cap" style="margin-top:2px">Redrawn after Meadows et al. (2018), Fig. 1; Proxima b after Anglada-Escudé et al. (2016). Seen from the planet, Proxima would look orange where our Sun looks white.</p>
+      <h3 class="h3" style="margin-top:28px">The fungus glows for two reasons</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:14px">
+        <div><p class="h4">Flare: everything glows, then fades</p>
+          <p class="cap" style="margin-top:4px">A flare's UV makes fluorescent life glow (O'Malley-James &amp; Kaltenegger, 2019).</p>
+          <svg id="flare" style="width:100%;height:178px;margin-top:8px"></svg>
+          <p class="cap">Proxima's 2016 superflare, after Howard et al. (2018), Fig. 1.</p></div>
+        <div><p class="h4">Buried hazard: one patch keeps glowing</p>
+          <p class="cap" style="margin-top:4px">Melanized fungi grow faster under radiation (Dadachova et al., 2007).</p>
+          <svg id="growth" style="width:100%;height:178px;margin-top:8px"></svg>
+          <p class="cap">Over 30 hours, after Dadachova et al. (2007), Fig. 6a.</p></div>
+      </div>
+      <p class="h3" style="margin-top:auto;font-size:28px"><span class="g">The glow shows where.</span> The suit says how bad, and how&nbsp;sure.</p>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span><span class="n">04 / 17</span></div>
+</section>
+
+<!-- ============================================================ 05 · midterm slide 8 -->
+<section class="plate" id="p05">
+  <div class="c">
+    <div class="col" style="left:0;width:610px">
+      <div class="kicker">The user</div>
+      <div style="display:grid;grid-template-columns:292px 1fr;gap:28px;margin-top:22px">
+        <div class="pic" style="height:430px"><img src="img/marvin.jpg" alt="" style="object-position:40% 50%"></div>
+        <div style="display:flex;flex-direction:column">
+          <h2 class="d3">Marvin, 42</h2>
+          <p class="lead" style="margin-top:8px">salvage worker</p>
+          <dl class="persona" style="margin-top:auto">
+            <dt>Appearance</dt><dd style="margin:0">Weathered, orange-tinted skin from 20 years under Proxima's light. His suit is patched and resealed past regulation.</dd>
+          </dl>
+        </div>
+      </div>
+      <dl class="persona" style="margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:0 28px">
+        <div><dt>Backstory</dt><dd>Landed at 22 with the original colony ship. Lost a teammate to an unmarked site in the early years, before the suit could tell flare-glow from hazard-glow. Methodical, and slow to trust ever since.</dd></div>
+        <div><dt>Allies</dt><dd>A fixed salvage crew, trust built on shared risk. The colony salvage authority assigns sites and rations gear. No contact with Earth: no resupply, no outside authority to appeal to.</dd></div>
+        <div style="grid-column:1 / 3"><dt>Equipment</dt><dd style="margin:0">The suit: sealed, gesture and gaze input, patched. A hand-marked map fragment, kept outside the official database. Salvaged material.</dd></div>
+      </dl>
+    </div>
+    <div class="col" style="left:672px;right:0">
+      <div class="kicker">The suit</div>
+      <h2 class="d3" style="margin-top:22px">The suit interprets, and says how certain it&nbsp;is</h2>
+      <table class="chan big" style="margin-top:auto">
+        <tr><th>Task</th><th>Channel</th><th>Why</th></tr>
+        <tr><td>Query</td><td>Gaze: look at a patch</td><td>Hands are busy</td></tr>
+        <tr><td>Answer</td><td>Visor: meaning + how sure</td><td>The suit can be wrong</td></tr>
+        <tr><td>Severity</td><td>Vibration rhythm</td><td>Orange light makes colour unreliable</td></tr>
+        <tr><td>Commands</td><td>Coarse glove gestures</td><td>Gloves cause "fat fingers" (Wobbrock et al., 2011)</td></tr>
+        <tr><td>Fatigue</td><td>Grip pressure (FSR)</td><td>Tired hands grip weaker</td></tr>
+        <tr><td>Team</td><td>Voice over radio</td><td>Share what the suit found</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span><span class="n">05 / 17</span></div>
+</section>
+
+<!-- ============================================================ 06 · midterm slide 9 -->
+<section class="plate" id="p06">
+  <div class="c">
+    <div class="col" style="left:0;width:526px">
+      <div class="pic" style="height:100%;background:#cfd0d5"><img src="img/suit.jpg" alt="" id="suitimg"></div>
+      <span class="callout" style="left:262px;top:112px">1</span>
+      <span class="callout" style="left:165px;top:204px">2</span>
+      <span class="callout" style="left:238px;top:161px">3</span>
+      <span class="callout" style="left:137px;top:254px">4</span>
+      <span class="callout" style="left:258px;top:254px">5</span>
+      <span class="callout" style="left:213px;top:412px">6</span>
+      <span class="callout" style="left:197px;top:480px">7</span>
+      <span class="callout" style="left:278px;top:189px">8</span>
+      <span class="callout" style="left:193px;top:683px">9</span>
+    </div>
+    <div class="col" style="left:590px;right:0">
+      <div class="kicker">Suit reference</div>
+      <h2 class="d3" style="margin-top:22px">A sealed suit, built in&nbsp;layers</h2>
+      <ol class="parts" id="suitparts" style="margin-top:30px">
+        <li>Wide-field visor with an infrared filter</li>
+        <li>Environmental sensors</li>
+        <li>Reinforced collar with a seal</li>
+        <li>Life support unit: air, thermal control, filtration</li>
+        <li>Modular interface for tools and salvage gear</li>
+        <li>Multi-layer gloves, for insulation and dexterity</li>
+        <li>Layered fabric: radiation resistance, thermal regulation, abrasion protection</li>
+        <li>Modular pouches for extended missions</li>
+        <li>All-terrain boots with enhanced grip</li>
+      </ol>
+      <div style="margin-top:auto;display:grid;grid-template-columns:1fr 300px;gap:40px">
+        <div>
+          <div class="lab">Moodboard</div>
+          <p class="body" style="margin-top:10px">Atmospheric diving suits, firefighter gear, the NASA EMU suit, Level A hazmat suits, the Acronym 3A-5TS lookbook and Deconstructed collection, Rick Owens menswear for spring-summer 2027, and a fighter jet HUD for the visor.</p>
+        </div>
+        <div>
+          <div class="lab">Material and colour</div>
+          <div style="margin-top:12px;display:flex"><span class="sw" style="background:#131311"></span><span class="sw" style="background:#433a31"></span><span class="sw" style="background:#443d2d"></span><span class="sw" style="background:#8c7c65"></span><span class="sw" style="background:#59585d"></span><span class="sw" style="background:#c5cf20;width:16px"></span></div>
+          <p class="cap" style="margin-top:10px">From the midterm suit sheet: dark, worn neutrals and one acid accent.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span><span class="n">06 / 17</span></div>
+</section>
+
+<!-- ============================================================ 07 · midterm slide 10 -->
+<section class="plate" id="p07">
+  <div class="c">
+    <div class="col" style="left:0;width:860px">
+      <div class="kicker">Prototype at the midterm</div>
+      <h2 class="d2" style="margin-top:22px">What we built, and what&nbsp;next</h2>
+      <!-- the visor and the glow camera, redrawn from the midterm screenshot (people left out) -->
+      <div style="margin-top:auto;display:grid;grid-template-columns:300px 1fr;gap:18px;height:470px">
+        <div class="box ink" style="padding:0;display:flex;flex-direction:column;border:0">
+          <div class="mono" style="font-size:11.5px;color:#92929C;padding:10px 12px;border-bottom:1px solid #2a2a30">glow detection (click the patch)</div>
+          <div style="flex:1;position:relative;background:#1c1c21">
+            <div style="position:absolute;left:96px;top:76px;width:84px;height:150px;background:var(--glow);box-shadow:0 0 40px rgba(139,227,168,.55)"></div>
+            <div style="position:absolute;left:90px;top:70px;width:96px;height:162px;border:1.5px solid #fff"></div>
+            <div class="mono" style="position:absolute;left:12px;bottom:12px;right:12px;font-size:11.5px;color:#92929C">camera 0 · a phone screen stands in for the glow</div>
+          </div>
+        </div>
+        <div class="box ink" style="padding:0;display:flex;flex-direction:column;border:0">
+          <div class="mono" style="font-size:11.5px;color:#92929C;padding:10px 12px;border-bottom:1px solid #2a2a30">VISOR</div>
+          <div style="flex:1;position:relative;padding:16px 18px;background-image:linear-gradient(#2a2a30 1px,transparent 1px),linear-gradient(90deg,#2a2a30 1px,transparent 1px);background-size:100% 25%,20% 100%;background-position:0 46px,0 0">
+            <div class="mono" style="font-size:12px;color:var(--glow)">SENSOR LIVE</div>
+            <div class="mono" style="font-size:12px;color:#C2C5CF;margin-top:4px">FLARE OFF <span style="color:#92929C">(manual, set by operator)</span></div>
+            <div style="position:absolute;left:0;right:0;bottom:40px;text-align:center;font-size:17px;color:#D5D6DB">no hazard glow in view</div>
+            <div class="mono" style="position:absolute;left:18px;bottom:12px;font-size:11.5px;color:#92929C;display:flex;align-items:center;gap:8px"><span style="width:14px;height:14px;border-radius:50%;background:#4A4A54"></span>glove: silent</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:12px;align-items:center">
+        <span class="box" style="padding:7px 12px;font-size:15px"><b>Seminar 1</b> · FSR input</span>
+        <span class="box" style="padding:7px 12px;font-size:15px"><b>Seminar 2</b> · camera, OSC and Arduino output</span>
+        <span class="cap">Built on the lab examples (Ching &amp; Fleck, 2026a, 2026b).</span>
+      </div>
+    </div>
+    <div class="col" style="left:932px;right:0">
+      <div class="lab">Next, before week 8</div>
+      <ul class="steps" style="margin-top:8px">
+        <li style="grid-template-columns:34px 1fr"><span class="k">1</span><span class="body">A click button for the flare</span></li>
+        <li style="grid-template-columns:34px 1fr"><span class="k">2</span><span class="body">Gestures with gloves on</span></li>
+        <li style="grid-template-columns:34px 1fr"><span class="k">3</span><span class="body">Gaze + squeeze: looking is not asking (Alavi, 2026a, slide 38)</span></li>
+      </ul>
+      <div class="lab" style="margin-top:auto">Still open</div>
+      <p class="d3" style="margin-top:14px;font-size:56px">Is <span class="g">"70% sure"</span> ignored, or over&#8209;trusted?</p>
+      <div style="margin-top:auto;display:grid;grid-template-columns:132px 1fr;gap:18px;align-items:end">
+        <svg viewBox="0 0 132 92" style="width:132px;height:92px">
+          <rect x="1" y="38" width="130" height="40" fill="#ECEDF0" stroke="#0E0E10" stroke-width="1.5"/>
+          <rect x="30" y="30" width="72" height="18" fill="#0E0E10"/><circle cx="66" cy="39" r="7" fill="#2a6236"/>
+          <path d="M8 38 L8 26 L124 26 L124 38" fill="none" stroke="#55555E" stroke-dasharray="3 3"/>
+          <text x="66" y="16" text-anchor="middle" class="m" font-size="10.5" fill="#55555E">foam</text>
+          <text x="66" y="90" text-anchor="middle" class="m" font-size="10.5" fill="#55555E">FSR</text>
+        </svg>
+        <p class="cap"><b style="color:var(--ink)">Flashback, week 1.</b> Our force-sensitive resistor started hidden under foam (Ching &amp; Fleck, 2026a, slide 48). Now it sits in the glove's palm.</p>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span><span class="n">07 / 17</span></div>
+</section>
+
+<!-- ============================================================ 08 · final slide 1 -->
+<section class="plate" id="p08">
+  <div class="c">
+    <div class="col" style="left:0;width:584px">
+      <div class="pic" style="height:100%"><img src="img/car.jpg" alt="" style="transform:scale(1.3);transform-origin:62% 64%"></div>
+      <span class="callout" style="left:214px;top:568px">2</span>
+      <span class="callout" style="left:318px;top:490px">3</span>
+    </div>
+    <div class="col" style="left:648px;right:0">
+      <div class="kicker">Final, 22 October 2026</div>
+      <h2 class="d1" style="margin-top:20px;font-size:150px">Junior.</h2>
+      <p class="lead" style="margin-top:24px;max-width:760px;font-size:30px">A probe rover that a gloved worker steers with a squeeze, a hand and his voice, so he never has to walk up to a hazard himself.</p>
+      <div class="lab" style="margin-top:auto">Junior taken apart</div>
+      <ol class="parts" style="margin-top:10px">
+        <li><span><b>Eye.</b> A phone camera, read by glow.py on the laptop.</span></li>
+        <li><span><b>Brain.</b> An Arduino Uno with an HC-05 Bluetooth module and an L298N motor driver, on 4 × AA and 9 V.</span></li>
+        <li><span><b>Wheels.</b> Two motors: two wheels and a caster.</span></li>
+        <li><span><b>Distance.</b> An HC-SR04 sensor: Junior stops himself 20 cm before an obstacle.</span></li>
+      </ol>
+      <p class="cap" style="margin-top:20px">Left: the Arduino car on 8 October 2026, driving on spoken commands (a frame from the voice test video). Junior comes in two versions: this car responds to hand gestures and spoken commands; the 3D Junior runs the whole system.</p>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · Alice Picco, Alexis Xie, Bor Ipema, Bram Schoen</span><span class="n">08 / 17</span></div>
+</section>
+
+<!-- ============================================================ 09 · final slide 2 + Alice's diagram of how the inputs relate -->
+<section class="plate" id="p09">
+  <div class="c">
+    <div style="display:grid;grid-template-columns:1fr 470px;gap:60px">
+      <div>
+        <div class="kicker">Six weeks</div>
+        <h2 class="d3" style="margin-top:22px">From a whole suit to one rover and a&nbsp;glove</h2>
+        <p class="body" style="margin-top:16px;max-width:820px">On Proxima b a fungus glows over buried hazards. Junior goes and looks; Marvin stays back. His hands, eyes and voice are each busy part of the time: a situational impairment (Wobbrock et al., 2011).</p>
+      </div>
+      <div style="padding-top:34px">
+        <p class="q">A whole suit might be a lot.</p>
+        <p class="cap" style="margin-top:6px">TA feedback at the midterm</p>
+      </div>
+    </div>
+    <table class="rel" style="margin-top:24px">
+      <tr><th style="width:250px">Input from Marvin</th><th style="width:230px">Relation</th><th>What it does</th><th style="width:410px">Decided by</th></tr>
+      <tr><td class="in"><svg class="ic"><use href="#i-squeeze"/></svg>Glove squeeze</td><td class="r">Gate</td><td>Switches which camera's gestures drive Junior; Junior stops on every switch</td><td class="by">A fixed rule</td></tr>
+      <tr><td class="in"><svg class="ic"><use href="#i-palm"/></svg>Hand gestures</td><td class="r">Assignment: direction</td><td>Open hand drives, tilt steers, fist stops</td><td class="by">Hand tracking, then fixed rules; no model call</td></tr>
+      <tr><td class="in"><svg class="ic"><use href="#i-mic"/></svg>Voice</td><td class="r">Assignment: action</td><td>"Stop", "come back", "check that one"</td><td class="by">Fixed rules for "stop" and "come back", no model call</td></tr>
+      <tr><td class="in"><svg class="ic"><use href="#i-point"/></svg>Voice + pointing</td><td class="r">Mutual disambiguation</td><td>Speech says what, pointing says where</td><td class="by">Gemma 3 4B gets words + point + glow and proposes a target in 2 to 3 s; the rules pick the glow</td></tr>
+    </table>
+    <p class="small" style="margin-top:18px;color:var(--graphite)"><b style="color:var(--ink)">Redundancy:</b> "stop" works by voice, fist and squeeze. <b style="color:var(--ink)">Priority:</b> a driving hand cancels the autopilot; fixed rules act before the local model, which only proposes a target.</p>
+    <!-- everything meets in the laptop -->
+    <div class="lab" style="position:absolute;left:0;bottom:150px">Everything meets in the laptop</div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:134px;display:grid;grid-template-columns:330px 44px 1fr 44px 330px;align-items:stretch">
+      <div class="box" style="display:flex;flex-direction:column;gap:6px">
+        <div class="lab">Marvin</div>
+        <div class="body">In: squeeze, hand, voice</div>
+        <div class="body">Back to him: the visor and Junior's voice</div>
+      </div>
+      <div class="arrow both"></div>
+      <div class="box ink" style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+        <div><div class="lab" style="color:#A5A6AE">Laptop, all offline</div><div class="h3" style="margin-top:12px;font-size:24px">Fixed rules, no model call</div><div class="body" style="color:#C2C5CF;margin-top:4px">stop, squeeze, 20 cm, flare</div></div>
+        <div style="padding-top:27px"><div class="h3" style="font-size:24px">Gemma 3 4B, 2 to 3 s</div><div class="body" style="color:#C2C5CF;margin-top:4px">words + point + glow; only proposes a target</div></div>
+      </div>
+      <div class="arrow both"></div>
+      <div class="box" style="display:flex;flex-direction:column;gap:6px">
+        <div class="lab">Junior</div>
+        <div class="body">Wheels, camera, distance</div>
+        <div class="body">Stops himself at 20 cm</div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · relations after Alice Picco's diagram</span><span class="n">09 / 17</span></div>
+</section>
+
+<!-- ============================================================ 10 · final slides 3-4 -->
+<section class="plate" id="p10">
+  <div class="c">
+    <div class="col" style="left:0;width:1000px">
+      <div class="kicker">Demo</div>
+      <h2 class="d3" style="margin-top:22px">Marvin's shift, in four&nbsp;moments</h2>
+      <div class="pic" style="margin-top:auto;height:612px" id="demo">
+        <img src="img/demo.jpg" alt="">
+        <span class="glbl" style="left:640px;top:520px">home ring</span>
+        <span class="glbl" style="left:150px;top:118px">glowing fungus: what glow.py looks for</span>
+        <span class="glbl" style="left:36px;top:338px">rocks: he stops 20 cm before one</span>
+      </div>
+    </div>
+    <div class="col" style="left:1048px;right:0;justify-content:space-between">
+      <p class="small" style="padding-top:4px">Our code drives the 3D Junior: Junior's brain, the visor and glow.py, all on one laptop. He drives like the car and follows the same stop rules.</p>
+      <div class="moment"><div class="pic"><img src="img/m-arrive.jpg" alt=""></div><div><div class="k">Arrive</div><p>A squeeze: Junior stops, and his view takes over.</p></div></div>
+      <div class="moment"><div class="pic"><img src="img/m-notice.jpg" alt=""></div><div><div class="k">Notice</div><p>The visor shows where it glows.</p></div></div>
+      <div class="moment"><div class="pic"><img src="img/m-steer.jpg" alt=""></div><div><div class="k">Steer</div><p>An open hand drives, a fist stops.</p></div></div>
+      <div class="moment"><div class="pic"><img src="img/m-home.jpg" alt=""></div><div><div class="k">Home</div><p>"Come back": straight home.</p></div></div>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · renders of the 3D Junior (sim.html) by Bor Ipema</span><span class="n">10 / 17</span></div>
+</section>
+
+<!-- ============================================================ 11 · final slide 5 -->
+<section class="plate" id="p11">
+  <div class="c">
+    <div class="col" style="left:0;width:700px">
+      <div class="kicker">Glove · palm switch</div>
+      <svg id="fsr" style="width:700px;height:640px;margin-top:auto"></svg>
+      <p class="cap" style="margin-top:10px">An illustrative trace. M,0,0 is the stop sent to the wheels: every switch stops Junior first. After a switch, only a fresh hand in the new view drives.</p>
+    </div>
+    <div class="col" style="left:776px;right:0">
+      <h2 class="d3" style="margin-top:34px">One squeeze switches the&nbsp;camera</h2>
+      <p class="lead" style="margin-top:14px">Hands on a tool, the radio busy with the team.</p>
+      <p class="body" style="margin-top:22px"><b>Why the palm.</b> Used often, so it sits in the hand: no reaching for a button, less tiring. The squeeze is a gate: it carries no content, only "now" (Alavi, 2026c, pp. 43–44).</p>
+      <div class="flow" style="grid-template-columns:1fr 34px 1.25fr 34px 1fr;margin-top:auto">
+        <div class="box green"><svg class="ic" style="fill:#fff"><use href="#i-squeeze"/></svg><div class="h4" style="margin-top:8px">Squeeze ≥ 800</div><div class="small">on the palm FSR</div></div>
+        <div class="arrow"></div>
+        <div class="box"><div class="lab">Laptop</div><div class="small" style="margin-top:8px">The glove's Arduino, over USB, to junior_093.py</div></div>
+        <div class="arrow"></div>
+        <div class="box"><svg class="ic"><use href="#i-eye"/></svg><div class="h4" style="margin-top:8px">Camera switches</div><div class="small">visor (laptop) ⇄ Junior (phone)</div></div>
+      </div>
+      <p class="h4" style="margin-top:22px">Every switch stops Junior first. A press counts at 800 and re-arms only below 200, so a brush does nothing and a held squeeze switches once.</p>
+      <div style="margin-top:auto">
+        <div class="tl" style="grid-template-columns:120px 1fr">
+          <div class="k">Iteration</div><div>Threshold 750 → 800: a natural grip reached 790 in our test. A phone over DroidCam instead of a camera module on the rover.</div>
+          <div class="k">Limits</div><div>One threshold for everyone; a tool grip can press the palm; a lost phone feed means stop.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · palm switch by Alexis Xie</span><span class="n">11 / 17</span></div>
+</section>
+
+<!-- ============================================================ 12 · final slide 6 -->
+<section class="plate" id="p12">
+  <div class="c">
+    <div class="col" style="left:0;width:640px">
+      <div class="kicker">Glove · gesture</div>
+      <div class="gest" style="margin-top:auto;height:540px;grid-template-rows:1fr 1fr">
+        <div class="box"><svg><use href="#i-palm"/></svg><b>Open hand</b><span>forward</span></div>
+        <div class="box"><svg style="transform:rotate(-28deg)"><use href="#i-palm"/></svg><b>Tilt</b><span>steer left or right</span></div>
+        <div class="box ink"><svg><use href="#i-fist"/></svg><b>Fist or no hand</b><span>stop</span></div>
+        <div class="box"><svg><use href="#i-thumbdown"/></svg><b>Thumb down</b><span>reverse</span></div>
+      </div>
+      <p class="cap" style="margin-top:12px">Tracked by MediaPipe Hands (Zhang et al., 2020). The visor shows each command back as an icon: an echo (Alavi, 2026d, p. 21).</p>
+    </div>
+    <div class="col" style="left:716px;right:0">
+      <h2 class="d3" style="margin-top:34px">One open hand drives&nbsp;Junior</h2>
+      <p class="lead" style="margin-top:14px">The radio is busy with the team, so Marvin steers Junior by hand.</p>
+      <div class="lab" style="margin-top:auto">Why one hand</div>
+      <ul class="steps why" style="margin-top:6px">
+        <li style="grid-template-columns:34px 1fr"><span class="k">1</span><span class="body">The other hand keeps working (Dianat et al., 2012)</span></li>
+        <li style="grid-template-columns:34px 1fr"><span class="k">2</span><span class="body">Simple, linear moves</span></li>
+        <li style="grid-template-columns:34px 1fr"><span class="k">3</span><span class="body">It works with one usable hand (Wobbrock et al., 2011)</span></li>
+      </ul>
+      <div style="margin-top:auto">
+        <div class="tl" style="grid-template-columns:120px 1fr">
+          <div class="k">Iteration</div><div style="display:flex;gap:16px;align-items:center">
+            <svg width="70" height="40" viewBox="0 0 70 40"><rect x="0" y="4" width="30" height="32" fill="#0E0E10"/><path d="M33 20 h10" stroke="#0E0E10" stroke-width="1.5"/><path d="M41 16 l5 4 -5 4" fill="none" stroke="#0E0E10" stroke-width="1.5"/><rect x="48" y="4" width="22" height="32" fill="#ECEDF0" stroke="#0E0E10"/><path d="M48 12h22M48 20h22M48 28h22" stroke="#0E0E10" stroke-width="2.5"/></svg>
+            <span>First a black glove, now a yellow one with stripes: the tracker lost the black glove.</span></div>
+          <div class="k">Limits</div><div>A gloved fist is sometimes lost; thumb down was recognised once in 30.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · gestures by Alexis Xie</span><span class="n">12 / 17</span></div>
+</section>
+
+<!-- ============================================================ 13 · final slide 7 -->
+<section class="plate" id="p13">
+  <div class="c">
+    <div class="col" style="left:0;width:700px">
+      <div class="kicker">Voice</div>
+      <h2 class="d3" style="margin-top:22px">Junior answers in your own&nbsp;voice</h2>
+      <div style="margin-top:auto">
+        <p class="q" style="font-size:30px">Can the constant training of voice be an heirloom?</p>
+        <p class="cap" style="margin-top:6px">TA feedback, week 6</p>
+      </div>
+      <div class="tl big" style="margin-top:auto">
+        <div class="k">First</div><div>A computer voice</div>
+        <div class="k">7 Oct</div><div>The first voice-cloning iteration</div>
+        <div class="k">20 Oct</div><div>Junior learns to tell the crew apart by voice</div>
+        <div class="k">Now</div><div>Junior answers Bram, Bor and Alexis in their own voice. Anyone new hears the heirloom: the three voices blended.</div>
+      </div>
+      <p class="cap" style="margin-top:10px">We dropped the radio filter: it made two of the voices sound alike. A voice tells who is speaking (Alavi, 2026b, p. 18).</p>
+    </div>
+    <div class="col" style="left:780px;right:0">
+      <div class="lab" style="margin-top:118px">How fast Junior answers, median</div>
+      <svg id="lat" style="width:100%;height:330px;margin-top:18px"></svg>
+      <p class="small" style="margin-top:22px">"Junior, stop" is a fixed rule and adds no model call. For "Junior, check that one", Gemma 3 4B gets the words, the pointing and the glow, and the rules pick the glow: frame and strike (Alavi, 2026c, p. 28). Talking to Junior is push-to-talk (Alavi, 2026c, pp. 43–44).</p>
+      <p class="cap" style="margin-top:auto">Medians of 85 logged commands; 62 of them reached the model, 15 were fixed-rule commands.</p>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · cloned voices by Bram Schoen (XTTS v2)</span><span class="n">13 / 17</span></div>
+</section>
+
+<!-- ============================================================ 14 · final slide 8 -->
+<section class="plate" id="p14">
+  <div class="c">
+    <div class="col" style="left:0;width:880px">
+      <div class="pic" style="height:100%" id="toppic">
+        <img src="img/m-top.jpg" alt="" style="object-position:50% 70%">
+        <svg id="homesvg" style="position:absolute;inset:0;width:100%;height:100%"></svg>
+      </div>
+    </div>
+    <div class="col" style="left:944px;right:0">
+      <div class="kicker">Home</div>
+      <div style="margin-top:22px">
+        <p class="q" style="font-size:28px">Repeats all steps in reverse to get back, not a direct route.</p>
+        <p class="cap" style="margin-top:6px">TA feedback, week 6</p>
+      </div>
+      <h2 class="d3" style="margin-top:auto">Junior now knows where home&nbsp;is</h2>
+      <p class="body" style="margin-top:20px">Before, Junior came back by repeating every step in reverse. Now autopilot.py adds up every wheel command, and on "come back" he turns towards the start and drives straight there.</p>
+      <p class="body" style="margin-top:12px">An open hand held in view takes over from the way home: capture by design (Alavi, 2026d, p. 26; Parasuraman &amp; Riley, 1997).</p>
+      <p class="cap" style="margin-top:auto">Seen from above in the 3D world, where the simulator supplies Junior's position. Without wheel encoders, the sum drifts over a whole site.</p>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · autopilot and 3D Junior by Bor Ipema</span><span class="n">14 / 17</span></div>
+</section>
+
+<!-- ============================================================ 15 · final slide 9 -->
+<section class="plate" id="p15">
+  <div class="c">
+    <div class="kicker">Benchmark</div>
+    <h2 class="d3" style="margin-top:22px">How we know it works, and against&nbsp;what</h2>
+    <table class="bench" style="margin-top:30px">
+      <tr><th style="width:300px">Test, compared against</th><th>Result, one dot per trial</th></tr>
+      <tr><td><div class="h4">Squeeze</div><div class="small dim" style="margin-top:4px">a hard press against a natural grip</div></td>
+        <td><div style="display:grid;grid-template-columns:auto auto;justify-content:start;gap:12px 54px;align-items:center">
+          <svg id="d-press" style="width:346px;height:46px"></svg><svg id="d-grip" style="width:461px;height:46px"></svg>
+          <div><span class="d3 g" style="font-size:40px">27 / 30</span> <span class="small">hard presses switched</span></div>
+          <div><span class="d3" style="font-size:40px">1 / 40</span> <span class="small">natural grips switched by mistake</span></div></div></td></tr>
+      <tr><td><div class="h4">Gestures</div><div class="small dim" style="margin-top:4px">a bare hand against a work glove (Dianat et al., 2012)</div></td>
+        <td><div style="display:grid;grid-template-columns:auto auto;justify-content:start;gap:12px 54px;align-items:center">
+          <svg id="d-bare" style="width:346px;height:115px"></svg><svg id="d-glove" style="width:346px;height:115px"></svg>
+          <div><span class="d3" style="font-size:40px">64%</span> <span class="small">bare hand, 48 / 75</span></div>
+          <div><span class="d3 g" style="font-size:40px">63%</span> <span class="small">work glove, 47 / 75</span></div></div></td></tr>
+      <tr><td><div class="h4">Latency</div><div class="small dim" style="margin-top:4px">speech recognition against the model call</div></td>
+        <td><svg id="lat2" style="width:820px;height:160px"></svg></td></tr>
+    </table>
+    <p class="cap" style="position:absolute;left:0;right:0;bottom:0">Glove, three testers: squeeze at 750 (now 800); 75 gestures per condition. Latency: medians of 85 logged commands (62 reached the model). Not tested yet: misheard commands per speaker (Koenecke et al., 2020). The testers are classmates, so this measures legibility, not Marvin's experience (Bennett &amp; Rosner, 2019).</p>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · glove tests run by Alexis Xie, 21 October 2026</span><span class="n">15 / 17</span></div>
+</section>
+
+<!-- ============================================================ 16 · final slides 10-11 -->
+<section class="plate" id="p16">
+  <div class="c">
+    <div class="col" style="left:0;width:960px">
+      <div class="kicker">Strengths and limits</div>
+      <h2 class="d3" style="margin-top:22px">What holds up, and what does not&nbsp;yet</h2>
+      <div class="lims" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px;margin-top:auto">
+        <div><h4>Holds up</h4><ul>
+          <li>Offline: every model runs on the laptop.</li>
+          <li>Every switch stops Junior first; he stops himself at 20 cm.</li>
+          <li>Voice is optional (Koenecke et al., 2020).</li></ul></div>
+        <div><h4>If someone does it differently</h4><ul>
+          <li>The hand leaves the view: Junior stops.</li>
+          <li>A brush is ignored; a held squeeze switches once.</li>
+          <li>Two glows and no pointing: Junior asks which one (Oviatt, 1999).</li></ul></div>
+        <div><h4>Not yet</h4><ul>
+          <li>The glove hangs on a cable; the way home drifts.</li>
+          <li>Tested with classmates, not salvage workers or disabled users (Bennett &amp; Rosner, 2019).</li></ul></div>
+      </div>
+      <div style="margin-top:auto" class="stack">
+        <p class="small"><b>Which version runs what.</b> The Arduino car responds to hand gestures and spoken commands. The 3D Junior runs the whole system: the squeeze, gestures, voice with pointing, glow detection, the local model and the way home.</p>
+        <p class="small"><b>Next.</b> Wheel encoders, a wireless glove, and a test with people who work in gloves. Voiceprints and command recordings stay on the laptop; a real crew needs consent and a way to delete them.</p>
+      </div>
+    </div>
+    <div class="col" style="left:1020px;right:0">
+      <div class="pic" style="height:420px"><img src="img/m-close.jpg" alt="" style="object-position:40% 50%"></div>
+      <h2 class="d3" style="margin-top:26px;font-size:44px">Junior, <span class="g">confidently wrong</span></h2>
+      <p class="body" style="margin-top:14px">A missed squeeze or a misheard word, and Junior acts, sure of itself, in a voice Marvin trusts (Parasuraman &amp; Riley, 1997).</p>
+      <p class="cap" style="margin-top:auto">At the midterm we asked whether "70% sure" would be ignored or over-trusted. The final ends on the same question.</p>
+      <p class="d3" style="margin-top:14px;font-size:40px">Whose voice was it?</p>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026</span><span class="n">16 / 17</span></div>
+</section>
+
+<!-- ============================================================ 17 · midterm slide 11 + final slide 12 -->
+<section class="plate" id="p17">
+  <div class="c">
+    <div class="kicker">References, midterm and final</div>
+    <div class="refs" style="margin-top:22px">
+      <p>Alavi, H. (2026a). <i>Multimodal interaction design (MMIxD), week 2: Vision</i> [Lecture slides]. Canvas, University of Amsterdam. https://canvas.uva.nl/courses/59806</p>
+      <p>Alavi, H. (2026b). <i>Multimodal interaction design (MMIxD), week 5: Voice</i> [Lecture slides]. Canvas, University of Amsterdam.</p>
+      <p>Alavi, H. (2026c). <i>Multimodal interaction design (MMIxD), week 6: Multimodality</i> [Lecture slides]. Canvas, University of Amsterdam.</p>
+      <p>Alavi, H. (2026d). <i>Multimodal interaction design (MMIxD), week 7: Design for human body, contextualizing MMIxD</i> [Lecture slides]. Canvas, University of Amsterdam.</p>
+      <p>American Nuclear Society. (n.d.). The art of the 10,000-year warning. <i>Nuclear Newswire</i>. https://www.ans.org/news/article-416/the-art-of-the-10000year-warning/</p>
+      <p>American Nuclear Society. (2025). Deep geologic repository progress: 2025 update. <i>Nuclear Newswire</i>. https://www.ans.org/news/2025-07-25/article-7222/deep-geologic-repository-progress2025-update/</p>
+      <p>Anglada-Escudé, G., Amado, P. J., Barnes, J., Berdiñas, Z. M., Butler, R. P., Coleman, G. A. L., de la Cueva, I., Dreizler, S., Endl, M., Giesers, B., Jeffers, S. V., Jenkins, J. S., Jones, H. R. A., Kiraga, M., Kürster, M., López-González, M. J., Marvin, C. J., Morales, N., Morin, J., … Zechmeister, M. (2016). A terrestrial planet candidate in a temperate orbit around Proxima Centauri. <i>Nature, 536</i>(7617), 437–440. https://doi.org/10.1038/nature19106</p>
+      <p>Bennett, C. L., &amp; Rosner, D. K. (2019). The promise of empathy: Design, disability, and knowing the "other". In <i>Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems</i> (pp. 1–13). ACM. https://doi.org/10.1145/3290605.3300528</p>
+      <p>Ching, B., &amp; Fleck, A. (2026a). <i>Multimodal interaction design: Seminar week 1</i> [Seminar slides]. Canvas, University of Amsterdam. https://canvas.uva.nl/courses/59806</p>
+      <p>Ching, B., &amp; Fleck, A. (2026b). <i>Multimodal interaction design: Seminar week 2</i> [Seminar slides]. Canvas, University of Amsterdam. https://canvas.uva.nl/courses/59806</p>
+      <p>Dadachova, E., Bryan, R. A., Huang, X., Moadel, T., Schweitzer, A. D., Aisen, P., Nosanchuk, J. D., &amp; Casadevall, A. (2007). Ionizing radiation changes the electronic properties of melanin and enhances the growth of melanized fungi. <i>PLoS ONE, 2</i>(5), Article e457. https://doi.org/10.1371/journal.pone.0000457</p>
+      <p>Dianat, I., Haslegrave, C. M., &amp; Stedmon, A. W. (2012). Methodology for evaluating gloves in relation to the effects on hand performance capabilities: A literature review. <i>Ergonomics, 55</i>(11), 1429–1451. https://doi.org/10.1080/00140139.2012.708058</p>
+      <p>Fabbri, P., &amp; Bastide, F. (2024). Living detectors and complementary signs: Cats, eyes, and sirens (S. Fell, Trans.). <i>Linguistic Frontiers, 5</i>(3), 10–13. https://doi.org/10.2478/lf-2022-0008 (Original work published 1984)</p>
+      <p>Harvard International Review. (n.d.). The Artemis Accords: International cooperation in the era of space exploration. https://hir.harvard.edu/the-artemis-accords/</p>
+      <p>Howard, W. S., Tilley, M. A., Corbett, H., Youngblood, A., Loyd, R. O. P., Ratzloff, J. K., Law, N. M., Fors, O., del Ser, D., Shkolnik, E. L., Ziegler, C., Goeke, E. E., Pietraallo, A. D., &amp; Haislip, J. (2018). The first naked-eye superflare detected from Proxima Centauri. <i>The Astrophysical Journal Letters, 860</i>(2), Article L30. https://doi.org/10.3847/2041-8213/aacaf3</p>
+      <p>Human Interference Task Force. (1984). <i>Reducing the likelihood of future human activities that could affect geologic high-level waste repositories</i> (Technical Report ONWI-537). Office of Nuclear Waste Isolation, Battelle Memorial Institute.</p>
+      <p>Inside Climate News. (2026). Trying to get away from gas turbines, data centers place their hopes on small modular nuclear reactors. https://insideclimatenews.org/news/30082026/data-center-small-modular-nuclear-reactors/</p>
+      <p>International Bar Association. (2024). Disputes over space mining on the horizon? https://www.ibanet.org/disputes-over-space-mining-on-the-horizon</p>
+      <p>Koenecke, A., Nam, A., Lake, E., Nudell, J., Quartey, M., Mengesha, Z., Toups, C., Rickford, J. R., Jurafsky, D., &amp; Goel, S. (2020). Racial disparities in automated speech recognition. <i>Proceedings of the National Academy of Sciences, 117</i>(14), 7684–7689. https://doi.org/10.1073/pnas.1915768117</p>
+      <p>Manual communication. (n.d.). In <i>Wikipedia</i>. Retrieved September 21, 2026, from https://en.wikipedia.org/wiki/Manual_communication</p>
+      <p>Meadows, V. S., Arney, G. N., Schwieterman, E. W., Lustig-Yaeger, J., Lincowski, A. P., Robinson, T., Domagal-Goldman, S. D., Deitrick, R., Barnes, R. K., Fleming, D. P., Luger, R., Driscoll, P. E., Quinn, T. R., &amp; Crisp, D. (2018). The habitability of Proxima Centauri b: Environmental states and observational discriminants. <i>Astrobiology, 18</i>(2), 133–189. https://doi.org/10.1089/ast.2016.1589</p>
+      <p>NASA. (n.d.-a). <i>Artemis Accords</i>. https://www.nasa.gov/artemis-accords/</p>
+      <p>NASA. (n.d.-b). <i>Space Suit RoboGlove (SSRG)</i>. NASA Technology Transfer Program. https://technology.nasa.gov/patent/MSC-TOPS-80</p>
+      <p>O'Malley-James, J. T., &amp; Kaltenegger, L. (2019). Biofluorescent worlds, II: Biological fluorescence induced by stellar UV flares, a new temporal biosignature. <i>Monthly Notices of the Royal Astronomical Society, 488</i>(4), 4530–4545. https://doi.org/10.1093/mnras/stz1842</p>
+      <p>Oviatt, S. (1999). Ten myths of multimodal interaction. <i>Communications of the ACM, 42</i>(11), 74–81. https://doi.org/10.1145/319382.319398</p>
+      <p>Parasuraman, R., &amp; Riley, V. (1997). Humans and automation: Use, misuse, disuse, abuse. <i>Human Factors, 39</i>(2), 230–253. https://doi.org/10.1518/001872097778543886</p>
+      <p>Progressive Geographies. (2025). Thomas Sebeok, Umberto Eco and the semiotics of nuclear waste. https://progressivegeographies.com/2025/02/02/thomas-sebeok-umberto-eco-and-the-semiotics-of-nuclear-waste/</p>
+      <p>Trauth, K. M., Hora, S. C., &amp; Guzowski, R. V. (1993). <i>Expert judgment on markers to deter inadvertent human intrusion into the Waste Isolation Pilot Plant</i> (Report SAND92-1382). Sandia National Laboratories.</p>
+      <p>Wobbrock, J. O., Kane, S. K., Gajos, K. Z., Harada, S., &amp; Froehlich, J. (2011). Ability-based design: Concept, principles and examples. <i>ACM Transactions on Accessible Computing, 3</i>(3), Article 9. https://doi.org/10.1145/1952383.1952384</p>
+      <p>World Nuclear News. (n.d.). How are geological repository projects progressing? https://www.world-nuclear-news.org/articles/how-are-geological-repository-projects-progressing</p>
+      <p>Zhang, F., Bazarevsky, V., Vakunov, A., Tkachenka, A., Sung, G., Chang, C.-L., &amp; Grundmann, M. (2020). <i>MediaPipe Hands: On-device real-time hand tracking</i> (arXiv:2006.10214). arXiv. https://doi.org/10.48550/arXiv.2006.10214</p>
+      <p style="margin-top:14px;text-indent:0;padding-left:0;color:#55555E"><b style="color:#0E0E10">Pictures and figures.</b> Renders of the group's 3D Junior (sim.html; its rover and suit models were AI-generated for the project site) and a frame from the Arduino car's voice test video, both graded to grey. The postcard, Marvin, the suit and the fungus: generated with SDXL in ComfyUI for these plates. Charts redrawn after the sources named on them. Icons: Phosphor Icons (MIT). TA feedback: A. Fleck and B. Ching (personal communication, 26 September to 9 October 2026), not listed (APA 7).</p>
+    </div>
+  </div>
+  <div class="folio"><span>Glove, Visor, Rover · Group 8 · Multimedia Interaction Design, University of Amsterdam, 2026</span><span class="n">17 / 17</span></div>
+</section>
+
+<script src="charts.js"></script>
+<script>
+  spikes('spikes');
+  radar('radar');
+  spectrum('spectrum'); flare('flare'); growth('growth');
+  fsr('fsr');
+  dots('d-press', 30, 27, 15, '#2a6236', 16, 7); dots('d-grip', 40, 1, 20, '#0E0E10', 16, 7);
+  dots('d-bare', 75, 48, 15, '#0E0E10', 16, 7); dots('d-glove', 75, 47, 15, '#2a6236', 16, 7);
+  latency('lat', [['Speech recognition', .25, '#2a6236', '0.25 s'], ['"Junior, stop": a fixed rule, no model call', .38, '#2a6236', '0.38 s'], ['"Junior, check that one": through Gemma 3 4B', 2.3, '#0E0E10', '2.3 s']]);
+  latency('lat2', [['Speech recognition', .25, '#2a6236', '0.25 s'], ['The model call (Gemma 3 4B)', 2.3, '#0E0E10', '2.3 s']]);
+  // the way home, drawn on the render from above (points projected by sim/shots.js, image 1200 x 900)
+  (async () => {
+    const P = await fetch('img/sim-top.json').then(r => r.json()).catch(() => null);
+    if (!P) return;
+    const s = document.getElementById('homesvg'), box = document.getElementById('toppic');
+    const W = box.clientWidth, H = box.clientHeight, sc = Math.max(W / 1200, H / 900);
+    const ox = (W - 1200 * sc) / 2, oy = (H - 900 * sc) * 0.7;  // object-position 50% 70%
+    const T = ([x, y]) => [ox + x * sc, oy + y * sc];
+    s.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const out = P.out.map(T), home = T(P.home), jr = T(P.junior);
+    el('path', { d: smooth(out), fill: 'none', stroke: C.bone, 'stroke-width': 2.5, 'stroke-dasharray': '7 7' }, s);
+    el('path', { d: `M${jr[0]},${jr[1]} L${home[0]},${home[1]}`, fill: 'none', stroke: C.glow, 'stroke-width': 4 }, s);
+    const lbl = (x, y, t, anchor = 'start', col = C.ink) => {
+      const g = el('g', {}, s), tx = txt(g, x, y, t, { class: 'm', 'font-size': 13, fill: col, 'text-anchor': anchor });
+      const b = tx.getBBox(); el('rect', { x: b.x - 7, y: b.y - 5, width: b.width + 14, height: b.height + 10, fill: C.bone }, g); g.appendChild(tx);
+    };
+    lbl(home[0] + 50, home[1] + 34, 'home ring');
+    lbl(jr[0] - 30, jr[1] - 44, 'Junior, at a glow', 'end');
+    const mo = out[3]; lbl(mo[0] + 60, mo[1] + 6, 'out: steered by hand, then every step');
+    lbl(mo[0] + 60, mo[1] + 30, 'in reverse to come back (before)');
+    const mid = [(jr[0] + home[0]) / 2, (jr[1] + home[1]) / 2]; lbl(mid[0] - 40, mid[1] + 40, 'back now: turn, then straight', 'end', C.green);
+  })();
+</script>
+</body>
+</html>

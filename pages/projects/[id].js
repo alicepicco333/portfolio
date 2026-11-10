@@ -9,6 +9,7 @@ import CaseStudy from "../../components/CaseStudy";
 import MethodStrip, { stepsOf } from "../../components/Method";
 import ProjectGraph from "../../components/ProjectGraph";
 import { TryIt, Clip } from "../../components/Prototype";
+import Deck from "../../components/Deck";
 import { byDateDesc, categoryMeta, withBase, projectStyle } from "../../utils";
 
 // Template filler ("Introductory paragraph for…") is hidden until real copy is written.
@@ -245,7 +246,9 @@ export default function ProjectPage({ project, number, next }) {
           </section>
         )}
 
-        {!project.caseStudy && project.gridImages.length > 0 && (
+        {!project.caseStudy && project.gallery === "deck" && project.gridImages.length > 0 && <Deck images={project.gridImages} title={project.title} />}
+
+        {!project.caseStudy && project.gallery !== "deck" && project.gridImages.length > 0 && (
           <section className="grid gap-x-4 gap-y-10 px-4 py-10 tablet:grid-cols-2 tablet:px-10">
             {project.gridImages.map(({ src, caption }, index) => (
               <figure key={src} className="flex flex-col gap-3">

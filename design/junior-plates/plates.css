@@ -1,0 +1,72 @@
+/* Plates for "Glove, Visor, Rover" (project 18). Tokens and type from the portfolio: styles/globals.css and
+   tailwind.config.js (Inter Tight + JetBrains Mono, the grey page, near-black ink, the project accent). */
+@font-face { font-family: "Inter Tight"; src: local("Inter Tight"), local("InterTight-Regular"); font-weight: 400; }
+@font-face { font-family: "Inter Tight"; src: local("Inter Tight Medium"), local("InterTight-Medium"); font-weight: 500; }
+@font-face { font-family: "Inter Tight"; src: local("Inter Tight SemiBold"), local("InterTight-SemiBold"); font-weight: 600; }
+@font-face { font-family: "Inter Tight"; src: local("Inter Tight Bold"), local("InterTight-Bold"); font-weight: 700; }
+@font-face { font-family: "Inter Tight"; src: local("Inter Tight ExtraBold"), local("InterTight-ExtraBold"); font-weight: 800; }
+
+:root {
+  --bone: #D5D6DB;      /* the page grey */
+  --paper: #ECEDF0;     /* card surface */
+  --ink: #0E0E10;
+  --graphite: #55555E;  /* secondary text, 5.1:1 on the grey */
+  --concrete: #A5A6AE;  /* faint rules */
+  --khaki: #C2C5CF;
+  --green: #2a6236;     /* the project accent, 5.0:1 on the grey */
+  --glow: #8BE3A8;      /* the fungus glow on near-black */
+  --blue: #1A1AFF;      /* Alice's signature, tiny */
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #9a9ba2; }
+body { font-family: "Inter Tight", system-ui, sans-serif; font-feature-settings: "tnum" 1; -webkit-font-smoothing: antialiased; color: var(--ink); }
+.plate { width: 1600px; height: 900px; position: relative; overflow: hidden; background: var(--bone); padding: 60px 72px 0; margin: 0 auto 48px; }
+.plate.dark { background: var(--ink); color: var(--bone); --graphite: #92929C; --concrete: #4A4A54; }
+
+/* type */
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.kicker { font: 500 13px/1.2 "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--graphite); display: flex; align-items: center; gap: 10px; }
+.kicker::before { content: ""; width: 8px; height: 8px; background: var(--green); flex: none; }
+.dark .kicker::before { background: var(--glow); }
+.d1 { font-weight: 700; font-size: 110px; line-height: .92; letter-spacing: -.04em; margin: 0; }
+.d2 { font-weight: 700; font-size: 68px; line-height: .95; letter-spacing: -.035em; margin: 0; }
+.d3 { font-weight: 700; font-size: 52px; line-height: .98; letter-spacing: -.03em; margin: 0; }
+.h3 { font-weight: 600; font-size: 26px; line-height: 1.12; letter-spacing: -.015em; margin: 0; }
+.h4 { font-weight: 600; font-size: 20px; line-height: 1.2; letter-spacing: -.01em; margin: 0; }
+.lead { font-size: 24px; line-height: 1.3; letter-spacing: -.01em; margin: 0; }
+.body { font-size: 18px; line-height: 1.42; margin: 0; }
+.small { font-size: 15.5px; line-height: 1.42; margin: 0; }
+.cap { font-size: 14px; line-height: 1.42; color: var(--graphite); margin: 0; }
+.lab { font: 500 12.5px/1.3 "JetBrains Mono", monospace; letter-spacing: .07em; text-transform: uppercase; color: var(--graphite); }
+.g { color: var(--green); }
+.dark .g { color: var(--glow); }
+.dim { color: var(--graphite); }
+.q { font-size: 24px; line-height: 1.25; letter-spacing: -.01em; margin: 0; }
+.q::before { content: "\201C"; } .q::after { content: "\201D"; }
+
+/* the folio: project, source, number; the one blue square is Alice's signature */
+.folio { position: absolute; left: 72px; right: 72px; bottom: 26px; display: flex; justify-content: space-between; align-items: center;
+  font: 500 12px/1 "JetBrains Mono", monospace; letter-spacing: .05em; color: var(--graphite); }
+.folio .n { display: flex; align-items: center; gap: 8px; }
+.folio .n::before { content: ""; width: 6px; height: 6px; background: var(--blue); }
+.dark .folio .n::before { background: #7E7EFF; }
+
+/* frames for pictures */
+.pic { position: relative; overflow: hidden; background: #2a2a2e; }
+.pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pic .tag { position: absolute; left: 12px; bottom: 12px; font: 500 11.5px/1 "JetBrains Mono", monospace; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--bone); background: rgba(14,14,16,.72); padding: 6px 8px; }
+
+/* chips and boxes for diagrams */
+.box { border: 1.5px solid var(--ink); background: var(--paper); padding: 14px 16px; }
+.box.ink { background: var(--ink); color: var(--bone); }
+.box.green { background: var(--green); border-color: var(--green); color: #fff; }
+.ic { width: 28px; height: 28px; fill: currentColor; flex: none; }
+
+/* tables: hairlines only where rows need them */
+table { border-collapse: collapse; width: 100%; }
+th { text-align: left; font: 500 12.5px/1.3 "JetBrains Mono", monospace; letter-spacing: .07em; text-transform: uppercase; color: var(--graphite); font-weight: 500; padding: 0 16px 10px 0; }
+td { vertical-align: top; padding: 13px 16px 13px 0; border-top: 1px solid var(--concrete); }
+
+svg text { font-family: "Inter Tight", sans-serif; }
+svg .m { font-family: "JetBrains Mono", monospace; }
