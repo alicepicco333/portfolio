@@ -252,8 +252,8 @@ export default function ProjectPage({ project, number, next }) {
 
         {!project.caseStudy && !["deck", "sections"].includes(project.gallery) && project.gridImages.length > 0 && (
           <section className="grid gap-x-4 gap-y-10 px-4 py-10 tablet:grid-cols-2 tablet:px-10">
-            {project.gridImages.map(({ src, caption }, index) => (
-              <figure key={src} className="flex flex-col gap-3">
+            {project.gridImages.map(({ src, caption, wide }, index) => (
+              <figure key={src} className={`flex flex-col gap-3 ${wide ? "tablet:col-span-2" : ""}`}>
                 {/* the caption describes the image, so the alt stays empty; a click opens it full size */}
                 <a href={withBase(src)} target="_blank" rel="noreferrer" aria-label={`Image ${index + 1} full size (opens in a new tab)`} className="block">
                   <img src={withBase(src)} alt={caption ? "" : `${project.title}, image ${index + 1}`} className="w-full border border-concrete" loading="lazy" />

@@ -22,9 +22,10 @@ export const TryIt = ({ data, title, first = false }) => {
           {on ? (
             <iframe src={src} title={`${title}: the prototype`} className="absolute inset-0 h-full w-full" allow="camera; microphone; fullscreen; autoplay" allowFullScreen />
           ) : (
-            <button type="button" onClick={() => setOn(true)} className="group absolute inset-0 block h-full w-full text-left">
-              {data.poster && <img src={withBase(data.poster)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-80 transition-opacity duration-200 group-hover:opacity-100" />}
-              <span className="absolute bottom-4 left-4 inline-flex min-h-[44px] items-center bg-olive px-5 font-mono text-[14px] uppercase tracking-[0.12em] text-white group-hover:bg-ink group-focus-visible:bg-ink tablet:bottom-6 tablet:left-6">
+            <button type="button" onClick={() => setOn(true)} className="group absolute inset-0 flex h-full w-full items-center justify-center">
+              {/* a clean still of the world, dimmed, and one label in the middle: the whole picture is the button */}
+              {data.poster && <img src={withBase(data.poster)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-70 transition-opacity duration-200 group-hover:opacity-90" />}
+              <span className="relative inline-flex min-h-[52px] items-center bg-olive px-6 font-mono text-[15px] uppercase tracking-[0.12em] text-white group-hover:bg-[#0E0E10] group-focus-visible:bg-[#0E0E10]">
                 {data.button || "Start"} →
               </span>
             </button>

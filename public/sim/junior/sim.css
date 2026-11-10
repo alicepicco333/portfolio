@@ -33,7 +33,7 @@ kbd { font: 500 11px/1 var(--mono); padding: 3px 5px; border: 1px solid var(--li
 /* ---------------------------------------------------------------- the stage: world + visor HUD */
 .stage { position: relative; overflow: hidden; background: #2a1a10; min-height: 0; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
 #world, #overlay { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-#overlay { pointer-events: none; z-index: 1; }
+#overlay { pointer-events: none; z-index: 4; } /* the glow box and its label stay above the side panels */
 .flash { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: #fff6e8; opacity: 0; }
 
 .hud-top { position: absolute; z-index: 3; top: 12px; left: 14px; right: 12px; display: flex; align-items: center; gap: 8px; pointer-events: none; }
