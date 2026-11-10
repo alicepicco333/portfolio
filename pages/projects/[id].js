@@ -10,6 +10,7 @@ import MethodStrip, { stepsOf } from "../../components/Method";
 import ProjectGraph from "../../components/ProjectGraph";
 import { TryIt, Clip } from "../../components/Prototype";
 import Deck from "../../components/Deck";
+import PlateSections from "../../components/PlateSections";
 import { byDateDesc, categoryMeta, withBase, projectStyle } from "../../utils";
 
 // Template filler ("Introductory paragraph for…") is hidden until real copy is written.
@@ -113,8 +114,9 @@ export default function ProjectPage({ project, number, next }) {
           </div>
         </section>
 
-        {/* the work itself, before any numbers */}
-        {project.highlightImage && (
+        {/* the work itself, before any numbers: a prototype to try takes the highlight's place */}
+        {project.tryIt && <TryIt data={project.tryIt} title={project.title} first />}
+        {!project.tryIt && project.highlightImage && (
           <figure className="mx-auto w-fit max-w-full px-4 tablet:px-10">
             {/* the whole image at its own shape, never cropped; the caption sits under it */}
             <img src={withBase(project.highlightImage)} alt={project.highlightCaption || project.title} className="mx-auto block h-auto max-h-[78vh] w-auto max-w-full border border-ink" fetchpriority="high" />
@@ -231,7 +233,6 @@ export default function ProjectPage({ project, number, next }) {
           </figure>
         )}
 
-        {project.tryIt && <TryIt data={project.tryIt} title={project.title} />}
         {project.video && <Clip data={project.video} title={project.title} />}
 
         {project.caseStudy && <CaseStudy data={project.caseStudy} showStats={!project.facts?.length} />}
@@ -247,8 +248,9 @@ export default function ProjectPage({ project, number, next }) {
         )}
 
         {!project.caseStudy && project.gallery === "deck" && project.gridImages.length > 0 && <Deck images={project.gridImages} title={project.title} />}
+        {!project.caseStudy && project.gallery === "sections" && project.gridImages.length > 0 && <PlateSections images={project.gridImages} title={project.title} />}
 
-        {!project.caseStudy && project.gallery !== "deck" && project.gridImages.length > 0 && (
+        {!project.caseStudy && !["deck", "sections"].includes(project.gallery) && project.gridImages.length > 0 && (
           <section className="grid gap-x-4 gap-y-10 px-4 py-10 tablet:grid-cols-2 tablet:px-10">
             {project.gridImages.map(({ src, caption }, index) => (
               <figure key={src} className="flex flex-col gap-3">
