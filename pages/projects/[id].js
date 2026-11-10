@@ -22,7 +22,7 @@ const imageExists = (src) => {
 };
 
 // Sections shown on the site; projects in other categories (e.g. "Past Projects") are kept in the data but not published.
-const ORDER = ["Design", "Research", "Live Coding", "Work in Progress"];
+const ORDER = ["Design", "Research", "Live Coding", "Work in Progress", "Archive"];
 
 export async function getStaticPaths() {
   const paths = portfolioData.projects
@@ -32,10 +32,11 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  // the same order as the home page: finished work by its curated rank, then work in progress
-  const finished = portfolioData.projects.filter((p) => ORDER.includes(p.category) && p.category !== "Work in Progress");
+  // the same order as the home page: finished work by its curated rank, then work in progress, then the archive
+  const finished = portfolioData.projects.filter((p) => ORDER.includes(p.category) && !["Work in Progress", "Archive"].includes(p.category));
   const wip = portfolioData.projects.filter((p) => p.category === "Work in Progress").sort(byDateDesc);
-  const projects = [...finished.sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99) || byDateDesc(a, b)), ...wip];
+  const archived = portfolioData.projects.filter((p) => p.category === "Archive").sort(byDateDesc);
+  const projects = [...finished.sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99) || byDateDesc(a, b)), ...wip, ...archived];
   const index = projects.findIndex((p) => p.id === params.id);
   const project = projects[index];
   const next = projects[(index + 1) % projects.length];
@@ -63,6 +64,8 @@ export async function getStaticProps({ params }) {
 
 export default function ProjectPage({ project, number, next }) {
   const { short } = categoryMeta(project.category);
+  const archived = project.category === "Archive";
+  const steps = stepsOf(project.id);
 
   return (
     <div className={`min-h-screen bg-bone text-ink ${project.accent ? "project-theme" : ""}`} style={projectStyle(project.accent, project.accentHC)}>
@@ -79,8 +82,8 @@ export default function ProjectPage({ project, number, next }) {
       <main id="main-content" tabIndex={-1}>
         <section className="grid gap-x-4 gap-y-8 px-4 pb-8 pt-6 tablet:px-10 laptop:grid-cols-4 laptop:pb-10 laptop:pt-10">
           <div className="flex flex-col gap-1">
-            <Link href="/#work" className="fu-meta -my-2 inline-flex min-h-[40px] w-max items-center text-fieldgrey hover:text-ink">
-              ← Selected work
+            <Link href={archived ? "/#archive" : "/#work"} className="fu-meta -my-2 inline-flex min-h-[40px] w-max items-center text-fieldgrey hover:text-ink">
+              {archived ? "← Archive" : "← Selected work"}
             </Link>
             <span className="fu-meta pt-4 text-fieldgrey">{number}</span>
             <span className="fu-title text-xl">{short}</span>
@@ -104,7 +107,7 @@ export default function ProjectPage({ project, number, next }) {
               </span>
             </h1>
             <p className="max-w-[720px] text-xl leading-snug tablet:text-phi1 tablet:leading-[1.15]">{project.introText}</p>
-            <MethodStrip used={stepsOf(project.id)} />
+            {steps.length > 0 && <MethodStrip used={steps} />}
           </div>
         </section>
 

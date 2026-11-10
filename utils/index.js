@@ -10,6 +10,7 @@ const CATEGORY_META = {
   "Live Coding": { short: "Live coding", tone: "rgb(var(--mint))" },
   "Work in Progress": { short: "Work in progress", tone: "rgb(var(--signal))" },
   "Past Projects": { short: "Past projects", tone: "rgb(var(--khaki))" },
+  Archive: { short: "Archive", tone: "rgb(var(--concrete))" },
 };
 
 // Prefix local /public paths with the deploy base path (GitHub Pages serves from a sub-folder).

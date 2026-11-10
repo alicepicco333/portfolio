@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import SkillMap from "../components/SkillMap";
 import WorkExplorer from "../components/WorkExplorer";
 import InProgress from "../components/InProgress";
+import Archive from "../components/Archive";
 import Journey from "../components/Journey";
 import portfolioData from "../data/portfolio.json";
 import { useIsomorphicLayoutEffect, byDateDesc } from "../utils";
@@ -21,6 +22,7 @@ const Home = () => {
   const projects = [...portfolioData.projects].sort(byDateDesc);
   const finished = projects.filter((p) => FINISHED.includes(p.category));
   const wip = projects.filter((p) => p.category === "Work in Progress");
+  const archived = projects.filter((p) => p.category === "Archive");
 
 
   useIsomorphicLayoutEffect(() => {
@@ -95,6 +97,7 @@ const Home = () => {
           </div>
         </section>
         <Journey projects={projects.filter((p) => FINISHED.includes(p.category) || p.category === "Work in Progress")} />
+        <Archive projects={archived} />
       </main>
 
       <Footer />
