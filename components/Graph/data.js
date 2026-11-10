@@ -52,10 +52,10 @@ export const SKILL_NOTES = {
   ux: "Information architecture, flows and prototypes in Figma, taken through to tested screens.",
   vis: "Typography, layout and visual identity that carry a project's tone.",
   ixd: "How an interface responds: states, transitions and multimodal input, prototyped and tested.",
-  live: "Audio-reactive visuals written live in Hydra and projected, in front of an audience.",
-  dv: "Making datasets about culture explorable: scraped and open data, charts, maps and interactive views.",
-  onto: "Formal models in OWL and linked data with RDF, SPARQL and Wikidata, so a domain can be classified and queried.",
-  arch: "Cataloging, digitizing and describing collections (METS, EAD3) so they stay findable.",
+  live: "Code as a material for image and sound: audio-reactive visuals in Hydra, written live and projected for an audience.",
+  dv: "Charts, maps and interactive views in D3, built from scraped data and CLIP image labels, that make culture explorable at scale.",
+  onto: "OWL models and linked data in RDF, SPARQL and Wikidata that make a domain classifiable and queryable, as in The Meme Ontology.",
+  arch: "METS and EAD3 metadata for digitized collections, and object records with their sources, so archives stay findable.",
 };
 
 // The home map is a fixed, hand-placed 2D layout, drawn at 1440 × 920 and scaled to the screen,

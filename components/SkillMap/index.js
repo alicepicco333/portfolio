@@ -153,8 +153,8 @@ const STATEMENT = [
   "I’m an ",
   ["HCI researcher and designer", "hci"],
   ". I ",
-  ["design interactions", "ixd"],
-  " for screens, hands and voice, from first interview to working prototype, and ",
+  ["design interactions, devices and interfaces", "ixd"],
+  ", from first interview to working prototype, and ",
   ["test them with people", "ur"],
   ".",
 ];

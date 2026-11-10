@@ -30,8 +30,8 @@
     {
       "id": "0",
       "title": "The Stolen Archive",
-      "description": "A virtual museum of 30 looted colonial objects that shows how each one left home, who claims it and who holds it today.",
-      "introText": "The Stolen Archive is a virtual exhibition of thirty objects taken during colonial wars, conquests and excavations, from the Benin Bronzes to the Parthenon Marbles. It works as a companion to a museum visit and as a museum of its own, and asks who was able to take these objects, who keeps them and who has managed to get them back.",
+      "description": "A virtual museum of 30 looted colonial objects, read by tour, length and reading level, where every object shows how it left, who claims it and who holds it.",
+      "introText": "The Stolen Archive is a virtual museum of thirty objects taken during colonial wars, conquests and excavations, from the Benin Bronzes to the Parthenon Marbles. Visitors choose a tour, a text length and a reading level, then follow numbered walking routes through rooms on two floors, and every object shows how it left, who claims it and who holds it, with sources.",
       "gridImages": [
         {
           "src": "/images/projects/0-g1-v5.jpg",
@@ -60,7 +60,7 @@
       ],
       "middleText": "Visitors pick one of three tours (Timeline, Colonial Conquests, Geo) and choose how long and how complex the texts should be: every object has nine versions of its text for each tour, 810 in all. Each object page explains how the object left, who claims it and who holds it, with the sources for each position. An atlas traces the thirty routes on a map, and a floor plan places the objects in thirteen rooms over two floors.",
       "highlightImage": "/images/projects/0-hl-v5.jpg",
-      "conclusionText": "Developed for Information Modeling and Web Technologies (prof. Fabio Vitali) in the Digital Humanities and Digital Knowledge master's at the University of Bologna. Built in HTML, CSS and JavaScript, with inline SVG maps, 3D views of the objects, an RDF graph for every record, and dark and light themes.",
+      "conclusionText": "Developed for Information Modeling and Web Technologies (prof. Fabio Vitali) in the Digital Humanities and Digital Knowledge master's at the University of Bologna. Built in HTML, CSS and JavaScript, with Leaflet maps, 3D views of the objects, an RDF graph for every record, and dark and light themes.",
       "imageSrc": "/images/projects/0-v5.jpg",
       "url": "https://alicepicco333.github.io/the-stolen-archive/",
       "category": "Design",
@@ -79,10 +79,10 @@
       "reworkNote": "The Stolen Archive began as a group project with Corrado Consiglio and Marco Lamorte for Information Modeling and Web Technologies. I reworked it independently in 2026; the version shown here is that rework.",
       "accent": "#aa2f10",
       "summary": {
-        "brief": "Museums rarely show how colonial-era objects left home, who claims them and who holds them today.",
-        "role": "Information modeling and web development; the 2026 redesign on my own.",
-        "method": "A metadata model for 30 objects; 810 texts across 3 tours, 3 lengths and 3 reading levels; maps, floor plans and 3D views.",
-        "outcome": "A virtual exhibition of 30 objects in 13 rooms on two floors, each with the claims, holdings and sources behind it.",
+        "brief": "Museums rarely show how colonial-era objects left home, who claims them and who holds them today, and one label has to serve every visitor.",
+        "role": "Information modeling and web development in a team of three in 2024; the 2026 redesign on my own.",
+        "method": "810 texts across 3 tours, 3 lengths and 3 reading levels; rooms on two floors with numbered walking routes; in 2026, a usability pass on every page, from object pages that fit one screen to atlas popups kept inside the map.",
+        "outcome": "A virtual museum each visitor reads at their own depth, with one numbering system, floor plans numbered along the walking route, and for 22 objects the museum's own wording struck through beside a plain alternative.",
         "stack": "HTML, CSS, JavaScript, Leaflet, three.js, RDF"
       },
       "facts": [
@@ -103,7 +103,7 @@
           "ways through: timeline, conquests, geography"
         ]
       ],
-      "shows": "Contested history made readable: every claim shown with its sources, at the depth the visitor chooses.",
+      "shows": "How visitors read and move through a contested collection: the depth they choose, routes they can follow, and every claim beside its sources.",
       "cardImage": "/images/projects/0-card-v5.jpg",
       "rank": 3,
       "accentHC": "#75210c",
@@ -3136,7 +3136,7 @@
         "dates": "2025 - Present",
         "type": "Freelance",
         "position": "Freelance Designer and Archive Specialist",
-        "bullets": "Web design and front-end development for cultural clients, such as the collection website for Teigetje & Woelrat, and archive digitization and cataloging, such as the Archivio Associazione Luki Massa.",
+        "bullets": "Web design and front-end development for cultural clients, such as the collection website for Teigetje & Woelrat, and METS and EAD3 metadata for digitized archives, such as the Archivio Associazione Luki Massa.",
         "short": "Freelance designer & archivist",
         "org": "Freelance",
         "skills": [
@@ -3144,7 +3144,7 @@
           "vis",
           "arch"
         ],
-        "start": 2025.0,
+        "start": 2025,
         "end": null
       },
       {
@@ -3392,7 +3392,7 @@
     "lead": "I work with information that is easy to misread, from archives and public data to health and learning services, and shape it so people can check it themselves.",
     "paragraphs": [
       "I start with people, not with the interface. I trained in cultural anthropology, so I watch how people actually use a system before deciding what they need, then check it with interviews and think-aloud tests. Then I put the material in order, whether it is an archive, a collection or a public dataset, so it stays findable and can be queried.",
-      "After that I shape it: flows into Figma prototypes and working code, tested with the people who will use them. I show where information comes from and how far to trust a result. I design for people who are often left out, such as neurodiverse users and older adults with low digital literacy. I also use code to make images and sound, live for an audience."
+      "After that I shape it: flows into Figma prototypes and working code, tested with people. I show where information comes from and how far to trust a result. I design for people who are often left out: as a UX researcher at BrainBite I assessed a tutoring platform's flows for neurodiverse learners and built the changes in Figma, and as a digital literacy educator at Ninacare I helped older people use smartphones and online services on home visits. I also use code to make images and sound, live for an audience."
     ],
     "practice": [
       {
