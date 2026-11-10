@@ -8,12 +8,12 @@
 // joined live coding, so the HCI side of the map carries the weight of the selected work.
 export const NODES = [
   { id: "anth", label: "Ethnography", p: [-0.9, -0.7, 0.3], work: ["0"], tools: ["Fieldwork", "Critical theory"] },
-  { id: "ur", label: "User research", p: [-0.2, -0.85, 0.55], work: ["20", "17"], tools: ["Interviews", "Personas", "Think-aloud tests"] },
+  { id: "ur", label: "User research", p: [-0.2, -0.85, 0.55], work: ["20", "17", "22"], tools: ["Interviews", "Personas", "Think-aloud tests"] },
   { id: "arch", label: "Digital archives", p: [-0.95, 0.55, -0.5], work: ["13", "0"], tools: ["Cataloging", "METS and EAD3", "Digitization"] },
   { id: "onto", label: "Ontologies", p: [-0.55, 0.8, -0.75], work: ["12"], tools: ["OWL", "RDF", "SPARQL", "Wikidata"] },
-  { id: "hci", label: "HCI", p: [0.15, -0.55, 0.35], work: ["18", "20", "17"], tools: ["Usability testing", "SUS", "Critical data studies"] },
+  { id: "hci", label: "HCI", p: [0.15, -0.55, 0.35], work: ["18", "20", "17", "22"], tools: ["Usability testing", "SUS", "Critical data studies"] },
   { id: "ux", label: "UX design", p: [0.55, -0.8, 0.15], work: ["20", "11", "0"], tools: ["Figma", "Prototyping", "Information architecture"] },
-  { id: "ixd", label: "Interaction design", p: [0.35, -0.05, 0.75], work: ["18", "20", "0"], tools: ["Multimodal interaction", "Arduino"] },
+  { id: "ixd", label: "Interaction design", p: [0.35, -0.05, 0.75], work: ["18", "20", "0", "22"], tools: ["Multimodal interaction", "Arduino"] },
   { id: "dv", label: "Data visualization", p: [0.05, 0.2, -0.35], work: ["12"], tools: ["D3.js", "Web scraping", "CLIP"] },
   { id: "vis", label: "Visual design", p: [0.85, -0.35, -0.25], work: ["11", "0", "20"], tools: ["Typography", "Visual identity"] },
   { id: "live", label: "Live coding", p: [0.45, 0.95, -0.3], work: ["14"], tools: ["Hydra", "Audio-reactive visuals", "Projection"] },
