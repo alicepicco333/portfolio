@@ -591,7 +591,7 @@
       ],
       "shows": "A client commission taken from Figma to a working bilingual site, built around how visitors browse a label’s collection and its history.",
       "cardImage": "/images/projects/11-card-v3.jpg",
-      "rank": 2,
+      "rank": 3,
       "accentHC": "#111111",
       "cardWebp": "/images/projects/11-card-v3-800.webp",
       "decisions": [
@@ -1301,6 +1301,113 @@
         ]
       ],
       "shows": "Research-led interface design with industry stakeholders."
+    },
+    {
+      "id": "18",
+      "title": "Junior, the Probe Rover",
+      "description": "A speculative probe rover for gloved salvage workers on Proxima b: a glove squeeze, one hand and the voice steer it, and fixed rules overrule a local language model.",
+      "introText": "Junior is a speculative probe rover for salvage workers on Proxima b, where earlier inhabitants marked buried hazards in infrared that humans cannot see, and a fungus glows over them. A worker in a sealed suit and thick gloves sends Junior ahead with a squeeze, one hand and his voice, so he never has to walk up to a hazard himself.",
+      "gridImages": [
+        {
+          "src": "/images/projects/18-g1.jpg",
+          "caption": "The midterm signals map: sixteen present-day signals placed around “now” on technological, environmental, economic, historical, cultural, social and political axes. We built the world from them, from gesture-controlled hazmat gloves and Onkalo-style nuclear waste repositories to folk-horror warning monuments."
+        },
+        {
+          "src": "/images/projects/18-g2.jpg",
+          "caption": "My midterm persona and the suit's channels: Marvin, 42, a salvage worker who lost a teammate to an unmarked site. Each channel answers a constraint: he asks by looking because his hands are busy, severity comes as a vibration rhythm because orange light makes colour unreliable, and gloves keep commands to coarse gestures."
+        },
+        {
+          "src": "/images/projects/18-g3.jpg",
+          "caption": "After the midterm we narrowed the whole suit to one rover and one glove, with everything meeting in the laptop. Fixed rules handle “stop”, the squeeze, the 20 cm stop and flares without calling the model, Gemma 3 4B takes two to three seconds to weigh words, pointing and glow, and the visor shows Junior's camera."
+        },
+        {
+          "src": "/images/projects/18-g4.jpg",
+          "caption": "My diagram of how Junior's inputs relate: the squeeze is a gate, hand gestures set direction, voice sets the action, and voice and pointing disambiguate each other, speech saying what and pointing saying where. “Stop” works by voice, fist and squeeze, and a driving hand outranks the autopilot."
+        },
+        {
+          "src": "/images/projects/18-g5.jpg",
+          "caption": "Alexis's palm switch: a press counts at 800 and re-arms only below 200, so a held squeeze switches once, and every switch stops Junior first. We raised the threshold from 750 after a natural grip reached 790 in our test; a strong grip on a tool can still pass it."
+        },
+        {
+          "src": "/images/projects/18-g6.jpg",
+          "caption": "Alexis's gestures, kept coarse so a glove can make them: an open hand drives, tilting it steers, a fist or no hand stops, a thumb down reverses. A yellow work glove tracked almost as well as a bare hand; the tracker lost the black glove we tried first."
+        },
+        {
+          "src": "/images/projects/18-g7.jpg",
+          "caption": "Junior's voice went from a computer voice to Bram's first clone on 7 October; now Bram, Bor and Alexis each hear their own voice, and anyone else hears the heirloom, a blend of the three (my voice was left out on purpose, so Junior answers me in the heirloom). Hearing a command takes a quarter of a second; “check that one” goes through Gemma and takes 2.3 seconds."
+        },
+        {
+          "src": "/images/projects/18-g8.jpg",
+          "caption": "Squeeze and gesture tests with three testers, all classmates, plus logged response times: a hard press switched the camera 27 times in 30 and a natural grip once in 40 (at the earlier threshold of 750); gestures were read 64% of the time bare-handed and 63% in a work glove; speech recognition took 0.25 s and the model 2.3 s. Over half the gesture misses were the thumb down, read once in 30."
+        }
+      ],
+      "middleText": "Everything meets in one laptop, offline. The squeeze in the glove's palm is a gate: it carries no content, only “now”, and it switches which camera's gestures drive Junior, stopping him first. One open hand drives and its tilt steers, since Marvin's other hand is on a tool and the radio is busy with the team. Voice sets the action. With “check that one”, speech says what and pointing says where; with two glows in view and no pointing, Junior asks which one. Fixed rules act before the local model, Gemma 3 4B, which can talk and propose a target but never decides to move Junior. The reason is time: a fixed-rule command takes a median of 0.38 seconds, a model call 2.3, too slow for an emergency stop.",
+      "highlightImage": "/images/projects/18-hl.jpg",
+      "conclusionText": "What held up: Junior ran offline on one laptop, every camera switch stopped him first, and a work glove tracked almost as well as a bare hand. What did not: the full system ran only in simulation. The Arduino car took gestures and simple voice commands, then a motor burned out and its battery overheated, so we presented the 3D Junior. We tested with classmates; a real test needs people who do dangerous work in gloves, such as mine rescuers or firefighters. I wrote the world and Marvin, added voice commands to the gesture car, worked on its firmware with Alexis and drew up the probe-rover plan. Bor gathered the research and built the visor, Junior's brain and the 3D Junior; Alexis made the palm switch, gestures, 3D models and project site; Bram the cloned voices.",
+      "imageSrc": "/images/projects/18.jpg",
+      "url": "",
+      "category": "Design",
+      "tags": [
+        "Interaction Design",
+        "Multimodal Interaction"
+      ],
+      "highlightCaption": "From the final demo: the simulated Junior on its home ring, with fungus glowing over buried hazards. Our own code drives it: Junior's brain, the visor and glow detection, all on one laptop.",
+      "date": "2026-10-22",
+      "dateLabel": "Sep - Oct 2026",
+      "context": "Multimodal Interaction Design, MSc Information Studies, University of Amsterdam",
+      "collaborators": [
+        "Alexis Xie",
+        "Bor Ipema",
+        "Bram Schoen"
+      ],
+      "accent": "#2a6236",
+      "accentHC": "#1f4d2b",
+      "summary": {
+        "brief": "Salvage workers on Proxima b dig in sealed suits and thick gloves among hazards marked in infrared they cannot see, and checking a site means walking up to it.",
+        "role": "In a team of four: the world and Marvin's persona, voice commands for the gesture car, its firmware with Alexis, and the probe-rover plan.",
+        "method": "A speculative world built on published research, a persona, weekly prototypes from a gesture car to a 3D simulation, and tests of the squeeze and gestures with three testers, plus logged response times.",
+        "outcome": "The full system ran in a 3D simulation driven by our code; the physical car took only gestures and simple voice commands before it broke down.",
+        "stack": "Arduino, Python, MediaPipe, Whisper, Gemma 3 4B (Ollama), XTTS v2, force-sensitive resistor"
+      },
+      "facts": [
+        [
+          "0.38 s",
+          "median for a fixed-rule command like “stop”; “check that one” through the model takes 2.3 s"
+        ],
+        [
+          "27 / 30",
+          "hard presses switched the camera; a natural grip did once in 40"
+        ],
+        [
+          "63%",
+          "of gestures read in a work glove, against 64% bare-handed"
+        ],
+        [
+          "Offline",
+          "speech, hand tracking and the language model all run on one laptop"
+        ]
+      ],
+      "shows": "Multimodal input designed as relations between channels, with fixed limits on what a language model may decide, and the gap between simulation and hardware stated plainly.",
+      "cardImage": "/images/projects/18-card.jpg",
+      "cardWebp": "/images/projects/18-card-800.webp",
+      "rank": 2,
+      "decisions": [
+        {
+          "choice": "Narrow the whole suit to one rover and one glove.",
+          "why": "At the midterm the TAs said a whole suit “might be a lot”, and a rover keeps the worker away from the hazard: Junior goes up to it in his place.",
+          "result": "Each input could be built and tested on its own: the squeeze and gestures with three testers, voice through its logged response times."
+        },
+        {
+          "choice": "Fixed rules act before the language model, and the model never moves Junior.",
+          "why": "“Check that one” through Gemma takes 2.3 seconds; only a fixed “stop”, at 0.38 seconds, is fast enough for an emergency.",
+          "result": "“Stop” works by voice, fist and squeeze, a driving hand cancels the autopilot, and the model only proposes which glow to check."
+        },
+        {
+          "choice": "Let Junior speak in the cloned voices of the crew.",
+          "why": "My idea, after Sebeok's 1984 proposal to keep nuclear warnings alive by retelling them: Marvin could hear a warning in the voice of the teammate he lost.",
+          "result": "Bram built it with XTTS v2: Junior answers Bram, Bor and Alexis in their own voices and anyone else in a blend of the three. A trusted voice also invites over-trust (Parasuraman & Riley, 1997), and consent for cloning a dead teammate's voice is still open."
+        }
+      ]
     },
     {
       "id": "20",
