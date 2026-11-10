@@ -8,13 +8,17 @@ export const TryIt = ({ data, title }) => {
   const src = withBase(data.src);
 
   return (
-    <section aria-labelledby="try-title" className="grid gap-x-4 gap-y-6 px-4 py-16 tablet:px-10 laptop:grid-cols-4 laptop:py-[88px]">
-      <h2 id="try-title" className="fu-title text-phi1">
-        {data.title || "Try it"}
-      </h2>
-      <div className="flex flex-col gap-4 laptop:col-span-3">
-        {data.intro && <p className="max-w-[720px] text-[19px] leading-relaxed">{data.intro}</p>}
-        <div className="relative w-full max-w-[1200px] overflow-hidden border border-ink bg-ink" style={{ aspectRatio: "16 / 9" }}>
+    <section aria-labelledby="try-title" className="flex flex-col gap-6 px-4 py-16 tablet:px-10 laptop:py-[88px]">
+      <div className="grid gap-x-4 gap-y-4 laptop:grid-cols-4">
+        <h2 id="try-title" className="fu-title text-phi1">
+          {data.title || "Try it"}
+        </h2>
+        {data.intro && <p className="max-w-[720px] text-[19px] leading-relaxed laptop:col-span-3">{data.intro}</p>}
+      </div>
+      <div className="flex flex-col gap-4">
+        {/* the prototype needs room: full width, most of the window's height; on phones a tall frame,
+            as its controls stack under the view */}
+        <div className="relative h-[780px] w-full max-w-[1440px] overflow-hidden border border-ink bg-ink tablet:h-[clamp(720px,88vh,960px)]">
           {on ? (
             <iframe src={src} title={`${title}: the prototype`} className="absolute inset-0 h-full w-full" allow="camera; microphone; fullscreen; autoplay" allowFullScreen />
           ) : (
