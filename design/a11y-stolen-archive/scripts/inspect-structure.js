@@ -6,7 +6,7 @@ const fs = require('fs');
 const NM = process.argv[2] || 'C:/Users/awlic/.claude/jobs/b08852a3/tmp/node_modules';
 const OUT = process.argv[3] || path.join(__dirname, 'structure.json');
 const { chromium } = require(path.join(NM, 'playwright'));
-const BASE = 'https://alicepicco333.' + 'github.io/the-stolen-archive/';
+const BASE = process.env.BASE || ('https://alicepicco333.' + 'github.io/the-stolen-archive/'); // BASE=http://127.0.0.1:3003/ to test a local copy
 const SAMPLE = [
   ['home', 'index.html'],
   ['collection', 'collection.html'],

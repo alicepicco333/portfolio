@@ -5,7 +5,7 @@ const path = require('path');
 const NM = process.argv[2] || 'C:/Users/awlic/.claude/jobs/b08852a3/tmp/node_modules';
 const SHOTS = process.argv[3] || path.join(__dirname, '..', 'shots');
 const { chromium } = require(path.join(NM, 'playwright'));
-const BASE = 'https://alicepicco333.' + 'github.io/the-stolen-archive/';
+const BASE = process.env.BASE || ('https://alicepicco333.' + 'github.io/the-stolen-archive/'); // BASE=http://127.0.0.1:3003/ to test a local copy
 const UA = 'a11y-audit-script (Playwright Chromium)';
 const OBJ = 'Object-page.html?no=8&tour=Colonial%20Conquests%20Tour&length=medium&complexity=basic';
 

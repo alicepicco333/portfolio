@@ -4,7 +4,7 @@ const path = require('path');
 const NM = process.argv[2] || 'C:/Users/awlic/.claude/jobs/b08852a3/tmp/node_modules';
 const OUTDIR = process.argv[3] || path.join(__dirname, '..', 'shots');
 const { chromium } = require(path.join(NM, 'playwright'));
-const BASE = 'https://alicepicco333.' + 'github.io/the-stolen-archive/';
+const BASE = process.env.BASE || ('https://alicepicco333.' + 'github.io/the-stolen-archive/'); // BASE=http://127.0.0.1:3003/ to test a local copy
 (async () => {
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 3, userAgent: 'a11y-audit-script (Playwright Chromium)' });

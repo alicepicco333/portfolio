@@ -10,8 +10,8 @@ const AXE_PATH = path.join(NM, 'axe-core', 'axe.min.js');
 const AXE_VERSION = require(path.join(NM, 'axe-core', 'package.json')).version;
 const PW_VERSION = require(path.join(NM, 'playwright', 'package.json')).version;
 
-const BASE = 'https://alicepicco333.' + 'github.io/the-stolen-archive/';
-const OUT = path.join(__dirname, '..', 'axe-results.json');
+const BASE = process.env.BASE || ('https://alicepicco333.' + 'github.io/the-stolen-archive/'); // BASE=http://127.0.0.1:3003/ to test a local copy
+const OUT = process.env.OUT || path.join(__dirname, '..', 'axe-results.json');
 
 // id, path, optional setup step run after load
 const SAMPLE = [

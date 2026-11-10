@@ -3,7 +3,7 @@
 // Project-only User-Agent, no contact details.
 import fs from 'node:fs';
 import path from 'node:path';
-const BASE = 'https://alicepicco333.' + 'github.io/the-stolen-archive/';
+const BASE = process.env.BASE || ('https://alicepicco333.' + 'github.io/the-stolen-archive/'); // BASE=http://127.0.0.1:3003/ to test a local copy
 const [outdir, ...pages] = process.argv.slice(2);
 fs.mkdirSync(outdir, { recursive: true });
 for (const p of pages) {
