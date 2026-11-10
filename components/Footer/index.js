@@ -32,7 +32,7 @@ const Footer = () => {
           ))}
         </ul>
       </div>
-      <div className="flex flex-wrap items-center justify-end gap-4 border-t border-bone/20 py-4">
+      <div className="flex flex-wrap items-center justify-end gap-4 py-4">
         <Link href="/accessibility" className="inline-flex min-h-[32px] items-center font-mono text-[14px] underline underline-offset-4">
           Accessibility statement
         </Link>

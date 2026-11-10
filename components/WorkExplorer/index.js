@@ -84,11 +84,11 @@ const IndexList = ({ projects }) => {
   const current = projects.find((p) => p.id === active) || projects[0];
   return (
     <div className="grid gap-x-10 laptop:grid-cols-12">
-      <ol className="border-b border-ink/15 laptop:col-span-7">
+      <ol className="laptop:col-span-7">
         {projects.map((p) => {
           const on = current && p.id === current.id;
           return (
-            <li key={p.id} className="border-t border-ink/15 first:border-ink">
+            <li key={p.id} className="border-t border-ink/15 first:border-t-0">
               <Link
                 href={`/projects/${p.id}`}
                 onMouseEnter={() => setActive(p.id)}
@@ -338,7 +338,7 @@ const WorkExplorer = ({ projects: given }) => {
       id="work"
       aria-labelledby="work-title"
       ref={rootRef}
-      className="scroll-mt-16 border-t border-ink px-4 py-16 fu-gutter tablet:py-24"
+      className="scroll-mt-16 px-4 py-16 fu-gutter tablet:py-24"
       onKeyDown={(e) => {
         if (!plainKey(e)) return;
         if (/^[igIG]$/.test(e.key)) setView("Grid");

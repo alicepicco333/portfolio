@@ -7,7 +7,7 @@ const Archive = ({ projects }) => {
   if (!projects.length) return null;
 
   return (
-    <section id="archive" aria-labelledby="archive-title" className="scroll-mt-16 border-t border-ink px-4 py-16 fu-gutter tablet:py-24">
+    <section id="archive" aria-labelledby="archive-title" className="scroll-mt-16 px-4 py-16 fu-gutter tablet:py-24">
       <div className="grid gap-x-8 gap-y-8 laptop:grid-cols-4">
         <div className="flex flex-col gap-3">
           <h2 id="archive-title" className="fu-section-title">
@@ -17,9 +17,9 @@ const Archive = ({ projects }) => {
             Earlier projects from the MA in Digital Humanities and Digital Knowledge, University of Bologna.
           </p>
         </div>
-        <ol className="border-b border-ink/15 laptop:col-span-3 laptop:pt-3">
+        <ol className="laptop:col-span-3 laptop:pt-3">
           {projects.map((p) => (
-            <li key={p.id} className="grid gap-x-6 gap-y-2 border-t border-ink/15 py-5 first:border-ink tablet:grid-cols-[minmax(0,1fr)_auto]">
+            <li key={p.id} className="grid gap-x-6 gap-y-2 border-t border-ink/15 py-5 first:border-t-0 tablet:grid-cols-[minmax(0,1fr)_auto]">
               <Link href={`/projects/${p.id}`} className="group flex flex-col gap-1.5">
                 <h3 className="text-[24px] font-semibold leading-tight tracking-[-0.01em] transition-colors duration-150 group-hover:text-olive">{p.title}</h3>
                 <p className="max-w-[62ch] text-[16px] leading-snug text-ink/75">{p.description}</p>
