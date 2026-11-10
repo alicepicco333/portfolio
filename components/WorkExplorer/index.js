@@ -170,35 +170,17 @@ const Uses = ({ project, row = false, children }) => (
 );
 
 
-const Select = ({ label, value, onChange, options }) => (
-  <label className="flex min-w-[150px] flex-1 flex-col gap-1 font-mono text-[14px] text-graphite desktop:flex-none">
-    {label}
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="min-h-[44px] w-full min-w-[160px] cursor-pointer border border-ink bg-paper px-2.5 font-mono text-[14px] text-ink"
-    >
-      {options.map(([v, t]) => (
-        <option key={v} value={v}>
-          {t}
-        </option>
-      ))}
-    </select>
-  </label>
-);
 
 const WorkExplorer = ({ projects: given }) => {
   const projects = useMemo(() => [...given].sort(curated), [given]);
   const [view, setView] = useState("Grid");
   const [skill, setSkill] = useState("all");
-  const [type, setType] = useState("all");
-  const [year, setYear] = useState("all");
   const [picked, setPicked] = useState(null);
   const [hot, setHot] = useState(null);
   const rootRef = useRef(null);
 
-  const years = [...new Set(projects.map(yearOf))].sort().reverse();
-  const matches = (p) => (skill === "all" || skillIds(p.id).includes(skill)) && (type === "all" ? p.category !== "Live Coding" : p.category === type) && (year === "all" || yearOf(p) === year);
+  // few enough works to show them all: only a skill picked on the map narrows the list
+  const matches = (p) => skill === "all" || skillIds(p.id).includes(skill);
   const shown = projects.filter(matches);
   // the index of works is the default; `?work=cards` still shows the earlier card grid
   const [layout, setLayout] = useState("index");
@@ -206,7 +188,7 @@ const WorkExplorer = ({ projects: given }) => {
     if (new URLSearchParams(window.location.search).get("work") === "cards") setLayout("cards");
   }, []);
   const selected = shown.find((p) => p.id === picked) || shown[0] || projects[0];
-  const filtered = skill !== "all" || year !== "all";
+  const filtered = skill !== "all";
 
   // each view makes its entrance when it is switched to
   useIsomorphicLayoutEffect(() => {
@@ -349,29 +331,8 @@ const WorkExplorer = ({ projects: given }) => {
         <div className="fu-reveal flex flex-col gap-2">
           <h2 id="work-title" className="fu-section-title">Selected work</h2>
         </div>
-        <div className="flex w-full flex-wrap items-end gap-3 desktop:w-auto">
-          {/* design and research together; live coding on its own */}
+        <div className="hidden w-full flex-wrap items-end gap-3 desktop:flex desktop:w-auto">
           <div className="flex flex-col gap-1 font-mono text-[14px] text-graphite">
-            Show
-            <div className="flex" role="group" aria-label="Show">
-              {[
-                ["all", "Projects"],
-                ["Live Coding", "Live coding"],
-              ].map(([v, t]) => (
-                <button
-                  key={v}
-                  type="button"
-                  aria-pressed={type === v}
-                  onClick={() => setType(v)}
-                  className={`-mr-px min-h-[44px] border border-ink px-4 font-mono text-[14px] transition-colors ${type === v ? "bg-ink text-bone" : "bg-paper text-ink hover:bg-bone"}`}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-          </div>
-          <Select label="Year" value={year} onChange={setYear} options={[["all", "All years"], ...years.map((y) => [y, y])]} />
-          <div className="hidden flex-col gap-1 font-mono text-[14px] text-graphite desktop:flex">
             View
             <div className="flex" role="group" aria-label="View">
               {VIEWS.map((v) => (
@@ -423,11 +384,7 @@ const WorkExplorer = ({ projects: given }) => {
             <button
               type="button"
               className="font-semibold text-olive underline"
-              onClick={() => {
-                setSkill("all");
-                setType("all");
-                setYear("all");
-              }}
+              onClick={() => setSkill("all")}
             >
               Clear filters
             </button>

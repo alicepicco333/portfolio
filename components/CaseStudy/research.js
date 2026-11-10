@@ -372,7 +372,7 @@ function CastChart({ members, traits, notes, clusters }) {
           <table className="w-full text-left text-[14px]">
             <caption className="sr-only">Personality traits per persona, 1 to 5</caption>
             <thead>
-              <tr className="border-b border-ink">
+              <tr className="border-b border-ink/30">
                 <th className="py-1 pr-2 font-medium text-fieldgrey">Persona</th>
                 {traits.map((t) => (
                   <th key={t} className="px-1 py-1 text-center font-medium text-fieldgrey">
@@ -387,7 +387,7 @@ function CastChart({ members, traits, notes, clusters }) {
               {members.map((m) => (
                 <tr
                   key={m.id}
-                  className={`border-b border-ink/10 ${visible(m.id) ? "" : "text-fieldgrey"}`}
+                  className={`border-b border-ink/10 last:border-b-0 ${visible(m.id) ? "" : "text-fieldgrey"}`}
                   onMouseEnter={() => setHover(m.id)}
                   onMouseLeave={() => setHover(null)}
                 >

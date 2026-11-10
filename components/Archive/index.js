@@ -16,7 +16,7 @@ const Archive = ({ projects }) => {
             Archive
           </h2>
           <p className="max-w-[32ch] font-mono text-[14px] leading-relaxed text-graphite">
-            Earlier projects, 2023 to 2024.
+            Earlier projects, 2023 to 2024; some rebuilt in 2026.
           </p>
         </div>
         <ol className="laptop:col-span-3 laptop:pt-3">
@@ -29,7 +29,7 @@ const Archive = ({ projects }) => {
               <p className="flex gap-4 font-mono text-[14px] leading-relaxed text-graphite tablet:flex-col tablet:items-end tablet:gap-1 tablet:pt-1.5 tablet:text-right">
                 <span>{p.dateLabel}</span>
                 {p.url && (
-                  <a href={p.url} target="_blank" rel="noreferrer" className="inline-flex min-h-[24px] items-center underline decoration-olive underline-offset-2 hover:text-ink" aria-label={`${p.title} ${linkLabel(p.url).toLowerCase()} (opens in a new tab)`}>
+                  <a href={p.url} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center underline decoration-olive underline-offset-2 hover:text-ink" aria-label={`${p.title} ${linkLabel(p.url).toLowerCase()} (opens in a new tab)`}>
                     {linkLabel(p.url)} ↗
                   </a>
                 )}

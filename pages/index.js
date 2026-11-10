@@ -86,7 +86,7 @@ const Home = () => {
               <p id="about-method" className="font-mono text-[14px] uppercase tracking-[0.12em]">How I work</p>
               <dl className="flex flex-col" aria-labelledby="about-method">
                 {about.practice.map((p) => (
-                  <div key={p.title} className="grid gap-2 border-t border-white/60 py-4 first:border-t-0 tablet:grid-cols-2 tablet:gap-6">
+                  <div key={p.title} className="grid gap-2 border-t border-white/25 py-4 first:border-t-0 tablet:grid-cols-2 tablet:gap-6">
                     <dt className="font-mono text-[14px] uppercase tracking-[0.12em] tablet:pt-1">{p.title}</dt>
                     <dd className="text-[18px] leading-snug">{p.items}</dd>
                   </div>

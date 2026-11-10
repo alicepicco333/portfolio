@@ -260,7 +260,7 @@ button:not(:disabled):active {
 .index-title {
   transition: color 150ms ease, transform 500ms var(--spring-firm);
 }
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
   .group:hover .index-title,
   .index-title.is-on {
     transform: translateX(10px);

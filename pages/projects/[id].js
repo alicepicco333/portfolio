@@ -8,6 +8,7 @@ import Footer from "../../components/Footer";
 import CaseStudy from "../../components/CaseStudy";
 import MethodStrip, { stepsOf } from "../../components/Method";
 import ProjectGraph from "../../components/ProjectGraph";
+import { TryIt, Clip } from "../../components/Prototype";
 import { byDateDesc, categoryMeta, withBase, projectStyle } from "../../utils";
 
 // Template filler ("Introductory paragraph for…") is hidden until real copy is written.
@@ -229,6 +230,9 @@ export default function ProjectPage({ project, number, next }) {
           </figure>
         )}
 
+        {project.tryIt && <TryIt data={project.tryIt} title={project.title} />}
+        {project.video && <Clip data={project.video} title={project.title} />}
+
         {project.caseStudy && <CaseStudy data={project.caseStudy} showStats={!project.facts?.length} />}
 
         {!project.caseStudy && (project.middleText || project.conclusionText) && (
@@ -245,12 +249,10 @@ export default function ProjectPage({ project, number, next }) {
           <section className="grid gap-x-4 gap-y-10 px-4 py-10 tablet:grid-cols-2 tablet:px-10">
             {project.gridImages.map(({ src, caption }, index) => (
               <figure key={src} className="flex flex-col gap-3">
-                <img
-                  src={withBase(src)}
-                  alt={caption || `${project.title}, image ${index + 1}`}
-                  className="w-full border border-concrete"
-                  loading="lazy"
-                />
+                {/* the caption describes the image, so the alt stays empty; a click opens it full size */}
+                <a href={withBase(src)} target="_blank" rel="noreferrer" aria-label={`Image ${index + 1} full size (opens in a new tab)`} className="block">
+                  <img src={withBase(src)} alt={caption ? "" : `${project.title}, image ${index + 1}`} className="w-full border border-concrete" loading="lazy" />
+                </a>
                 {caption && (
                   <figcaption className="flex gap-3 text-[16px] leading-snug text-graphite">
                     <span className="fu-meta shrink-0 text-fieldgrey">{String(index + 1).padStart(2, "0")}</span>

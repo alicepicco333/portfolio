@@ -494,7 +494,7 @@ export default function CaseStudy({ data, showStats = true }) {
         <div className="max-w-[720px] overflow-x-auto">
           <table className="w-full text-left text-[16px]">
             <thead>
-              <tr className="border-b border-ink">
+              <tr className="border-b border-ink/30">
                 <th className="py-2 pr-4 font-medium text-fieldgrey">Task (final version)</th>
                 <th className="py-2 pr-4 font-medium text-fieldgrey">Avg time</th>
                 <th className="py-2 pr-4 font-medium text-fieldgrey">Success</th>
@@ -503,7 +503,7 @@ export default function CaseStudy({ data, showStats = true }) {
             </thead>
             <tbody>
               {results.tasks.map((t) => (
-                <tr key={t.task} className="border-b border-ink/10">
+                <tr key={t.task} className="border-b border-ink/10 last:border-b-0">
                   <td className="py-2 pr-4">{t.task}</td>
                   <td className="py-2 pr-4">{t.time}</td>
                   <td className="py-2 pr-4">{t.success}</td>
