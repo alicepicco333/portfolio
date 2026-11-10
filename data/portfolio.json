@@ -1306,7 +1306,7 @@
       "id": "18",
       "title": "Junior, the Probe Rover",
       "description": "A speculative probe rover for gloved salvage workers on Proxima b: a glove squeeze, one hand and the voice steer it, and fixed rules overrule a local language model.",
-      "introText": "Junior is a speculative probe rover for salvage workers on Proxima b, where earlier inhabitants marked buried hazards in infrared that humans cannot see, and a fungus glows over them. A worker in a sealed suit and thick gloves sends Junior ahead with a squeeze, one hand and his voice, so he never has to walk up to a hazard himself.",
+      "introText": "A salvage worker in a sealed suit and thick gloves, his hands on a tool and his radio busy with the team, sends Junior, a probe rover, ahead with a squeeze, one hand and his voice, so he never has to walk up to a hazard himself. The setting is Proxima b as we imagined it: earlier inhabitants marked buried hazards in infrared that humans cannot see, and a fungus glows over them.",
       "gridImages": [
         {
           "src": "/images/projects/18-g1.jpg",
@@ -1341,9 +1341,9 @@
           "caption": "Squeeze and gesture tests with three testers, all classmates, plus logged response times: a hard press switched the camera 27 times in 30 and a natural grip once in 40 (at the earlier threshold of 750); gestures were read 64% of the time bare-handed and 63% in a work glove; speech recognition took 0.25 s and the model 2.3 s. Over half the gesture misses were the thumb down, read once in 30."
         }
       ],
-      "middleText": "Everything meets in one laptop, offline. The squeeze in the glove's palm is a gate: it carries no content, only “now”, and it switches which camera's gestures drive Junior, stopping him first. One open hand drives and its tilt steers, since Marvin's other hand is on a tool and the radio is busy with the team. Voice sets the action. With “check that one”, speech says what and pointing says where; with two glows in view and no pointing, Junior asks which one. Fixed rules act before the local model, Gemma 3 4B, which can talk and propose a target but never decides to move Junior. The reason is time: a fixed-rule command takes a median of 0.38 seconds, a model call 2.3, too slow for an emergency stop.",
+      "middleText": "The prototype has two parts. The Arduino car responds to two-hand gestures and spoken commands. The 3D Junior runs the whole system offline on one laptop: the squeeze, gestures, voice with pointing, glow detection, the local model and the way home. He drives like the car and follows the same stop rules, halting 20 cm before a rock as the firmware does. The palm squeeze is a gate: it carries no content, only “now”, and switches which camera's gestures drive Junior, stopping him first. With “check that one”, speech says what and pointing says where.",
       "highlightImage": "/images/projects/18-hl.jpg",
-      "conclusionText": "What held up: Junior ran offline on one laptop, every camera switch stopped him first, and a work glove tracked almost as well as a bare hand. What did not: the full system ran only in simulation. The Arduino car took gestures and simple voice commands, then a motor burned out and its battery overheated, so we presented the 3D Junior. We tested with classmates; a real test needs people who do dangerous work in gloves, such as mine rescuers or firefighters. I wrote the world and Marvin, added voice commands to the gesture car, worked on its firmware with Alexis and drew up the probe-rover plan. Bor gathered the research and built the visor, Junior's brain and the 3D Junior; Alexis made the palm switch, gestures, 3D models and project site; Bram the cloned voices.",
+      "conclusionText": "What held up: every camera switch stops Junior first, and a work glove barely changed the gesture scores. Still open: testing with people who work in gloves rather than classmates, a wireless glove, a way home that does not drift, and consent for cloned voices. I wrote the world and Marvin, added voice commands to the gesture car, worked on its firmware with Alexis and drew up the probe-rover plan. Bor gathered the research and built the visor, Junior's brain and the 3D Junior; Alexis made the palm switch, gestures, 3D models and project site; Bram the cloned voices.",
       "imageSrc": "/images/projects/18.jpg",
       "url": "",
       "category": "Design",
@@ -1351,7 +1351,7 @@
         "Interaction Design",
         "Multimodal Interaction"
       ],
-      "highlightCaption": "From the final demo: the simulated Junior on its home ring, with fungus glowing over buried hazards. Our own code drives it: Junior's brain, the visor and glow detection, all on one laptop.",
+      "highlightCaption": "From the final demo: the 3D Junior on its home ring, with fungus glowing over buried hazards. Our own code drives it: Junior's brain, the visor and glow detection.",
       "date": "2026-10-22",
       "dateLabel": "Sep - Oct 2026",
       "context": "Multimodal Interaction Design, MSc Information Studies, University of Amsterdam",
@@ -1365,29 +1365,29 @@
       "summary": {
         "brief": "Salvage workers on Proxima b dig in sealed suits and thick gloves among hazards marked in infrared they cannot see, and checking a site means walking up to it.",
         "role": "In a team of four: the world and Marvin's persona, voice commands for the gesture car, its firmware with Alexis, and the probe-rover plan.",
-        "method": "A speculative world built on published research, a persona, weekly prototypes from a gesture car to a 3D simulation, and tests of the squeeze and gestures with three testers, plus logged response times.",
-        "outcome": "The full system ran in a 3D simulation driven by our code; the physical car took only gestures and simple voice commands before it broke down.",
+        "method": "A speculative world built on published research, a persona, weekly prototypes from a gesture car to the 3D Junior, and tests of the squeeze and gestures with three testers, plus logged response times.",
+        "outcome": "A prototype in two parts: an Arduino car that responds to two-hand gestures and voice commands, and a 3D Junior that runs the whole system, with a browser version to try on this page.",
         "stack": "Arduino, Python, MediaPipe, Whisper, Gemma 3 4B (Ollama), XTTS v2, force-sensitive resistor"
       },
       "facts": [
         [
           "0.38 s",
-          "median for a fixed-rule command like “stop”; “check that one” through the model takes 2.3 s"
+          "median for a fixed-rule voice command like “stop”, which skips the model (15 of 85 logged commands); speech recognition alone takes 0.25 s"
         ],
         [
           "27 / 30",
-          "hard presses switched the camera; a natural grip did once in 40"
+          "hard presses switched the camera; a natural grip did once in 40 (three testers)"
         ],
         [
-          "63%",
-          "of gestures read in a work glove, against 64% bare-handed"
+          "63 vs 64%",
+          "of gestures read in a work glove and bare-handed: 47 and 48 of 75, three testers"
         ],
         [
           "Offline",
           "speech, hand tracking and the language model all run on one laptop"
         ]
       ],
-      "shows": "Multimodal input designed as relations between channels, with fixed limits on what a language model may decide, and the gap between simulation and hardware stated plainly.",
+      "shows": "Multimodal input designed as relations between channels, with fixed limits on what a language model may decide, prototyped on a physical car and in a 3D world.",
       "cardImage": "/images/projects/18-card.jpg",
       "cardWebp": "/images/projects/18-card-800.webp",
       "rank": 2,
@@ -1395,19 +1395,38 @@
         {
           "choice": "Narrow the whole suit to one rover and one glove.",
           "why": "At the midterm the TAs said a whole suit “might be a lot”, and a rover keeps the worker away from the hazard: Junior goes up to it in his place.",
-          "result": "Each input could be built and tested on its own: the squeeze and gestures with three testers, voice through its logged response times."
+          "result": "Hand, voice and squeeze each got a prototype of their own, week by week, before they were joined in the 3D Junior."
         },
         {
           "choice": "Fixed rules act before the language model, and the model never moves Junior.",
-          "why": "“Check that one” through Gemma takes 2.3 seconds; only a fixed “stop”, at 0.38 seconds, is fast enough for an emergency.",
+          "why": "A command that goes through Gemma, like “check that one”, takes a median of 2.3 seconds (62 logged commands): too slow for an emergency.",
           "result": "“Stop” works by voice, fist and squeeze, a driving hand cancels the autopilot, and the model only proposes which glow to check."
         },
         {
           "choice": "Let Junior speak in the cloned voices of the crew.",
           "why": "My idea, after Sebeok's 1984 proposal to keep nuclear warnings alive by retelling them: Marvin could hear a warning in the voice of the teammate he lost.",
-          "result": "Bram built it with XTTS v2: Junior answers Bram, Bor and Alexis in their own voices and anyone else in a blend of the three. A trusted voice also invites over-trust (Parasuraman & Riley, 1997), and consent for cloning a dead teammate's voice is still open."
+          "result": "Bram built it with XTTS v2: Junior answers Bram, Bor and Alexis in their own voices and anyone else in a blend of the three. A voice Marvin trusts also makes over-trust easier (Parasuraman & Riley, 1997)."
         }
-      ]
+      ],
+      "video": {
+        "title": "Voice test",
+        "src": "/videos/18-voice-test.mp4",
+        "poster": "/images/projects/18-voice-test-poster.jpg",
+        "width": 464,
+        "height": 832,
+        "caption": "My voice test of the Arduino car on 8 October 2026, filmed from above on a floor at home. I set a base, then move, stop, turn and reverse the car by voice, and send it back to base.",
+        "transcript": [
+          "Set base.",
+          "Move forward.",
+          "Stop.",
+          "Turn right.",
+          "Turn left.",
+          "Go backwards.",
+          "Move forward.",
+          "Stop.",
+          "Return to base."
+        ]
+      }
     },
     {
       "id": "20",

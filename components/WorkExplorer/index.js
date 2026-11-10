@@ -102,8 +102,7 @@ const IndexList = ({ projects }) => {
                   {shortTitle(p.title)}
                 </h3>
                 <span className="font-mono text-[14px] leading-relaxed text-graphite laptop:row-span-2 laptop:pt-2 laptop:text-right">
-                  {categoryMeta(p.category).short} · {yearOf(p)}
-                  {teamOf(p) && <span className="block">{teamOf(p)}</span>}
+                  {yearOf(p)}
                 </span>
                 <p className="max-w-[60ch] text-[18px] leading-snug text-ink/80">{p.description}</p>
               </Link>
