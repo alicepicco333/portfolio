@@ -3523,10 +3523,10 @@
     ]
   },
   "about": {
-    "lead": "I work on the moments when people meet technology: starting therapy online, finding their way through a museum, sending a rover ahead of them, or sharing a room.",
+    "lead": "I study how people live with technology, and use what I learn to design systems they can understand, question and trust.",
     "paragraphs": [
-      "I start with people, not with the interface. I trained in cultural anthropology, so I watch how people actually use a system before deciding what they need, then check it with interviews and think-aloud tests. Then I put the material in order, whether it is an archive, a collection or a public dataset, so it stays findable and can be queried.",
-      "After that I shape it: flows into Figma prototypes and working code, tested with people. I show where information comes from and how far to trust a result. I design for people who are often left out: as a UX researcher at BrainBite I assessed a tutoring platform's flows for neurodiverse learners and built the changes in Figma, and as a digital literacy educator at Ninacare I helped older people use smartphones and online services on home visits. I also use code to make images and sound, live for an audience."
+      "I start with people, not with the interface. Trained in cultural anthropology, I watch how people actually use a system before deciding what they need, then check it with interviews, think-aloud sessions and usability tests. Then I put the material in order, so that an archive, a collection or a dataset stays findable and can be queried.",
+      "After that I shape it into flows, prototypes and working code, and test them with users. I show where information comes from and how far to trust a result. I design for people who are often left out, such as neurodiverse learners and older adults new to digital services. I also write code live for an audience, to make images and sound."
     ],
     "practice": [
       {
