@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
@@ -18,6 +19,9 @@ import { useIsomorphicLayoutEffect, useMotionOn, withBase } from "../../utils";
 import { textWidth, overlapArea } from "../../utils/layout";
 import { scramble, drawIn, motionOn } from "../../utils/motion";
 import HydraPlaying, { codeSize } from "./Hydra";
+// the statement (STATEMENT: plain text, and [phrase, skill] pairs that open the part of the map they name),
+// the plain-key test, and 1 to 5 for the first skill of each step: listen, order, count, shape, play
+import { STATEMENT, STATEMENT_TEXT, STEP_KEYS, plainKey } from "./shared";
 
 const shortTitle = (title) => title.split(" - ")[0];
 const mapTitle = (p) => p.short || shortTitle(p.title);
@@ -146,23 +150,16 @@ function codeLayout(box) {
   return { x: box.x + box.w - w, y: box.y + box.h + 12, w, h };
 }
 
-// a plain key press inside this section, not typing in a field and not a browser shortcut
-const plainKey = (e) => !(e.metaKey || e.ctrlKey || e.altKey) && !/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName);
-// the statement, in pieces: plain text, and [phrase, skill] pairs that open the part of the map they name
-const STATEMENT = [
-  "I’m an ",
-  ["HCI researcher and designer", "hci"],
-  ". I ",
-  ["design interactions, devices and interfaces", "ixd"],
-  ", from first interview to working prototype, and ",
-  ["test them with people", "ur"],
-  ".",
-];
-const STATEMENT_TEXT = STATEMENT.map((part) => (typeof part === "string" ? part : part[0])).join("");
-// 1 to 5 select the first skill of each step of the method: listen, order, count, shape, play
-const STEP_KEYS = ["listening", "ordering", "counting", "shaping", "playing"];
+// Variants of the hero, to compare on localhost: `?hero=orbit`, `?hero=field`, `?hero=flow`.
+// Loaded only when asked for; without the parameter the page is the hand-placed map below.
+const Hold = () => <section id="map" aria-label="Skill map" className="relative min-h-[calc(100svh-64px)] scroll-mt-16 bg-bone" />;
+const VARIANTS = {
+  orbit: dynamic(() => import("./Orbit"), { ssr: false, loading: Hold }),
+  field: dynamic(() => import("./Field"), { ssr: false, loading: Hold }),
+  flow: dynamic(() => import("./Flow"), { ssr: false, loading: Hold }),
+};
 
-const SkillMap = ({ projects }) => {
+const SkillMapClassic = ({ projects }) => {
   const router = useRouter();
   // the map rests quietly: the whole network in grey with plain labels; a hovered, focused or picked skill
   // lights its own lines and neighbours and opens its card
@@ -659,6 +656,17 @@ const SkillMap = ({ projects }) => {
       </div>
     </section>
   );
+};
+
+// the hero: the hand-placed map, or the variant named in `?hero=` (read before the first paint)
+const SkillMap = (props) => {
+  const [variant, setVariant] = useState(null);
+  useIsomorphicLayoutEffect(() => {
+    const m = new URLSearchParams(window.location.search).get("hero");
+    if (VARIANTS[m]) setVariant(m);
+  }, []);
+  const Variant = variant ? VARIANTS[variant] : null;
+  return Variant ? <Variant {...props} /> : <SkillMapClassic {...props} />;
 };
 
 export default SkillMap;
