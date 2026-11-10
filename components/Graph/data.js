@@ -16,9 +16,9 @@ export const NODES = [
   { id: "ixd", label: "Interaction design", p: [0.35, -0.05, 0.75], work: ["20", "0"], tools: ["Multimodal interaction", "Arduino"] },
   { id: "dv", label: "Data visualization", p: [0.05, 0.2, -0.35], work: ["12"], tools: ["D3.js", "Leaflet", "Chart.js"] },
   { id: "vis", label: "Visual design", p: [0.85, -0.35, -0.25], work: ["11", "0", "20"], tools: ["Typography", "Visual identity"] },
-  { id: "cc", label: "Creative coding", p: [0.25, 0.6, 0.2], work: ["14", "10", "5"], tools: ["Hydra", "Processing", "JavaScript"] },
-  { id: "live", label: "Live coding", p: [0.45, 0.95, -0.3], work: ["14", "10", "5"], tools: ["Hydra", "Audio-reactive visuals"] },
-  { id: "perf", label: "Performance", p: [0.9, 0.85, -0.6], work: ["14", "5"], tools: ["VJ sets", "Projection"] },
+  { id: "cc", label: "Creative coding", p: [0.25, 0.6, 0.2], work: ["14"], tools: ["Hydra", "Processing", "JavaScript"] },
+  { id: "live", label: "Live coding", p: [0.45, 0.95, -0.3], work: ["14"], tools: ["Hydra", "Audio-reactive visuals"] },
+  { id: "perf", label: "Performance", p: [0.9, 0.85, -0.6], work: ["14"], tools: ["VJ sets", "Projection"] },
 ];
 
 export const EDGES = [
