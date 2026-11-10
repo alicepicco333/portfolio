@@ -131,15 +131,14 @@ function fanLayout(id, works, extra = []) {
   return { leafPts: leaves.pts };
 }
 
-// Playing: the Hydra screen behind its cluster, and the patch under it, flush with its right edge
+// Playing: the Hydra screen behind its one skill, live coding (the node on its left edge), and the
+// patch under it, flush with its right edge
 function playingBox() {
-  const [cx] = pos("cc");
-  const [px, py] = pos("perf");
   const [lx, ly] = pos("live");
-  const x = cx - 56;
-  const y = py - 40;
-  const r = Math.min(stageW() - 4, Math.max(px, lx) + 48);
-  const b = Math.min(G.H - 4, ly + 34);
+  const x = lx - 56;
+  const y = ly - 200;
+  const r = Math.min(stageW() - 4, lx + 238);
+  const b = Math.min(G.H - 4, ly + 214);
   return { x, y, w: r - x, h: b - y };
 }
 function codeLayout(box) {
@@ -149,12 +148,17 @@ function codeLayout(box) {
 
 // a plain key press inside this section, not typing in a field and not a browser shortcut
 const plainKey = (e) => !(e.metaKey || e.ctrlKey || e.altKey) && !/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName);
-// the statement's phrases, each opening the part of the map it names
-const PHRASES = [
-  ["complex information", "dv"],
-  ["easy to understand and trust", "ux"],
-  ["test it with the people who use it", "ur"],
+// the statement, in pieces: plain text, and [phrase, skill] pairs that open the part of the map they name
+const STATEMENT = [
+  "I’m an ",
+  ["HCI researcher and designer", "hci"],
+  ". I ",
+  ["design interactions", "ixd"],
+  " for screens, hands and voice, from first interview to working prototype, and ",
+  ["test them with people", "ur"],
+  ".",
 ];
+const STATEMENT_TEXT = STATEMENT.map((part) => (typeof part === "string" ? part : part[0])).join("");
 // 1 to 5 select the first skill of each step of the method: listen, order, count, shape, play
 const STEP_KEYS = ["listening", "ordering", "counting", "shaping", "playing"];
 
@@ -372,13 +376,13 @@ const SkillMap = ({ projects }) => {
   const statement = (
     <>
                   <>
-                    I&rsquo;m an HCI researcher and designer. I make{" "}
-                    {PHRASES.map(([text, id], i) => (
-                      <React.Fragment key={id}>
-                        {i === 1 && " "}
-                        {i === 2 && ", and I "}
-                        {/* a span, not a <button>: buttons cannot wrap mid-phrase, and the sentence must read as one */}
+                    {STATEMENT.map((part, i) => {
+                      if (typeof part === "string") return <React.Fragment key={i}>{part}</React.Fragment>;
+                      const [text, id] = part;
+                      return (
+                        /* a span, not a <button>: buttons cannot wrap mid-phrase, and the sentence must read as one */
                         <span
+                          key={id}
                           role="button"
                           tabIndex={0}
                           aria-pressed={active === id}
@@ -396,9 +400,8 @@ const SkillMap = ({ projects }) => {
                         >
                           {text}
                         </span>
-                      </React.Fragment>
-                    ))}
-                    .
+                      );
+                    })}
                   </>
 </>
   );
@@ -636,7 +639,7 @@ const SkillMap = ({ projects }) => {
       <div ref={narrowRef} className="relative overflow-hidden px-4 pb-16 pt-14 fu-gutter tablet:pb-24 tablet:pt-20 map:hidden">
         <div className="map-intro relative flex max-w-[720px] flex-col gap-6">
           <p className="text-[34px] font-medium leading-[1.12] tracking-[-0.02em] tablet:text-[52px]">
-            I&rsquo;m an HCI researcher and designer. I make complex information easy to understand and trust, and I test it with the people who use it.
+            {STATEMENT_TEXT}
           </p>
           {/* the work, straight away: the three projects that lead Selected work */}
           <ul className="grid grid-cols-3 gap-3">
