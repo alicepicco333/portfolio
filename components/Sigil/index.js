@@ -1,17 +1,19 @@
 import React from "react";
 import { RING } from "../Graph/data";
 
-// A project's graph, as on the work wheel: the fifteen skills around a ring, the project's pin
+// A project's graph, as on the work wheel: the skills around a ring, the project's pin
 // pulled towards the skills it uses, and a spoke from the pin to each of them.
 // `SigilG` draws inside an existing <svg>; `Sigil` is a standalone figure.
 const angleOf = (id) => -Math.PI / 2 + (2 * Math.PI * RING.indexOf(id)) / RING.length;
+// coordinates rounded to 0.01 px, so the server's and the browser's floating point agree on hydration
+const q = (v) => Math.round(v * 100) / 100;
 
 export const pinOf = (skills, cx, cy, r) => {
   const used = skills.filter((s) => RING.includes(s));
   if (!used.length) return [cx, cy];
   const x = used.reduce((a, s) => a + Math.cos(angleOf(s)), 0) / used.length;
   const y = used.reduce((a, s) => a + Math.sin(angleOf(s)), 0) / used.length;
-  return [cx + x * r * 0.78, cy + y * r * 0.78];
+  return [q(cx + x * r * 0.78), q(cy + y * r * 0.78)];
 };
 
 export const SigilG = ({ cx, cy, r, skills, color = "rgb(var(--olive))", width = 2, className }) => {
@@ -23,7 +25,7 @@ export const SigilG = ({ cx, cy, r, skills, color = "rgb(var(--olive))", width =
       {skills
         .filter((s) => RING.includes(s))
         .map((s) => (
-          <line key={s} className="sigil-edge" x1={px} y1={py} x2={cx + r * Math.cos(angleOf(s))} y2={cy + r * Math.sin(angleOf(s))} style={{ stroke: color }} strokeWidth={width} strokeLinecap="round" />
+          <line key={s} className="sigil-edge" x1={px} y1={py} x2={q(cx + r * Math.cos(angleOf(s)))} y2={q(cy + r * Math.sin(angleOf(s)))} style={{ stroke: color }} strokeWidth={width} strokeLinecap="round" />
         ))}
       {RING.map((s) => {
         const on = skills.includes(s);
@@ -31,8 +33,8 @@ export const SigilG = ({ cx, cy, r, skills, color = "rgb(var(--olive))", width =
           <circle
             key={s}
             className={on ? "sigil-dot" : undefined}
-            cx={cx + r * Math.cos(angleOf(s))}
-            cy={cy + r * Math.sin(angleOf(s))}
+            cx={q(cx + r * Math.cos(angleOf(s)))}
+            cy={q(cy + r * Math.sin(angleOf(s)))}
             r={on ? dot * 1.6 : dot}
             style={on ? { fill: color } : { fill: "rgb(var(--bone))", stroke: color }}
             strokeWidth="1"

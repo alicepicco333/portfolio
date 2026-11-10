@@ -3,7 +3,7 @@
 // hand-placed in 3D (x, y, z in -1…1) so the shape stays asymmetric.
 // `work` lists the projects (by id) where each skill shows up; `tools` are the methods and
 // tools behind the skill, taken from what those projects actually used.
-// Ten skills since the November 2026 audit: semantic web joined ontologies, digital humanities joined
+// Ten skills since the November 2026 audit (eleven with speculative design, added for Glove, Visor, Rover): semantic web joined ontologies, digital humanities joined
 // digital archives, cultural analytics joined data visualization, and creative coding and performance
 // joined live coding, so the HCI side of the map carries the weight of the selected work.
 export const NODES = [
@@ -16,13 +16,14 @@ export const NODES = [
   { id: "ixd", label: "Interaction design", p: [0.35, -0.05, 0.75], work: ["18", "20", "0", "22"], tools: ["Multimodal interaction", "Arduino"] },
   { id: "dv", label: "Data visualization", p: [0.05, 0.2, -0.35], work: ["12"], tools: ["D3.js", "Web scraping", "CLIP"] },
   { id: "vis", label: "Visual design", p: [0.85, -0.35, -0.25], work: ["11", "0", "20"], tools: ["Typography", "Visual identity"] },
+  { id: "spec", label: "Speculative design", p: [0.7, 0.2, 0.55], work: ["18"], tools: ["Worldbuilding", "Personas", "Design fiction"] },
   { id: "live", label: "Live coding", p: [0.45, 0.95, -0.3], work: ["14"], tools: ["Hydra", "Audio-reactive visuals", "Projection"] },
 ];
 
 export const EDGES = [
   ["anth", "ur"], ["anth", "arch"], ["arch", "onto"], ["arch", "dv"],
   ["ur", "hci"], ["hci", "ux"], ["hci", "ixd"], ["ux", "vis"],
-  ["dv", "vis"], ["dv", "live"], ["ixd", "live"],
+  ["dv", "vis"], ["dv", "live"], ["ixd", "live"], ["ixd", "spec"],
 ];
 
 export const neighbours = (id) => EDGES.filter((e) => e.includes(id)).map((e) => (e[0] === id ? e[1] : e[0]));
@@ -36,7 +37,7 @@ export const skillsOfProject = (projectId) => NODES.filter((n) => n.work.include
 // project sigil and of the anchors around the work wheel.
 export const CLUSTERS = [
   { id: "listening", label: "Listening", skills: ["anth", "ur", "hci"] },
-  { id: "shaping", label: "Shaping", skills: ["ux", "vis", "ixd"] },
+  { id: "shaping", label: "Shaping", skills: ["ux", "vis", "ixd", "spec"] },
   { id: "playing", label: "Playing", skills: ["live"] },
   { id: "counting", label: "Counting", skills: ["dv"] },
   { id: "ordering", label: "Ordering", skills: ["onto", "arch"] },
@@ -52,6 +53,7 @@ export const SKILL_NOTES = {
   ux: "Information architecture, flows and prototypes in Figma, taken through to tested screens.",
   vis: "Typography, layout and visual identity that carry a project's tone.",
   ixd: "How an interface responds: states, transitions and multimodal input, prototyped and tested.",
+  spec: "Worlds built from research, with personas and design fiction, to design for needs and places that do not exist yet.",
   live: "Code as a material for image and sound: audio-reactive visuals in Hydra, written live and projected for an audience.",
   dv: "Charts, maps and interactive views in D3, built from scraped data and CLIP image labels, that make culture explorable at scale.",
   onto: "OWL models and linked data in RDF, SPARQL and Wikidata that make a domain classifiable and queryable, as in The Meme Ontology.",
@@ -67,11 +69,11 @@ export const MAP = {
   // Counting in the middle, Playing bottom right
   pos: {
     anth: [150, 200], ur: [400, 165], hci: [650, 215], ux: [930, 140], vis: [1200, 205], ixd: [900, 400],
-    live: [1100, 610], dv: [700, 640], arch: [170, 560], onto: [400, 800],
+    live: [1100, 610], spec: [1170, 360], dv: [700, 640], arch: [170, 560], onto: [400, 800],
   },
   label: {
     anth: [22, 6, "start"], ur: [22, 6, "start"], hci: [22, 6, "start"], ux: [22, 6, "start"], vis: [22, 6, "start"],
-    ixd: [22, 6, "start"], live: [22, 6, "start"], dv: [22, 6, "start"], arch: [22, 6, "start"], onto: [22, 6, "start"],
+    ixd: [22, 6, "start"], spec: [22, 6, "start"], live: [22, 6, "start"], dv: [22, 6, "start"], arch: [22, 6, "start"], onto: [22, 6, "start"],
   },
   clusters: { listening: [330, 330], shaping: [1010, 290], playing: [1130, 530], counting: [660, 730], ordering: [40, 900] },
   // the cropped top strip above the graph: nothing is placed there
