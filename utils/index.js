@@ -5,6 +5,7 @@ export const useIsomorphicLayoutEffect =
 
 // Category → short label + pastel tone (FIELD/UNIT colour key)
 const CATEGORY_META = {
+  "Research and Design": { short: "Research and design", tone: "rgb(var(--lilac))" },
   Design: { short: "Design", tone: "rgb(var(--pink))" },
   Research: { short: "Research", tone: "rgb(var(--lilac))" },
   "Live Coding": { short: "Live coding", tone: "rgb(var(--mint))" },

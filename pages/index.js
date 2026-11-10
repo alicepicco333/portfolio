@@ -15,7 +15,7 @@ import portfolioData from "../data/portfolio.json";
 import { useIsomorphicLayoutEffect, byDateDesc } from "../utils";
 
 // Finished work is shown in the work views; work in progress gets its own section.
-const FINISHED = ["Design", "Research", "Live Coding"];
+const FINISHED = ["Research and Design", "Design", "Research", "Live Coding"];
 
 const Home = () => {
   const { about } = portfolioData;

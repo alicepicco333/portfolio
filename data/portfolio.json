@@ -1002,7 +1002,7 @@
     {
       "id": "13",
       "title": "Archivio Associazione Luki Massa",
-      "description": "METS metadata for the digitized archive of Luki Massa: 9,882 scans of lesbian and feminist activism, 1976-2015, described to Italian national guidelines and checked file by file.",
+      "description": "METS metadata for the digitized archive of Luki Massa: 9,882 scans of lesbian and feminist activism, 1976-2015, described to Italian national guidelines and checked file by file; the archive's online interface is still to be built.",
       "introText": "Metadata for the digitized archive of Luki Massa, which documents lesbian and feminist activism from 1976 to 2015 and was inventoried by Emanuela Fiorletta in 2023. I turned the team's cataloguing spreadsheets and the scans into METS records for long-term preservation.",
       "gridImages": [
         {
@@ -1037,7 +1037,7 @@
         "brief": "A digitized community archive that needed describing to national preservation standards.",
         "role": "Metadata: the METS profile, the generation and validation pipeline, and the checks between catalogue and scans.",
         "method": "Cataloguing spreadsheets and image files read by a Python pipeline into METS with EAD3, NISO MIX and METS Rights, validated against the official schemas.",
-        "outcome": "90 valid METS records describing 85 archival files, 1,629 documentary units and 4,942 pages.",
+        "outcome": "90 valid METS records describing 85 archival files, 1,629 documentary units and 4,942 pages; the interface for browsing the archive comes next.",
         "stack": "Python, lxml, METS, EAD3, NISO MIX 2.0, XML Schema"
       },
       "short": "Luki Massa archive",
@@ -1090,7 +1090,7 @@
       "id": "14",
       "title": "5PIC3 live at Fulfillment Music Center",
       "description": "An audio-reactive visual system performed live: real-time feedback between sound, code and projection.",
-      "introText": "An audio-reactive visual set performed live as 5PIC3 at Fulfillment Music Center, written in Hydra Video Synth in real time.",
+      "introText": "An audio-reactive visual set performed live as 5PIC3 with the musician SPITS at Fulfillment Music Center, written in Hydra Video Synth in real time.",
       "gridImages": [
         {
           "src": "/images/projects/14-g1.jpg",
@@ -1123,11 +1123,13 @@
       "highlightCaption": "The projection across the wall of the venue.",
       "date": "2026-01-30",
       "dateLabel": "Jan 2026",
-      "context": "Live set as 5PIC3, Fulfillment Music Center",
-      "collaborators": [],
+      "context": "Live set with the musician SPITS, Fulfillment Music Center",
+      "collaborators": [
+        "SPITS (music)"
+      ],
       "summary": {
         "brief": "A real-time audiovisual system for a live music event.",
-        "role": "Visuals, performing as 5PIC3.",
+        "role": "Visuals, performing as 5PIC3, with SPITS on music.",
         "method": "Algorithmic, audio-reactive Hydra patches driven by the music's frequency bands, with the code projected alongside the output.",
         "outcome": "A 23-minute set, recorded in full.",
         "stack": "Hydra · JavaScript"
@@ -1575,7 +1577,7 @@
       "conclusionText": "Over three iterations the design added a calmer home page, a real dashboard with the next appointment and pricing, three therapist proposals with a \"why you match\" explanation, filters to compare profiles, and a way to change therapist by only updating preferences. In the summative test of the final version, all four participants completed every task with no errors, and the average SUS score rose from 75 on the original product to 91.25.",
       "imageSrc": "/images/projects/20.jpg",
       "url": "",
-      "category": "Design",
+      "category": "Research and Design",
       "tags": [
         "UX Design",
         "HCI",

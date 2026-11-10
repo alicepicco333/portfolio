@@ -25,7 +25,7 @@ const imageExists = (src) => {
 };
 
 // Sections shown on the site; projects in other categories (e.g. "Past Projects") are kept in the data but not published.
-const ORDER = ["Design", "Research", "Live Coding", "Work in Progress", "Archive"];
+const ORDER = ["Research and Design", "Design", "Research", "Live Coding", "Work in Progress", "Archive"];
 
 export async function getStaticPaths() {
   const paths = portfolioData.projects
