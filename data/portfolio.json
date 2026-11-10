@@ -245,7 +245,7 @@
       "conclusionText": "The process is documented in a public GitBook. It showed how much understanding of a domain an ontology needs before any modeling starts, and where language models help and where their answers had to be corrected. In 2026 I built an explorer on the group's OWL files: it walks through each user story sentence by sentence as the graph fills in, compares any two ontologies, and runs every competency question as SPARQL in the browser. Testing showed what the documentation did not: only 12 of the group's 24 written queries answered their question as written, mostly because of reversed properties and typos. Fixed and completed, 37 of the 47 questions are answered by the files, 7 in part, and 3 ask about things the files do not record.",
       "imageSrc": "/images/projects/2.jpg",
       "url": "https://alicepicco333.github.io/cognitive-bias-explorer/",
-      "category": "Research",
+      "category": "Archive",
       "tags": [
         "Ontology Engineering",
         "Psychology"
