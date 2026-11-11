@@ -5,7 +5,7 @@ import { STILLS } from "./stills";
 // The skill's screen: a picture of a project that used the skill, behind the skill itself (its point,
 // label and links are drawn on top), as the live-coding screen once sat behind Playing. No code and no
 // effects: the work as it is, moving slowly (a slow pan and zoom) while motion is on, still otherwise.
-export const SCREEN = { w: 380, h: 250 }; // stage units
+export const SCREEN = { w: 260, h: 172 }; // stage units
 
 const SkillScreen = ({ skill, box, animate }) => {
   const wrapRef = useRef(null);

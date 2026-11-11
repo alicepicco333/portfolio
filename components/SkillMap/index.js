@@ -146,16 +146,29 @@ const cost = (boxes, obstacles) => {
   return score;
 };
 
-// The skill's screen sits behind the skill (its point, label and links are drawn over it): the skill
-// near the screen's upper left, or upper right when the skill is in the right half, kept on the stage.
+// The skill's screen sits behind the skill (its point, label and links are drawn over it). It tries
+// nine positions with the skill near a corner, an edge or the middle of the screen, and takes the one that
+// covers the fewest other skills, labels and step names, kept on the stage.
 function cardLayout(id) {
   const [x, y] = pos(id);
   const { w: W, h: H } = SCREEN;
-  const left = x > stageW() / 2 ? x - W + 70 : x - 70;
-  const top = y - 60;
-  const l = Math.min(Math.max(left, 6), stageW() - W - 6);
-  const t = Math.min(Math.max(top, 6), G.H - H - 6);
-  return { x: l, y: t, w: W, h: H };
+  const others = [
+    ...NODES.filter((n) => n.id !== id).flatMap((n) => [grow(labelBox(n.id), 6), grow(nodeBox(n.id), 6)]),
+    ...CLUSTERS.map((c) => grow(verbBox(c), 4)),
+  ];
+  let best = null;
+  [0.18, 0.5, 0.82].forEach((fx) => {
+    [0.22, 0.5, 0.78].forEach((fy) => {
+      const l = Math.min(Math.max(x - fx * W, 6), stageW() - W - 6);
+      const t = Math.min(Math.max(y - fy * H, 6), G.H - H - 6);
+      const b = [l, t, l + W, t + H];
+      // what it covers, plus a little for leaving the skill off-centre
+      let score = others.reduce((sum, o) => sum + overlapArea(b, o), 0);
+      score += Math.hypot(x - (l + W / 2), y - (t + H / 2)) * 4;
+      if (!best || score < best.score) best = { score, x: l, y: t };
+    });
+  });
+  return { x: best.x, y: best.y, w: W, h: H };
 }
 
 // Projects fan out from the selected skill: try every direction, radius and spread and keep
