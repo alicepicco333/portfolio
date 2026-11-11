@@ -69,19 +69,26 @@ export const SKILL_NOTES = {
 export const MAP = {
   W: 1440,
   H: 920,
+  // one open ring of seven (ethnography, user research, HCI, UX design, visual design, data visualization,
+  // digital archives) with HCI at its top; the chain HCI, interaction design, live coding, data
+  // visualization runs down the middle; speculative design and ontologies sit inside their halves.
+  // No two links cross.
   pos: {
-    anth: [40, 100], hci: [630, 100], vis: [1220, 100],
-    ur: [335, 305], ux: [925, 305],
-    ixd: [630, 510],
-    onto: [40, 715], spec: [630, 715], live: [925, 715],
-    arch: [335, 920], dv: [1220, 920],
+    hci: [630, 100],
+    ur: [250, 230], ux: [1010, 230],
+    ixd: [660, 400],
+    anth: [40, 500], vis: [1220, 500],
+    spec: [470, 560],
+    live: [820, 640],
+    onto: [230, 690],
+    arch: [300, 860], dv: [1000, 860],
   },
   label: {
     anth: [22, 6, "start"], ur: [22, 6, "start"], hci: [22, 6, "start"], ux: [22, 6, "start"], vis: [22, 6, "start"],
     ixd: [22, 6, "start"], spec: [22, 6, "start"], live: [22, 6, "start"], dv: [22, 6, "start"], arch: [22, 6, "start"], onto: [22, 6, "start"],
   },
   // each verb sits with its step, as a line over (-1) or under (1) one of its skills, on the outer side
-  clusters: { listening: ["anth", -1], shaping: ["vis", -1], ordering: ["onto", -1], counting: ["dv", 1], playing: ["live", -1] },
+  clusters: { listening: ["hci", -1], shaping: ["vis", -1], ordering: ["onto", -1], counting: ["dv", 1], playing: ["live", -1] },
   // the cropped top strip above the graph: nothing is placed there
   reserved: [[0, 0, 1440, 100]],
 };
