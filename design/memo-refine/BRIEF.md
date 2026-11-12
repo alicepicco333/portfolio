@@ -1,7 +1,9 @@
 # The Meme Ontology site: refine, do not redesign
 
-For a Claude Code conversation opened in the site's own repo (memory:
-`C:\Users\awlic\Desktop\DHDK\memo\meme-ontology`, remote `alicepicco333/memo`, branch `main`).
+For a Claude Code conversation opened in the site's own repo
+(`C:\Users\awlic\Documents\Studies\DHDK\memo\meme-ontology`, moved from the Desktop on 28 Oct 2026;
+remote `alicepicco333/memo`, branch `main`). Note: on 12 Nov the repo had uncommitted changes to the
+ontology files and classify_images.py that are not part of this brief: ask Alice before touching them.
 Netlify deploys every push to `main` automatically (https://thememeontology.netlify.app/), so:
 work on a new branch `refine-2026-11`, commit there, do not push; Alice publishes.
 
@@ -25,6 +27,13 @@ separators and containers." She looked at three redesign directions and rejected
   (a project site follows its subject; avoid the template; two tests: hide the title, could the
   first screen belong to another project? is it headline + label line + stat row with none of the
   material?).
+
+## Alice approved all of design review 2 (12 Nov)
+Implement everything in `CRITIC-2.md` (same folder): the spacing scale, the hero to wall pause, the
+two-size wall with its fade, alternating wide and split visualization sections, edges and alignment,
+the opener, one finding per chart with memes (copy: `findings.json` and writer-alice), chart text,
+phone layouts, self-hosted WebP thumbnails for the wall, and the contents. `memo-refine.js` holds the
+markup changes as tried in the preview; port them into the real HTML and JS.
 
 ## Reference made in the portfolio session
 `C:\Users\awlic\Projects\portfolio\.claude\worktrees\scroll-immersion\design\memo-refine\`:
