@@ -91,7 +91,8 @@ const Journey = ({ projects }) => {
   const work = pack(
     projects
       .map((p) => {
-        const t = timeOf(p);
+        // nothing sits after "now": work dated later (the thesis) stands on the now line, its label to the left
+        const t = Math.min(timeOf(p), NOW);
         const x = px(t);
         const w = 12 + textWidth(shortTitle(p), 15) * 1.05;
         const flip = x + w > px(NOW) - 6; // never run past the "now" line
@@ -329,16 +330,6 @@ const Journey = ({ projects }) => {
                       </g>
                     );
                   })}
-                <text
-                  x={PAD}
-                  y={yStudies - 8}
-                  fontFamily="JetBrains Mono, monospace"
-                  fontSize="13"
-                  style={{ fill: "rgb(var(--graphite))" }}
-                  aria-hidden="true"
-                >
-                  {layer === "studies" ? "STUDIES" : "ROLES"}
-                </text>
                 {layer === "studies"
                   ? studies.map((it) => bar(it, "study"))
                   : roles.map((it) => bar(it, "role"))}
@@ -381,9 +372,10 @@ const Journey = ({ projects }) => {
                     style={{ stroke: "rgb(var(--olive))" }}
                     strokeWidth="1.5"
                   />
+                  {/* the date rides at the foot of the line, under the last row of projects, clear of every label */}
                   <text
                     x={px(NOW) + 6}
-                    y={yChapters + 70}
+                    y={H - 6}
                     fontFamily="JetBrains Mono, monospace"
                     fontSize="13"
                     style={{ fill: "rgb(var(--olive))" }}
@@ -393,16 +385,23 @@ const Journey = ({ projects }) => {
                   </text>
                   </g>
                 </g>
-                <text
-                  x={PAD}
-                  y={yAxis + 52}
-                  fontFamily="JetBrains Mono, monospace"
-                  fontSize="13"
-                  style={{ fill: "rgb(var(--graphite))" }}
-                  aria-hidden="true"
-                >
-                  PROJECTS
-                </text>
+                {/* the row names sit over the moving line, which passes behind them */}
+                {[
+                  [layer === "studies" ? "STUDIES" : "ROLES", yStudies - 8],
+                  ["PROJECTS", yAxis + 52],
+                ].map(([name, y]) => (
+                  <text
+                    key={name}
+                    x={PAD}
+                    y={y}
+                    fontFamily="JetBrains Mono, monospace"
+                    fontSize="13"
+                    style={{ fill: "rgb(var(--graphite))", paintOrder: "stroke", stroke: "rgb(var(--bone))", strokeWidth: 6, strokeLinejoin: "round" }}
+                    aria-hidden="true"
+                  >
+                    {name}
+                  </text>
+                ))}
                 {work.map(({ p, t, x, row, flip }) => {
                   const y = yWork + row * ROW + 10;
                   const wip = p.category === "Work in Progress";

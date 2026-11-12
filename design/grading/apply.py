@@ -12,10 +12,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from make import grey, blue, muted, glow_grade, PUBLIC  # noqa: E402
 
-GRADES = {"A": grey, "B": blue, "C": muted}
-# [source under public, output name in public/images/hero, grade]
+GRADES = {"A": grey, "B": blue, "C": muted, "O": None}   # O: original colour, only cropped and resized
+# [source under public, output name in public/images/hero, grade, optional crop box in source pixels]
+# 12 Nov 2026, later: no hero pictures from in-progress projects (Alice), so HCI moves from the Rijksmuseum
+# Group Hunt to Unobravo's usability-test urgency matrix (still grey), and Digital archives from Luki Massa
+# to The Stolen Archive's collection page (original colour).
 CHOICES = [
-    ("/images/projects/17-hl.jpg", "hci", "A"),                 # HCI: Rijksmuseum, grey
+    ("/images/projects/unobravo/research/urgency-current.jpg", "hci", "A"),  # HCI: Unobravo usability findings, grey
+    ("/images/projects/0-g3-v5.jpg", "arch", "O", (0, 175, 1100, 900)),      # Digital archives: The Stolen Archive collection
     ("/images/projects/18-card-800.webp", "ixd", "D"),          # Interaction design: Glove, Visor, Rover
     ("/images/projects/18-hl.jpg", "spec", "D"),                # Speculative design: Glove, Visor, Rover
     ("/images/projects/14-card-v3-800.webp", "live", "B"),      # Live coding: 5PIC3, blue
@@ -27,11 +31,19 @@ CHOICES = [
     ("/images/projects/14-card-v3-800.webp", "card-14", "B"),   # Selected work: 5PIC3 live, blue
 ]
 
-for src, name, g in CHOICES:
+ONLY = set(sys.argv[1:])   # python apply.py hci arch: redo only those
+
+for src, name, g, *crop in CHOICES:
+    if ONLY and name not in ONLY:
+        continue
     img = Image.open(PUBLIC + src.replace("/", os.sep)).convert("RGB")
+    if crop:
+        img = img.crop(crop[0])
     if img.width > 800:
         img = img.resize((800, round(img.height * 800 / img.width)), Image.LANCZOS)
-    if g == "D":
+    if g == "O":
+        out = img
+    elif g == "D":
         out = glow_grade(img).convert("RGB")
     else:
         a = np.asarray(img, float) / 255

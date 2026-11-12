@@ -1538,7 +1538,7 @@
       "tryIt": {
         "title": "Try the 3D Junior",
         "src": "/sim/junior/index.html",
-        "poster": "/images/projects/18-hl.jpg",
+        "poster": "/images/projects/18-try-poster.jpg",
         "intro": "The 3D Junior, in your browser: drive it by keyboard or touch, or by hand and voice if you allow your webcam and microphone. Click a glowing patch to point at it; here the fixed rules pick the glow, without the language model.",
         "button": "Load the 3D Junior",
         "note": "About 4 MB, loaded when you press start. Camera and microphone are asked for only if you turn them on."

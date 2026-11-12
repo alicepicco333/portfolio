@@ -163,6 +163,16 @@ html[data-contrast="high"] [class*="text-bone/"] { color: rgb(var(--bone)) !impo
 html[data-contrast="high"] [class*="border-ink/"] { border-color: rgb(var(--ink)) !important; }
 html[data-contrast="high"] [class*="border-bone/"] { border-color: rgb(var(--bone)) !important; }
 html[data-contrast="high"] .map-edge { opacity: 1 !important; }
+/* the grey accent is close to the text, so in high contrast a selected phrase in the statement is shown by
+   shape: a solid ink block with the page colour on it */
+html[data-contrast="high"] .map-intro [role="button"][aria-pressed="true"] {
+  background: rgb(var(--ink));
+  color: rgb(var(--bone));
+  text-decoration: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0 0.08em;
+}
 html[data-contrast="high"] .map-edge:not([stroke-width="4"]) { stroke-width: 1.5px; }
 html[data-contrast="high"] .map-glow,
 html[data-contrast="high"] .work-glow,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import data from "../../data/portfolio.json";
@@ -21,9 +21,17 @@ const Header = () => {
   const onHome = pathname === "/";
   const { active } = useActiveSection(onHome ? ["map", "work", "in-progress", "about", "journey", "contact"] : []);
   const current = (id) => (id === "contact" && pathname === "/contact") || (onHome && id !== "contact" && (active === id || (id === "work" && active === "in-progress")));
+  // at rest (the page at its top) the header has no rule under it; the rule comes in once the page scrolls
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const read = () => setScrolled(window.scrollY > 4);
+    read();
+    window.addEventListener("scroll", read, { passive: true });
+    return () => window.removeEventListener("scroll", read);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-ink bg-bone text-ink">
+    <header className={`sticky top-0 z-50 w-full border-b bg-bone text-ink transition-colors duration-200 ${scrolled || open ? "border-ink" : "border-transparent"}`}>
       <div className="flex h-16 items-center gap-6 px-4 fu-gutter">
         <Link href="/" className="-m-2 flex items-center gap-3 p-2" aria-label={`${name}, home`}>
           <GraphMark size={34} />

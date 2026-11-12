@@ -67,3 +67,26 @@ and the last project label ("Thesis: s...") is cut off at the right edge while t
 
 Keep: the palette in all three themes, Inter Tight with JetBrains Mono, straight links, the statement, the
 gradings as one family, the Glove plates, the Selected work hover preview and the Archive layout.
+
+## After the review (Alice's decisions, same day)
+
+Done: 1, 3, 4, 5, 6, 7, 9, 10 and the timeline glitches. Point 2 differently: no hero picture from in-progress
+work, so HCI now shows Unobravo's usability-test urgency matrix (grey) and Digital archives The Stolen
+Archive's collection page. Point 8 kept as it is (project colour in the header). Also on Alice's word: no rule
+under the header while the page is at its top, and "Available for freelance · Amsterdam" removed from the hero.
+
+- Hero (components/SkillMap): Interaction design opens once the map has grown in and the map returns to it when
+  the pointer leaves; the picture is 364 x 240, on a corner of the skill, links masked under it, chosen together
+  with the projects' places (which now avoid lines); labels it covers get a chip; the step tag shows only on the
+  open skill. Phones: the heavy statement, no thumbnails; tablets: full-width cards.
+- One wording for the steps everywhere: listening, ordering, counting, shaping, playing (components/Method).
+- In progress: the Archive layout, 30 px titles, "write-up to come" removed.
+- /projects/18 (web-dev agent, checked): "Open full size" under each plate below 1024 px; a graded poster for the
+  3D Junior (18-try-poster.jpg); a line speaker icon on the sound button; the video panel split 50/50; parts 1
+  and 4 of "Junior taken apart" marked "not visible in this photo"; plate counters removed from all 17 plates.
+- High contrast: the selected phrase in the statement is a solid ink block.
+- Timeline: nothing placed after "now" (the thesis label no longer runs off the chart); the date rides at the
+  foot of the playhead, and ROLES and PROJECTS sit over the line.
+
+Final technical run (tech-results-final.json): 0 axe violations, no page or console errors, no failed requests,
+no overflow at 390 px, every keyboard stop visible with a ring. Screenshots: fix-shots/, p18-work/shots/.

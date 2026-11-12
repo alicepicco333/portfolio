@@ -1,13 +1,15 @@
 import React from "react";
 import { skillsOfProject, clusterOf } from "../Graph/data";
 
-// The five verbs read as a method: the order work moves through, not only a set of skill groups.
+// The five steps read as a method: the order work moves through, not only a set of skill groups. One wording
+// across the site (the hero map, the skills band, the method strip and the case-study contents): listening,
+// ordering, counting, shaping, playing.
 export const METHOD = [
-  ["listening", "listen"],
-  ["ordering", "order"],
-  ["counting", "count"],
-  ["shaping", "shape"],
-  ["playing", "play"],
+  ["listening", "listening"],
+  ["ordering", "ordering"],
+  ["counting", "counting"],
+  ["shaping", "shaping"],
+  ["playing", "playing"],
 ];
 export const verbOf = (id) => (METHOD.find(([k]) => k === id) || [])[1];
 

@@ -36,6 +36,9 @@
   .parts { margin: 0; padding: 0; counter-reset: p; }
   .parts li::before { counter-increment: p; content: counter(p); width: 26px; height: 26px; border-radius: 50%; background: var(--green); color: #fff;
     font: 700 13px/26px "JetBrains Mono", monospace; text-align: center; }
+  /* a part with no marker on the photo: an open number, and a note saying why */
+  .parts li.off::before { background: none; color: var(--green); box-shadow: inset 0 0 0 1.5px var(--green); }
+  .parts .off-note { display: block; margin-top: 3px; font: 500 12.5px/1.3 "JetBrains Mono", monospace; letter-spacing: .07em; text-transform: uppercase; color: var(--graphite); }
   .callout { position: absolute; width: 26px; height: 26px; border-radius: 50%; background: var(--green); color: #fff; font: 700 13px/26px "JetBrains Mono", monospace;
     text-align: center; box-shadow: 0 0 0 2px var(--bone); }
   .sw { display: inline-block; width: 46px; height: 30px; margin-right: 6px; }
@@ -118,7 +121,7 @@
       <p class="cap" style="margin-top:10px">Spikes bursting through a grid: our drawing after one of the marker concepts in the Sandia report.</p>
     </div>
   </div>
-  <div class="folio"><span>Group 8 · Alice Picco, Alexis Xie, Bor Ipema, Bram Schoen · Multimodal Interaction Design, University of Amsterdam</span><span class="n">01 / 17</span></div>
+  <div class="folio"><span>Group 8 · Alice Picco, Alexis Xie, Bor Ipema, Bram Schoen · Multimodal Interaction Design, University of Amsterdam</span></div>
 </section>
 
 <!-- ============================================================ 02 · midterm slides 3-4 -->
@@ -143,7 +146,7 @@
       </ol>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span><span class="n">02 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span></div>
 </section>
 
 <!-- ============================================================ 03 · midterm slide 5 -->
@@ -184,7 +187,7 @@
       </div>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span><span class="n">03 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span></div>
 </section>
 
 <!-- ============================================================ 04 · midterm slides 6-7 (and the sunset reference of slide 3) -->
@@ -215,7 +218,7 @@
       <p class="h3" style="margin-top:auto;font-size:28px"><span class="g">The glow shows where.</span> The suit says how bad, and how&nbsp;sure.</p>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span><span class="n">04 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span></div>
 </section>
 
 <!-- ============================================================ 05 · midterm slide 8 -->
@@ -253,7 +256,7 @@
       </table>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span><span class="n">05 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span></div>
 </section>
 
 <!-- ============================================================ 06 · midterm slide 9 -->
@@ -298,7 +301,7 @@
       </div>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span><span class="n">06 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span></div>
 </section>
 
 <!-- ============================================================ 07 · midterm slide 10 -->
@@ -354,7 +357,7 @@
       </div>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span><span class="n">07 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Midterm, 22 September 2026</span></div>
 </section>
 
 <!-- ============================================================ 08 · final slide 1 -->
@@ -371,15 +374,15 @@
       <p class="lead" style="margin-top:24px;max-width:760px;font-size:30px">A probe rover that a gloved worker steers with a squeeze, a hand and his voice, so he never has to walk up to a hazard himself.</p>
       <div class="lab" style="margin-top:auto">Junior taken apart</div>
       <ol class="parts" style="margin-top:10px">
-        <li><span><b>Eye.</b> A phone camera, read by glow.py on the laptop.</span></li>
+        <li class="off"><span><b>Eye.</b> A phone camera, read by glow.py on the laptop.<span class="off-note">Not visible in this photo</span></span></li>
         <li><span><b>Brain.</b> An Arduino Uno with an HC-05 Bluetooth module and an L298N motor driver, on 4 × AA and 9 V.</span></li>
         <li><span><b>Wheels.</b> Two motors: two wheels and a caster.</span></li>
-        <li><span><b>Distance.</b> An HC-SR04 sensor: Junior stops himself 20 cm before an obstacle.</span></li>
+        <li class="off"><span><b>Distance.</b> An HC-SR04 sensor: Junior stops himself 20 cm before an obstacle.<span class="off-note">Not visible in this photo</span></span></li>
       </ol>
       <p class="cap" style="margin-top:20px">Left: the Arduino car on 8 October 2026, driving on spoken commands (a frame from the voice test video). Junior comes in two versions: this car responds to hand gestures and spoken commands; the 3D Junior runs the whole system.</p>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · Alice Picco, Alexis Xie, Bor Ipema, Bram Schoen</span><span class="n">08 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · Alice Picco, Alexis Xie, Bor Ipema, Bram Schoen</span></div>
 </section>
 
 <!-- ============================================================ 09 · final slide 2 + Alice's diagram of how the inputs relate -->
@@ -425,7 +428,7 @@
       </div>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · the inputs and how they relate</span><span class="n">09 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · the inputs and how they relate</span></div>
 </section>
 
 <!-- ============================================================ 10 · final slides 3-4 -->
@@ -449,7 +452,7 @@
       <div class="moment"><div class="pic"><img src="img/m-home.jpg" alt=""></div><div><div class="k">Home</div><p>"Come back": straight home.</p></div></div>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · renders of the 3D Junior</span><span class="n">10 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · renders of the 3D Junior</span></div>
 </section>
 
 <!-- ============================================================ 11 · final slide 5 -->
@@ -480,7 +483,7 @@
       </div>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · the palm switch</span><span class="n">11 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · the palm switch</span></div>
 </section>
 
 <!-- ============================================================ 12 · final slide 6 -->
@@ -515,7 +518,7 @@
       </div>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · gestures</span><span class="n">12 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · gestures</span></div>
 </section>
 
 <!-- ============================================================ 13 · final slide 7 -->
@@ -543,7 +546,7 @@
       <p class="cap" style="margin-top:auto">Medians of 85 logged commands; 62 of them reached the model, 15 were fixed-rule commands.</p>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · cloned voices (XTTS v2)</span><span class="n">13 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · cloned voices (XTTS v2)</span></div>
 </section>
 
 <!-- ============================================================ 14 · final slide 8 -->
@@ -567,7 +570,7 @@
       <p class="cap" style="margin-top:auto">Seen from above in the 3D world, where the simulator supplies Junior's position. Without wheel encoders, the sum drifts over a whole site.</p>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · the autopilot</span><span class="n">14 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · the autopilot</span></div>
 </section>
 
 <!-- ============================================================ 15 · final slide 9 -->
@@ -592,7 +595,7 @@
     </table>
     <p class="cap" style="position:absolute;left:0;right:0;bottom:0">Glove, three testers: squeeze at 750 (now 800); 75 gestures per condition. Latency: medians of 85 logged commands (62 reached the model). Not tested yet: misheard commands per speaker (Koenecke et al., 2020). The testers are classmates, so this measures legibility, not Marvin's experience (Bennett &amp; Rosner, 2019).</p>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · glove tests, 21 October 2026</span><span class="n">15 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026 · glove tests, 21 October 2026</span></div>
 </section>
 
 <!-- ============================================================ 16 · final slides 10-11 -->
@@ -627,7 +630,7 @@
       <p class="d3" style="margin-top:14px;font-size:40px">Whose voice was it?</p>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026</span><span class="n">16 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Final, 22 October 2026</span></div>
 </section>
 
 <!-- ============================================================ 17 · midterm slide 11 + final slide 12 -->
@@ -669,7 +672,7 @@
       <p style="margin-top:14px;text-indent:0;padding-left:0;color:#55555E"><b style="color:#0E0E10">Pictures and figures.</b> Renders of the group's 3D Junior (sim.html; its rover and suit models were AI-generated for the project site) and a frame from the Arduino car's voice test video, both graded to grey. The postcard, Marvin, the suit and the fungus: generated with SDXL in ComfyUI for these plates. Charts redrawn after the sources named on them. Icons: Phosphor Icons (MIT). TA feedback: A. Fleck and B. Ching (personal communication, 26 September to 9 October 2026), not listed (APA 7).</p>
     </div>
   </div>
-  <div class="folio"><span>Glove, Visor, Rover · Group 8 · Multimodal Interaction Design, University of Amsterdam, 2026</span><span class="n">17 / 17</span></div>
+  <div class="folio"><span>Glove, Visor, Rover · Group 8 · Multimodal Interaction Design, University of Amsterdam, 2026</span></div>
 </section>
 
 <script src="charts.js"></script>

@@ -33,19 +33,19 @@ const weightOf = (id) => nodeOf(id).work.length;
 const nodeR = (id) => 4.5 + 1.6 * weightOf(id);
 const labelDx = (id) => nodeR(id) + 13;
 const labelW = (id, widths = {}) => widths[id] || textWidth(labelOf(id), 18) * 1.1;
-// each step's verb is a line over or under one of its skills
+// the step a skill belongs to (listening, ordering...) shows only on the open skill, as a blue tag over or
+// under its label, on the side away from its picture: at rest the tags read as names of single skills
 const VERB_SIZE = 14;
 const VERB_GAP = 28;
 const verbW = (c) => textWidth(c.label, VERB_SIZE, true) * 1.27;
 const headOf = (c) => MAP.clusters[c.id];
-const verbAt = (c) => {
-  const [id, side] = headOf(c);
+const verbAt = (id, side) => {
   const [x, y] = pos(id);
   return [x + labelDx(id), y + MAP.label[id][1] + side * VERB_GAP];
 };
-const verbBox = (c) => {
-  const [x, y] = verbAt(c);
-  return [x - 8, y - 17, x + verbW(c) + 8, y + 7];
+const verbBox = (id, side) => {
+  const [x, y] = verbAt(id, side);
+  return [x - 8, y - 17, x + verbW(clusterOf(id)) + 8, y + 7];
 };
 
 function labelBox(id) {
@@ -59,7 +59,7 @@ const nodeBox = (id) => {
   const r = nodeR(id) + 8;
   return [x - r, y - r, x + r, y + r];
 };
-const staticBoxes = () => [...NODES.map((n) => labelBox(n.id)), ...NODES.map((n) => nodeBox(n.id)), ...CLUSTERS.map(verbBox)];
+const staticBoxes = () => [...NODES.map((n) => labelBox(n.id)), ...NODES.map((n) => nodeBox(n.id))];
 
 // every skill with how far its own ink (point, label and, for a step's head, its verb) reaches on each
 // side, in design units; `widths` are the labels' rendered lengths once the fonts are in
@@ -146,29 +146,46 @@ const cost = (boxes, obstacles) => {
   return score;
 };
 
-// The skill's screen sits behind the skill (its point, label and links are drawn over it). It tries
-// nine positions with the skill near a corner, an edge or the middle of the screen, and takes the one that
-// covers the fewest other skills, labels and step names, kept on the stage.
-function cardLayout(id) {
+// The skill's picture sits beside the skill, with the skill on one of its corners (never in its middle): under
+// or over the skill's label, reaching right or left. It takes the corner that covers the fewest other skills
+// and labels, kept on the stage. The links are masked where they cross it, so it reads as a picture, not a
+// thumbnail under lines.
+function cardOptions(id) {
   const [x, y] = pos(id);
   const { w: W, h: H } = SCREEN;
-  const others = [
-    ...NODES.filter((n) => n.id !== id).flatMap((n) => [grow(labelBox(n.id), 6), grow(nodeBox(n.id), 6)]),
-    ...CLUSTERS.map((c) => grow(verbBox(c), 4)),
+  const dy = MAP.label[id][1];
+  const r = nodeR(id);
+  // a skill's point under the picture costs more than its label (a covered label gets a chip and still reads)
+  const others = NODES.filter((n) => n.id !== id).flatMap((n) => [grow(labelBox(n.id), 8), grow(nodeBox(n.id), 8), grow(nodeBox(n.id), 8), grow(nodeBox(n.id), 8)]);
+  const under = y + dy + 14; // the label's foot is at y + dy + 7
+  const over = y + dy - 24 - H; // its top is at y + dy - 18
+  const options = [
+    { l: x - r - 4, t: under, bias: 0 }, // the skill on the picture's top-left corner
+    { l: x + r + 4 - W, t: under, bias: 30 }, // top-right: the picture to the left, the label outside it
+    { l: x - r - 4, t: over, bias: 60 }, // bottom-left
+    { l: x + r + 4 - W, t: over, bias: 90 }, // bottom-right
   ];
-  let best = null;
-  [0.18, 0.5, 0.82].forEach((fx) => {
-    [0.22, 0.5, 0.78].forEach((fy) => {
-      const l = Math.min(Math.max(x - fx * W, 6), stageW() - W - 6);
-      const t = Math.min(Math.max(y - fy * H, 6), G.H - H - 6);
-      const b = [l, t, l + W, t + H];
-      // what it covers, plus a little for leaving the skill off-centre
-      let score = others.reduce((sum, o) => sum + overlapArea(b, o), 0);
-      score += Math.hypot(x - (l + W / 2), y - (t + H / 2)) * 4;
-      if (!best || score < best.score) best = { score, x: l, y: t };
-    });
+  // side: where the step tag goes, away from the picture (1 under the label, -1 over it)
+  return options.map(({ l: l0, t: t0, bias }) => {
+    const l = Math.min(Math.max(l0, 6), stageW() - W - 6);
+    const t = Math.min(Math.max(t0, 6), G.H - H - 6);
+    const b = [l, t, l + W, t + H];
+    let score = bias + others.reduce((sum, o) => sum + overlapArea(b, o), 0);
+    score += overlapArea(b, labelBox(id)) * 4; // its own label stays clear
+    score += (Math.abs(l - l0) + Math.abs(t - t0)) * 40; // pushed off the corner by the stage edge
+    return { score, x: l, y: t, w: W, h: H, side: t0 < y ? 1 : -1 };
   });
-  return { x: best.x, y: best.y, w: W, h: H };
+}
+
+// the picture's corner and the projects' places are chosen together: the pair that covers least
+function layoutFor(id, works) {
+  let best = null;
+  cardOptions(id).forEach((card) => {
+    const fan = fanLayout(id, works, [grow([card.x, card.y, card.x + card.w, card.y + card.h], 6), grow(verbBox(id, card.side), 4)]);
+    const total = card.score + fan.score;
+    if (!best || total < best.total) best = { total, card, fan };
+  });
+  return best;
 }
 
 // Projects fan out from the selected skill: try every direction, radius and spread and keep
@@ -176,10 +193,12 @@ function cardLayout(id) {
 function fanLayout(id, works, extra = []) {
   const [ox, oy] = pos(id);
   const boxes = [...staticBoxes(), ...extra];
+  // points along the links, so a project's name does not sit on a line
+  const linkPts = LINKS.flatMap((l) => samplesOf(l, 24));
   let leaves = null;
   for (let deg = 0; deg < 360; deg += 5) {
     const a = (deg * Math.PI) / 180;
-    [170, 200, 235, 275, 315].forEach((rl) => {
+    [170, 200, 235, 275, 315, 360].forEach((rl) => {
       [0.22, 0.3, 0.4, 0.55].forEach((spread) => {
         const pts = works.map((p, i) => {
           const b = a + (i - (works.length - 1) / 2) * spread;
@@ -193,6 +212,11 @@ function fanLayout(id, works, extra = []) {
           pts.map((o) => o.box),
           boxes
         );
+        pts.forEach(({ box: lb }) => {
+          linkPts.forEach(([px, py]) => {
+            if (px > lb[0] && px < lb[2] && py > lb[1] && py < lb[3]) score += 1500;
+          });
+        });
         // a leaf's line must not run under the card
         extra.forEach((o) => {
           pts.forEach((pt) => {
@@ -207,7 +231,7 @@ function fanLayout(id, works, extra = []) {
       });
     });
   }
-  return { leafPts: leaves.pts };
+  return { leafPts: leaves.pts, score: leaves.score };
 }
 
 // ——— life ———
@@ -216,6 +240,9 @@ const DRIFT = 4.5;
 const PHASE = Object.fromEntries(NODES.map((n, i) => [n.id, { p1: i * 1.9, p2: i * 2.7 + 1, w1: 0.31 + (i % 4) * 0.05, w2: 0.26 + (i % 3) * 0.06 }]));
 const LEAN = { reach: 190, pull: 8 }; // skills near the pointer lean in
 const PULSE = { speed: 0.27, dash: 26 }; // units per ms; the dash's length
+// the first screen shows work: once the map has grown in, Interaction design opens (its picture and projects)
+// until the visitor picks another skill; leaving the map comes back to it
+const DEFAULT_SKILL = "ixd";
 
 const SkillMap = ({ projects }) => {
   const router = useRouter();
@@ -224,6 +251,7 @@ const SkillMap = ({ projects }) => {
   const bandRef = useRef(null);
   const [hovered, setHovered] = useState(null);
   const [pinned, setPinned] = useState(null);
+  const [soft, setSoft] = useState(false); // the open skill is the default, not the visitor's pick
   const [chipW, setChipW] = useState({});
   const labelRefs = useRef({});
   const [fit, setFit] = useState(null);
@@ -270,8 +298,16 @@ const SkillMap = ({ projects }) => {
   // so crossing a skill on the way to a project does not switch the map.
   const pick = (id, now = false) => {
     clearTimeout(switchTimer.current);
-    if (now || !activeRef.current || activeRef.current === id) setPinned(id);
-    else switchTimer.current = setTimeout(() => setPinned(id), 110);
+    const open = () => {
+      setPinned(id);
+      setSoft(false);
+    };
+    if (now || !activeRef.current || activeRef.current === id) open();
+    else switchTimer.current = setTimeout(open, 110);
+  };
+  const rest = () => {
+    setPinned(DEFAULT_SKILL);
+    setSoft(true);
   };
 
   // fit the graph to the first screen: its outermost ink on the page gutters, 64 px under the header,
@@ -326,9 +362,13 @@ const SkillMap = ({ projects }) => {
   const activeNode = active ? nodeOf(active) : null;
   const activeWork = activeNode ? workOf(active) : [];
   // the card in the clearest pocket beside the skill, then the leaves around both, their lines clear of it
-  const card = useMemo(() => (activeNode && fit ? cardLayout(active) : null), [active, sx, fit]); // eslint-disable-line react-hooks/exhaustive-deps
-  const fan = useMemo(() => (activeNode && fit ? fanLayout(active, activeWork) : null), [active, sx, fit]); // eslint-disable-line react-hooks/exhaustive-deps
+  // the picture on a corner of the skill, and the projects fanned out around it and the step tag
+  const layout = useMemo(() => (activeNode && fit ? layoutFor(active, activeWork) : null), [active, sx, fit]); // eslint-disable-line react-hooks/exhaustive-deps
+  const card = layout ? layout.card : null;
+  const fan = layout ? layout.fan : null;
   const lit = activeNode ? new Set(neighbours(active)) : new Set();
+  // skills whose label the picture covers wear a chip, so they read on the picture
+  const covered = new Set(card ? NODES.filter((n) => n.id !== active && overlapArea(labelBox(n.id), [card.x, card.y, card.x + card.w, card.y + card.h]) > 0).map((n) => n.id) : []);
   const [ax, ay] = active ? pos(active) : [0, 0];
   // the leaves of the skill just left fade out where they were
   const [leaving, setLeaving] = useState(null);
@@ -504,6 +544,16 @@ const SkillMap = ({ projects }) => {
     return () => mm.revert();
   }, [fit !== null]);
 
+  // once the map has grown in (about 1.6 s with motion, at once without), the default skill opens, unless
+  // the visitor or a `?skill=` link has opened one already
+  useEffect(() => {
+    if (!fit || !wide) return undefined;
+    const t = setTimeout(() => {
+      if (!activeRef.current) rest();
+    }, animate ? 1700 : 0);
+    return () => clearTimeout(t);
+  }, [fit !== null, wide]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // scroll: no hold. As the hero leaves, the map lingers a little behind the page, leans in toward the skills
   // behind the first project in Selected work, and fades back so the list arrives on a quiet page.
   useIsomorphicLayoutEffect(() => {
@@ -567,7 +617,10 @@ const SkillMap = ({ projects }) => {
     return () => mm.revert();
   }, [active, fit]);
 
-  const toggle = (id) => setPinned((current) => (current === id ? null : id));
+  const toggle = (id) => {
+    setSoft(false);
+    setPinned((current) => (current === id ? null : id));
+  };
   const statement = STATEMENT.map((part, i) => {
     if (typeof part === "string") return <React.Fragment key={i}>{part}</React.Fragment>;
     const [text, id] = part;
@@ -680,15 +733,27 @@ const SkillMap = ({ projects }) => {
             onMouseLeave={() => {
               pointer.current = null;
               clearTimeout(switchTimer.current);
-              setPinned(null);
+              rest();
             }}
             onKeyDown={(e) => {
-              if (e.key === "Escape") setPinned(null);
+              if (e.key === "Escape") {
+                setPinned(null);
+                setSoft(false);
+              }
             }}
           >
             {fit && <SkillScreen skill={active} box={card} animate={animate && wide} />}
             <svg viewBox={`0 0 ${G.W} ${G.H}`} className="absolute inset-0 z-[1] h-full w-full overflow-visible" role="group" aria-label="Skills, linked where they feed into each other; larger points carry more projects. Select one to see its projects and a picture of its work.">
-              <g aria-hidden="true" fill="none">
+              {/* the links stop at the picture's edge */}
+              {card && (
+                <defs>
+                  <mask id="map-picture-cut" maskUnits="userSpaceOnUse" x={-400} y={-400} width={G.W + 800} height={G.H + 800}>
+                    <rect x={-400} y={-400} width={G.W + 800} height={G.H + 800} fill="#fff" />
+                    <rect x={card.x} y={card.y} width={card.w} height={card.h} fill="#000" />
+                  </mask>
+                </defs>
+              )}
+              <g aria-hidden="true" fill="none" mask={card ? "url(#map-picture-cut)" : undefined}>
                 {LINKS.map((l) => {
                   const hot = active && (l.a === active || l.b === active);
                   const d = curveD(l);
@@ -729,9 +794,9 @@ const SkillMap = ({ projects }) => {
                 const r = nodeR(n.id);
                 const isActive = active === n.id;
                 const isLit = lit.has(n.id);
-                const plain = !isActive && !isLit && hovered !== n.id;
-                const c = CLUSTERS.find((k) => headOf(k)[0] === n.id);
-                const on = c && activeNode && clusterOf(active).id === c.id;
+                const plain = !isActive && !isLit && hovered !== n.id && !covered.has(n.id);
+                // the open skill wears its step as a tag; no other skill shows one
+                const c = isActive && card ? clusterOf(n.id) : null;
                 return (
                   <g
                     key={n.id}
@@ -762,12 +827,12 @@ const SkillMap = ({ projects }) => {
                       {c && (
                         <g aria-hidden="true">
                           {(() => {
-                            const [vx, vy] = verbAt(c);
+                            const [vx, vy] = verbAt(n.id, card.side);
                             return (
                               <>
-                                {/* the verb of the selected skill's step: a blue tag, the one filled label in the map */}
-                                <rect x={vx - 7} y={vy - 16} width={verbW(c) + 14} height="22" style={{ fill: "rgb(var(--olive-fill))", opacity: on ? 1 : 0, transition: "opacity .2s" }} />
-                                <text className="map-cluster" data-head={n.id} x={vx} y={vy} fontFamily="JetBrains Mono, monospace" fontSize={VERB_SIZE} fontWeight="700" letterSpacing="0.16em" style={{ fill: on ? "#fff" : "rgb(var(--olive))", transition: "fill .2s" }}>
+                                {/* the open skill's step: a blue tag, the one filled label in the map */}
+                                <rect x={vx - 7} y={vy - 16} width={verbW(c) + 14} height="22" style={{ fill: "rgb(var(--olive-fill))" }} />
+                                <text className="map-cluster" data-head={n.id} x={vx} y={vy} fontFamily="JetBrains Mono, monospace" fontSize={VERB_SIZE} fontWeight="700" letterSpacing="0.16em" style={{ fill: "#fff" }}>
                                   {c.label.toUpperCase()}
                                 </text>
                               </>
@@ -844,7 +909,7 @@ const SkillMap = ({ projects }) => {
 
             {/* the screen is a picture behind the skill; screen readers hear the skill */}
             <p className="sr-only" aria-live="polite">
-              {activeNode ? `${activeNode.label}. ${SKILL_NOTES[active]} Tools: ${activeNode.tools.join(", ")}.` : ""}
+              {activeNode && !soft ? `${activeNode.label}. ${SKILL_NOTES[active]} Tools: ${activeNode.tools.join(", ")}.` : ""}
             </p>
           </div>
         </div>
@@ -855,14 +920,15 @@ const SkillMap = ({ projects }) => {
         <p className="fu-display col-span-9 leading-[1.06]" style={{ fontSize: "clamp(32px, 5vh, 48px)" }}>
           {statement}
         </p>
-        <p className="col-span-3 justify-self-end whitespace-nowrap pb-[0.35em] text-right font-mono text-[14px] leading-relaxed text-graphite">Available for freelance · Amsterdam</p>
       </div>
       {/* ——— phones and tablets: the statement only; the map needs a wide screen ——— */}
-      <div className="relative overflow-hidden px-4 pb-16 pt-14 fu-gutter tablet:pb-24 tablet:pt-20 map:hidden">
-        <div className="map-narrow relative flex max-w-[720px] flex-col gap-6">
-          <p className="text-[34px] font-medium leading-[1.12] tracking-[-0.02em] tablet:text-[52px]">{STATEMENT_TEXT}</p>
-          {/* the work, straight away: the three projects that lead Selected work */}
-          <ul className="grid grid-cols-3 gap-3">
+      <div className="relative overflow-hidden px-4 pb-8 pt-12 fu-gutter tablet:pb-24 tablet:pt-20 map:hidden">
+        <div className="map-narrow relative flex flex-col gap-6 tablet:gap-8">
+          {/* the same heavy display line as on wide screens */}
+          <p className="fu-display max-w-[900px] text-[38px] tablet:text-[60px]">{STATEMENT_TEXT}</p>
+          {/* tablets: the three projects that lead Selected work, across the full width; on phones Selected work
+              follows straight after the statement, so the cards would only repeat it */}
+          <ul className="hidden grid-cols-3 gap-4 tablet:grid">
             {[...projects]
               .sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))
               .slice(0, 3)
@@ -875,7 +941,7 @@ const SkillMap = ({ projects }) => {
                 </li>
               ))}
           </ul>
-          <a href="#work" className="inline-flex min-h-[44px] w-max items-center border-b-2 border-olive font-mono text-[14px] text-olive">
+          <a href="#work" className="hidden min-h-[44px] w-max items-center border-b-2 border-olive font-mono text-[14px] text-olive tablet:inline-flex">
             All work
           </a>
         </div>
