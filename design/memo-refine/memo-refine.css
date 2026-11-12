@@ -1,0 +1,508 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   MEMO REFINE: fewer separators and containers
+   An override layer for thememeontology.netlify.app, loaded after meme_viz.css.
+   Same pages, sections, order, content, meme wall and type families. What changes:
+   · rules and boxes go, except the hero ground line, the drawing surfaces and table rules;
+   · spaced capitals and numbered kickers become sentence-case text;
+   · controls lose their frames but keep a 44 px target and the site's focus ring;
+   · space and type size do the grouping.
+   Every change is listed in NOTES.md with the reason.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --mr-line: #8a8378;              /* input boundary: 3.4:1 on paper, 3.7:1 on the reading surface */
+  --mr-hover: rgba(20, 20, 20, .06);
+  --mr-section: 56px;              /* space above a section title */
+  --mr-label: .9rem;               /* former spaced-caps labels, now plain text */
+}
+
+/* ── Shared: labels that were spaced capitals ─────────────────────────────── */
+.viz-group-label, .panel-label, .viz-controls-label, .about-section h2, .detail-section-title,
+.onto-doc-nav h3, .stat-label, .pipeline-num, .vg-legend-title, .onto-stat-card label, .ds-ov-sub,
+.dot-nav::before, .collage-sort-title, .home-hero .hero-cta, .transform-legend h3, .panel-top h3,
+.walk-card-body b, .pipeline-label, .th-kicker, .th-toc-head, .sidebar-label, .ds-ov-go,
+.site-footer-col span, .collage-more a, .transform-legend-hint, .vg-ext-label, .story-step h3 {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+
+/* ── Top bar ──────────────────────────────────────────────────────────────── */
+.topnav { border-bottom: 0; }
+/* a hairline only once content scrolls under the bar (progressive: browsers without
+   scroll-linked animation keep no line) */
+@supports (animation-timeline: scroll()) {
+  .topnav {
+    animation: mr-nav-edge linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 72px;
+  }
+}
+@keyframes mr-nav-edge {
+  from { box-shadow: 0 1px 0 rgba(20, 20, 20, 0); }
+  to   { box-shadow: 0 1px 0 rgba(20, 20, 20, .12); }
+}
+.topnav-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.topnav-link.active::after { display: none; }
+.topnav-link.active {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
+}
+.topnav-dropdown-menu { border: 0; box-shadow: 0 14px 36px rgba(0, 0, 0, .14); padding: 8px 0; }
+.topnav-dropdown-item { padding-top: 9px; padding-bottom: 9px; }
+.topnav-dropdown-divider { border-top: 0; margin-top: 10px; padding-top: 9px; }
+
+/* Random meme: a plain icon + label, no frame */
+.rm-btn {
+  border: 0;
+  background: none;
+  min-height: 44px;
+  padding: 0 10px;
+  margin-left: 4px;
+  font-size: .8rem;
+}
+.rm-btn:hover, .rm-btn[aria-expanded="true"] { background: none; color: var(--ink); }
+.rm-btn:hover span, .rm-btn[aria-expanded="true"] span {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
+}
+.rm-card { border: 0; box-shadow: 0 18px 44px rgba(0, 0, 0, .2); }
+.rm-again, .rm-open { min-height: 44px; font-size: .85rem; }
+.rm-again { border-color: transparent; background: none; text-decoration: underline; text-underline-offset: 4px; }
+.rm-again:hover { background: var(--mr-hover); }
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+.site-footer-col span { font-size: .85rem; font-weight: 600; color: #a19a8f; margin-bottom: 6px; }
+.site-footer-base { border-top: 0; padding-top: 0; }
+
+/* ── Buttons: toggles become text with an underline for the current choice ── */
+.viz-btn, .ds-vtoggle, .ds-page-btn {
+  border-color: transparent;
+  background: none;
+  color: var(--muted);
+  min-height: 44px;
+  padding: 0 10px;
+  font-size: .85rem;
+}
+.viz-btn:hover, .ds-vtoggle:hover, .ds-page-btn:hover {
+  border-color: transparent;
+  background: var(--mr-hover);
+  color: var(--ink);
+}
+.viz-btn.active, .ds-vtoggle.active, .ds-page-btn.cur {
+  border-color: transparent;
+  background: none;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+/* actions: underlined text in ink */
+.onto-doc-btn, .panel-more button, #btn-show-more, .walk-card-actions a, .walk-card-actions button {
+  border-color: transparent;
+  background: none;
+  color: var(--ink);
+  min-height: 44px;
+  padding: 0 10px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.onto-doc-btn:hover, .panel-more button:hover, #btn-show-more:hover,
+.walk-card-actions a:hover, .walk-card-actions button:hover {
+  border-color: transparent;
+  background: var(--mr-hover);
+  color: var(--ink);
+}
+.onto-doc-btn { display: inline-flex; align-items: center; text-transform: none; letter-spacing: 0; font-size: .9rem; }
+.icon-btn, .zoom-tools button, .onto-graph-zoom button {
+  border-color: transparent;
+  background: none;
+  min-width: 44px;
+  height: 44px;
+  font-size: .95rem;
+}
+.icon-btn:hover, .zoom-tools button:hover, .onto-graph-zoom button:hover {
+  border-color: transparent;
+  background: var(--mr-hover);
+}
+
+/* ── Inputs: one underline, strong enough to find (3:1) ──────────────────── */
+.dataset-search, .dataset-select, .viz-search input, .th-search input {
+  border: 0;
+  border-bottom: 1px solid var(--mr-line);
+  background: transparent;
+  min-height: 44px;
+}
+.dataset-search:focus, .viz-search input:focus, .th-search input:focus { border-bottom-color: var(--ink); }
+/* with a single underline the text starts where the line starts */
+.dataset-search, .dataset-select, .viz-search input { padding-left: 0; }
+.viz-search { margin: 0 6px 0 10px; }
+
+/* thumbnails and cards: the image is the object, no frame around it */
+.meme-thumb, .ds-card { border: 0; background: none; }
+.meme-thumb:hover, .ds-card:hover { transform: none; }
+.meme-thumb:hover .meme-thumb-name, .ds-card:hover .ds-card-name { color: var(--ink); }
+.tag-pill, .onto-pill { border: 0; background: var(--mr-hover); }
+.meme-page-img-col img { border: 0; }
+.detail-section-title { border-bottom: 0; font-size: var(--mr-label); color: var(--ink); }
+
+
+/* ══ HOME ═══════════════════════════════════════════════════════════════════ */
+
+/* the looping ticker of format counts (aria-hidden, decorative) goes; the counts live in the charts */
+.home-ticker { display: none; }
+.home-hero { padding-top: calc(var(--nav-h) + 4px); }
+
+/* triples on the hero graph: readable grey (was 3.4:1 at 11 px) */
+.hero-graph text { fill: var(--muted); }
+
+.home-hero .hero-cta {
+  font-size: 1rem;
+  font-weight: 600 !important;
+  min-height: 48px;
+  padding: 0 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Arrange: a line of text choices instead of a framed segmented control */
+.collage-sort {
+  border: 0;
+  background: none;
+  padding: 0;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+.collage-sort-title {
+  font-size: 1rem;
+  font-weight: 500 !important;
+  color: var(--muted);
+  padding: 0 10px 0 0;
+}
+.collage-sort button {
+  min-height: 44px;
+  padding: 0 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--muted);
+  background: none;
+}
+.collage-sort button:hover { background: none; color: var(--ink); }
+.collage-sort button.active {
+  background: none;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
+}
+.collage-sort-note { margin-bottom: 22px; font-size: .9rem; }
+
+/* end of the wall: a link, no rule above it */
+.collage-more { border-top: 0; padding: 48px 16px 64px; }
+.collage-more a {
+  border-bottom: 0;
+  padding: 12px 0;
+  font-size: 1.05rem;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
+}
+
+
+/* ══ VISUALIZATIONS ═════════════════════════════════════════════════════════ */
+
+/* side contents: no rule, no 01 to 11 numbers */
+.dot-nav { border-right: 0; padding-top: 28px; }
+.dot-nav::before {
+  content: 'Contents';
+  border-bottom: 0;
+  font-size: var(--mr-label);
+  font-weight: 600 !important;
+  color: var(--ink);
+  padding: 0 16px 10px 18px;
+  margin-bottom: 0;
+}
+.dot::before { content: none; }
+/* equal padding instead of a minimum height: one-line items are 44 px, and the space between labels stays even */
+.dot { min-height: 0; padding: 14px 16px; border-left-width: 2px; align-items: center; }
+.dot-nav { gap: 0; }
+.dot::after { font-size: .8rem; }
+.dot.active { border-left: 2px solid var(--ink); padding-left: 16px; }
+
+/* sections: no band, strip or rule; the title and its sentence stack, the chart sits on the page */
+.viz-section { border-bottom: 0; }
+.viz-group-label {
+  background: none;
+  border-bottom: 0;
+  font-size: var(--mr-label);
+  font-weight: 500 !important;
+  color: var(--muted);
+  padding: var(--mr-section) 32px 0;
+}
+.sec-header {
+  height: auto;
+  background: none;
+  border-bottom: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: var(--mr-section) 32px 18px;
+}
+.viz-group-label + .sec-header { padding-top: 6px; }
+.sec-header h2 { font-size: 2rem; padding-bottom: 0; white-space: normal; }
+.sec-header h2::after { content: none; }
+.sec-header p { font-size: .95rem; line-height: 1.5; max-width: 72ch; }
+.graph-wrap { background: transparent; }
+.graph-wrap-dark { background: #121212; }    /* the colour field keeps its dark ground: it is the canvas */
+.viz-controls { background: none; border-bottom: 0; padding: 0 22px 10px; gap: 4px 6px; }
+.viz-controls-label { font-size: var(--mr-label); font-weight: 500 !important; color: var(--muted); margin: 0 4px 0 10px; }
+.viz-note { font-size: .82rem; }
+
+/* variant gallery: the eight dimensions as a plain list, rows held apart by space */
+.transform-legend { border: 0; background: none; padding: 0 32px; margin: 0 0 12px; }
+.transform-legend-collapsible > summary { justify-content: flex-start; gap: 16px; min-height: 44px; }
+.transform-legend h3 { font-size: 1rem; font-weight: 600 !important; }
+.transform-legend-hint {
+  font-size: .9rem;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.legend-grid { gap: 22px 40px; margin-top: 10px; }
+.legend-item { border-left: 0; background: none; padding: 0; }
+.legend-item strong { color: var(--ink); margin-bottom: 4px; }
+.legend-item p { font-size: .85rem; }
+.vg-legend { border-bottom: 0; }
+.vg-legend-title { font-size: var(--mr-label); }
+.vg-row { border-bottom: 0; padding: 28px 0; }
+#graph-variant-gallery { padding-left: 32px; padding-right: 32px; }   /* rows start on the title's edge */
+
+/* knowledge-graph walk: the trail is text with its arrows, the card floats on a shadow alone */
+.walk-step { border: 0; background: none; padding: 2px 2px; }
+.walk-step-prop { background: none; color: var(--ink); font-weight: 600; }
+.walk-card { border: 0; box-shadow: 0 12px 32px rgba(0, 0, 0, .14); }
+
+/* platform story: chapters are text beside the chart; the current one is at full strength */
+.story-step { background: none; border: 0; padding: 0 0 0 4px; }
+.story-step.active { border: 0; }
+
+/* drawer of memes: an edge by shadow, no rules inside */
+.node-panel { border-left: 0; box-shadow: -18px 0 44px rgba(0, 0, 0, .1); }
+.panel-top { border-bottom: 0; }
+.panel-label { font-size: var(--mr-label); color: var(--muted); }
+
+
+/* ══ IN-PAGE VIEWS: dataset, about, ontology ════════════════════════════════ */
+
+/* dataset: the three datasets as open columns, sections held apart by space */
+.ds-overview-card, .ds-overview-card:hover {
+  border: 0;
+  background: none;
+  padding: 0;
+  transform: none;
+}
+.ds-overview-row { gap: 40px; margin-bottom: 72px; }
+.ds-ov-sub { font-size: .9rem; }
+.ds-ov-go { font-size: .9rem; text-decoration: underline; text-underline-offset: 4px; }
+.ds-overview-card:hover .ds-ov-go { text-decoration-thickness: 2px; }
+.ds-sec-title { box-shadow: none; display: block; }
+.ds-section { border-top: 0; padding-top: 32px; margin-bottom: 72px; }
+
+/* about: headings without rules, figures without frames or colour bars */
+.about-section { margin-bottom: 64px; }
+.about-section h2 { font-size: 1.15rem; color: var(--ink); border-bottom: 0; padding-bottom: 0; margin-bottom: 16px; }
+.about-stats { border: 0; gap: 32px; }
+.about-stats .stat-card, .about-stats .stat-card:last-child {
+  border: 0;
+  background: none;
+  padding: 0;
+  text-align: left;
+}
+.stat-label { font-size: var(--mr-label); }
+.about-pipeline { border: 0; gap: 32px; }
+.pipeline-step, .pipeline-step:last-child { border: 0; background: none; padding: 0; }
+.pipeline-num { font-size: var(--mr-label); color: var(--muted); }
+.pipeline-label { font-size: 1.05rem; line-height: 1.25; }
+.pipeline-desc { font-size: .85rem; line-height: 1.5; }
+
+/* ontology: header and graph without bands or frames; the graph keeps its drawing surface */
+.onto-doc-header, .onto-doc-disclaimer { border: 0; background: none; }
+.onto-doc-header { padding: 28px calc(clamp(16px, 5vw, 64px) + 20px) 0; }   /* on the graph's text edge */
+.onto-graph { border: 0; background: none; }
+.onto-graph svg { border-top: 0; }
+.onto-graph-zoom { padding-left: 2px; }   /* first glyph on the heading's edge, targets stay 44 px */
+.onto-doc-nav { border-right: 0; }
+.onto-doc-sec h2 { border-bottom: 0; }
+.onto-entity-block, .onto-card, .onto-stat-card, .stat-card, .pipeline-step { border: 0; box-shadow: none; }
+.onto-card-head { border-bottom: 0; background: none; }
+
+
+/* ══ THESIS ═════════════════════════════════════════════════════════════════ */
+
+/* index: one reading surface, no rule; chapters in the text face, not Impact */
+.th-toc { border-right: 0; background: transparent; }
+.th-toc-head { font-family: var(--ui); font-size: var(--mr-label); font-weight: 600; color: var(--ink); }
+.toc-ch > a {
+  font-family: var(--ui);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: .88rem;
+  font-weight: 600;
+  margin-top: 10px;
+}
+.th-toc-list a.active { border-left-width: 2px; }
+.th-search svg { left: 2px; }
+.th-search input { padding-left: 24px; }
+
+/* title block: the degree line moves under the byline, so nothing sits above the title */
+.th-title {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: 64px;
+}
+.th-title .meme-banner { order: 1; }
+.th-title p { order: 2; }
+.th-kicker { order: 3; }
+.th-meta { order: 4; }
+.th-title p, .th-kicker {
+  font-family: var(--ui);
+  font-style: normal;
+  font-size: .95rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.th-title p { color: var(--ink); }
+.th-kicker { color: var(--muted); margin-top: 2px; }
+.th-meta { font-size: .9rem; margin-top: 12px; gap: 4px 18px; }
+.th-meta b { font-weight: 500; }
+
+/* chapters: space and the Impact title mark the break; no rule above, no bar below */
+.th-body h2 { border-top: 0; padding-top: 0; margin-top: 128px; }
+.th-chapter:first-of-type h2 { margin-top: 0; }
+.th-body h2::after { content: none; }
+.th-body figure img { border: 0; }
+.th-body figcaption, .th-caption { font-size: .85rem; }
+.th-body pre { border: 0; }
+.pg { color: var(--muted); font-size: .7rem; }    /* page numbers: 6:1 (were 2.8:1) */
+
+.th-toc-toggle {
+  font-family: var(--ui);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: .9rem;
+  font-weight: 600;
+  min-height: 44px;
+}
+.th-top {
+  border: 0;
+  width: 44px;
+  height: 44px;
+  background: var(--surface);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .14);
+}
+
+
+/* ══ SPARQL ═════════════════════════════════════════════════════════════════ */
+
+.sparql-sidebar { border-right: 0; background: transparent; width: 300px; }
+@media (min-width: 1200px) { .sparql-sidebar { width: 340px; } }   /* room for most prefixes on one line */
+.sidebar-section { border-bottom: 0; padding: 24px 20px 4px 24px; }
+.sidebar-label { font-size: var(--mr-label); font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+
+/* prefixes: a list; a long IRI wraps and hangs under its prefix */
+.ns-pill {
+  display: block;
+  border: 0;
+  background: none;
+  padding: 0 0 0 2ch;
+  text-indent: -2ch;
+  margin-bottom: 7px;
+  font-size: .68rem;
+}
+
+/* example queries: a list of choices, highlighted on hover, no cards */
+.example-btn {
+  border: 0;
+  background: none;
+  padding: 10px 12px;
+  margin: 0 0 2px -12px;
+  width: calc(100% + 12px);
+}
+.example-btn:hover { background: var(--mr-hover); }
+.example-btn .ex-desc { font-size: .78rem; }
+
+.sparql-editor-area { padding: 24px 32px; }
+.editor-topbar .meme-banner { padding: 0 0 10px; }   /* title and memes on the editor's edge */
+.editor-subtitle { font-size: .9rem; }
+.sparql-textarea {
+  border: 0;
+  border-bottom: 1px solid var(--mr-line);
+  background: #efebe3;
+  padding: 16px 18px;
+}
+.sparql-textarea:focus { border-bottom-color: var(--ink); }
+.run-btn {
+  font-family: var(--ui);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: .95rem;
+  font-weight: 600;
+  min-height: 44px;
+  padding: 0 22px;
+}
+.clear-btn {
+  border-color: transparent;
+  background: none;
+  min-height: 44px;
+  font-size: .9rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.clear-btn:hover { border-color: transparent; background: var(--mr-hover); }
+.sparql-results { border: 0; background: transparent; }
+.results-empty { align-items: flex-start; justify-content: flex-start; padding-top: 6px; font-size: .9rem; }
+.results-count { border-bottom: 0; background: none; padding-left: 0; }
+/* the results table keeps its rules: there they carry the rows */
+.results-table th { text-transform: none; letter-spacing: 0; font-size: .78rem; }
+
+
+/* ══ PHONE AND TABLET ═══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .rm-btn { top: 2px; right: 4px; width: 44px; height: 44px; padding: 0; justify-content: center; }
+  .topnav-link { min-height: 44px; }
+  .topnav-link.active { text-underline-offset: 6px; }
+  .viz-section.home-hero { padding-top: calc(var(--nav-h) + 4px) !important; }
+
+  .viz-group-label { padding: 32px 0 0; font-size: .85rem; }
+  .sec-header { padding: 32px 0 12px; margin-bottom: 0; }
+  .viz-group-label + .sec-header { padding-top: 4px; }
+  .sec-header h2 { font-size: 1.6rem; }
+  .sec-header p { font-size: .9rem; }
+  .viz-controls { padding: 0 0 8px; }
+  .transform-legend { padding: 0; }
+  .story-step { background: var(--surface); padding: 14px 16px; box-shadow: 0 10px 28px rgba(0, 0, 0, .1); }
+
+  .onto-doc-header { padding: 20px 32px 0; }
+  .sparql-sidebar { width: auto; border-top: 0; }
+  .sparql-editor-area { padding: 20px 16px; }
+  .sidebar-section { padding: 20px 16px 4px; }
+
+  .about-stats { gap: 24px 20px; grid-template-columns: 1fr 1fr; }   /* four columns ran off a 390 px screen */
+  .about-stats .stat-card { border-bottom: 0; }
+  .pipeline-step { border-bottom: 0; }
+  .ds-overview-row { gap: 28px; margin-bottom: 48px; }
+}
