@@ -1,6 +1,6 @@
 // Before/after screenshots of the live Meme Ontology site with memo-refine.css injected.
-// Nothing is copied or edited: the live pages load as they are and, for "after", the stylesheet is added on top
-// with page.addStyleTag once the page has loaded.
+// Nothing is copied or edited: the live pages load as they are and, for "after", the stylesheet is added as the
+// last element of each HTML page in transit (the same place serve.js puts it), before any chart draws.
 //
 // Usage (from any folder):
 //   node shots.js                      -> before and after, every page
@@ -56,14 +56,34 @@ async function settle(page, limit) {
   await page.waitForTimeout(2000);
 }
 
-async function load(page, name, mode) {
-  await page.goto(BASE + PAGES[name], { waitUntil: 'networkidle', timeout: 90000 });
-  if (mode === 'after') {
-    await page.addStyleTag({ content: CSS });
-    // Charts drawn at load measured their boxes before the stylesheet arrived; let them measure again,
-    // as they would if the rules were in the site's own stylesheet.
-    await page.evaluate(() => window.dispatchEvent(new Event('resize')));
-  }
+// "after": exactly what serve.js does. Each HTML page gets the stylesheet and the markup layer as the last
+// things in <body>, and /__refine.css and /__refine.js are answered from disk, so the charts measure the new
+// layout when they first draw.
+const JS = path.join(HERE, 'memo-refine.js');
+const FINDINGS = path.join(HERE, 'findings.json');
+async function useRefine(ctx) {
+  await ctx.route('**/*', async (route) => {
+    const url = new URL(route.request().url());
+    if (url.pathname === '/__refine.css') {
+      return route.fulfill({ status: 200, contentType: 'text/css; charset=utf-8', body: CSS });
+    }
+    if (url.pathname === '/__refine.js') {
+      const findings = fs.existsSync(FINDINGS) ? fs.readFileSync(FINDINGS, 'utf8') : 'null';
+      return route.fulfill({ status: 200, contentType: 'text/javascript; charset=utf-8',
+        body: `window.MEMO_REFINE_FINDINGS = ${findings};\n` + fs.readFileSync(JS, 'utf8') });
+    }
+    if (route.request().resourceType() !== 'document') return route.continue();
+    const resp = await route.fetch();
+    let html = await resp.text();
+    const tag = '<link rel="stylesheet" href="/__refine.css"><script src="/__refine.js" defer></script>';
+    html = html.includes('</body>') ? html.replace(/<\/body>(?![\s\S]*<\/body>)/, `${tag}</body>`) : html + tag;
+    await route.fulfill({ status: resp.status(), contentType: 'text/html; charset=utf-8', body: html });
+  });
+}
+
+async function load(page, name) {
+  await page.goto(BASE + PAGES[name], { waitUntil: 'load', timeout: 120000 });
+  await page.waitForLoadState('networkidle', { timeout: 20000 }).catch(() => {});
   await page.waitForTimeout(1800);
 }
 
@@ -87,12 +107,14 @@ async function innerHeight(page) {
         deviceScaleFactor: 1,
         userAgent: 'memo-design-study',
       });
-      const page = await ctx.newPage();
+      if (mode === 'after') await useRefine(ctx);
       for (const name of only) {
         if (!PAGES[name]) continue;
         const tag = `${name}-${vp.w}x${vp.h}`;
+        // a fresh page per capture: the charts size themselves on first draw
+        const page = await ctx.newPage();
         try {
-          await load(page, name, mode);
+          await load(page, name);
           await page.screenshot({ path: path.join(dir, `${tag}.png`) });
           if (vp.full) {
             const inner = await innerHeight(page);
@@ -112,6 +134,7 @@ async function innerHeight(page) {
         } catch (e) {
           console.log('fail', mode, tag, e.message.slice(0, 160));
         }
+        await page.close();
       }
       await ctx.close();
     }

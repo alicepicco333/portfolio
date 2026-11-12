@@ -55,7 +55,7 @@
   text-underline-offset: 7px;
 }
 .topnav-dropdown-menu { border: 0; box-shadow: 0 14px 36px rgba(0, 0, 0, .14); padding: 8px 0; }
-.topnav-dropdown-item { padding-top: 9px; padding-bottom: 9px; }
+.topnav-dropdown-item { padding-top: 9px; padding-bottom: 9px; min-height: 44px; display: flex; align-items: center; }
 .topnav-dropdown-divider { border-top: 0; margin-top: 10px; padding-top: 9px; }
 
 /* Random meme: a plain icon + label, no frame */
@@ -157,20 +157,30 @@
 .detail-section-title { border-bottom: 0; font-size: var(--mr-label); color: var(--ink); }
 
 
-/* ══ HOME ═══════════════════════════════════════════════════════════════════ */
+/* ══ HOME ═══════════════════════════════════════════════════════════════════
+   A poster first, then a working wall. Spacing scale: 4 8 16 24 32 48 64 96 128 192. */
 
 /* the looping ticker of format counts (aria-hidden, decorative) goes; the counts live in the charts */
 .home-ticker { display: none; }
 .home-hero { padding-top: calc(var(--nav-h) + 4px); }
 
-/* triples on the hero graph: readable grey (was 3.4:1 at 11 px) */
+/* hero: title, tagline and button 24 / 32 apart, then a 64 px pause under the ground line */
+.home-hero .hero-content { gap: 24px; margin-bottom: 64px; }
+.home-hero .hero-title { letter-spacing: .01em; }
+.home-hero .hero-tagline { text-wrap: balance; }
+
+/* triples on the hero graph: readable grey (was 3.4:1 at 11 px); from 1200 px they clear the characters,
+   so they show; below 1200 px the dashed lines would run without their triples, so the graph goes */
 .hero-graph text { fill: var(--muted); }
+@media (min-width: 1200px) and (max-width: 1299px) { .hero-graph text { display: inline; } }
+@media (min-width: 761px) and (max-width: 1199px) { .hero-graph { display: none; } }
 
 .home-hero .hero-cta {
   font-size: 1rem;
   font-weight: 600 !important;
   min-height: 48px;
   padding: 0 24px;
+  margin-top: 8px;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -182,7 +192,7 @@
   background: none;
   padding: 0;
   gap: 2px;
-  margin-bottom: 2px;
+  margin-bottom: 8px;
 }
 .collage-sort-title {
   font-size: 1rem;
@@ -207,49 +217,109 @@
   text-decoration-thickness: 2px;
   text-underline-offset: 7px;
 }
-.collage-sort-note { margin-bottom: 22px; font-size: .9rem; }
+.collage-sort-note { margin-bottom: 32px; font-size: .9rem; }
 
-/* end of the wall: a link, no rule above it */
-.collage-more { border-top: 0; padding: 48px 16px 64px; }
+/* from 1100 px Arrange sits on the wall's left edge and its note on the same line at the right edge */
+@media (min-width: 1100px) {
+  .home-hero { display: grid; grid-template-columns: auto 1fr; column-gap: 32px; }
+  .home-hero > .hero-content, .home-hero > .hero-images, .home-hero > .home-collage-sentinel { grid-column: 1 / -1; }
+  .collage-sort { margin: 0 0 32px 48px; }
+  .collage-sort-note { margin: 0 48px 32px 0; padding: 0; max-width: none; text-align: right; align-self: center; }
+}
+
+/* the wall: wider gutters and margins, square-ish rows */
+.home-hero .hero-images { padding: 0 48px; gap: 16px; grid-auto-rows: clamp(150px, 14vw, 210px); }
+/* in Shuffle only (no year or format labels, no colour strips) two tiles in every 13 are twice the size,
+   so the wall has two scales; the arranged orders stay a regular grid that reads in sequence */
+.hero-images:not(:has(.home-tile-label, .home-tile-swatch)) .home-tile:nth-child(13n+2),
+.hero-images:not(:has(.home-tile-label, .home-tile-swatch)) .home-tile:nth-child(13n+9) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+/* the last 13 tiles stay single, so the wall ends on a full row (360 tiles fill 87 rows of 6 exactly) */
+.hero-images .home-tile:nth-last-child(-n+13) { grid-column: auto !important; grid-row: auto !important; }
+
+/* the end of the wall fades out and the link sits in the fade (until every tile is in, the link stays below) */
+body.collage-done .home-hero .hero-images {
+  -webkit-mask-image: linear-gradient(#000 calc(100% - 320px), transparent);
+  mask-image: linear-gradient(#000 calc(100% - 320px), transparent);
+}
+.collage-more { border-top: 0; background: none; padding: 48px 16px 128px; }
+body.collage-done .collage-more { margin-top: -96px; padding-top: 0; }
 .collage-more a {
   border-bottom: 0;
   padding: 12px 0;
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 7px;
 }
 
+/* tablet, 4 columns: square rows, one large tile in every 7 */
+@media (max-width: 980px) {
+  .home-hero .hero-images {
+    padding: 0 32px;
+    gap: 16px;
+    grid-auto-rows: calc((100vw - 64px - 48px) / 4);
+  }
+  .hero-images:not(:has(.home-tile-label, .home-tile-swatch)) .home-tile:nth-child(13n+2),
+  .hero-images:not(:has(.home-tile-label, .home-tile-swatch)) .home-tile:nth-child(13n+9) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .hero-images:not(:has(.home-tile-label, .home-tile-swatch)) .home-tile:nth-child(7n+1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
+/* phone, 3 columns: 8 px gutters, square rows */
+@media (max-width: 640px) {
+  .home-hero .hero-images {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 0 16px;
+    gap: 8px;
+    grid-auto-rows: calc((100vw - 48px) / 3);
+  }
+}
+
 
 /* ══ VISUALIZATIONS ═════════════════════════════════════════════════════════ */
 
-/* side contents: no rule, no 01 to 11 numbers */
-.dot-nav { border-right: 0; padding-top: 28px; }
+/* side contents: no rule, no 01 to 11 numbers; a wider column so most names fit one line */
+@media (min-width: 1025px) { :root { --dot-nav-w: 208px; } }
+.dot-nav { border-right: 0; padding-top: 32px; gap: 0; }
 .dot-nav::before {
   content: 'Contents';
   border-bottom: 0;
   font-size: var(--mr-label);
   font-weight: 600 !important;
   color: var(--ink);
-  padding: 0 16px 10px 18px;
+  padding: 0 16px 8px 26px;   /* 24 px plus the 2 px marker: the items' text edge */
   margin-bottom: 0;
 }
 .dot::before { content: none; }
-/* equal padding instead of a minimum height: one-line items are 44 px, and the space between labels stays even */
-.dot { min-height: 0; padding: 14px 16px; border-left-width: 2px; align-items: center; }
-.dot-nav { gap: 0; }
-.dot::after { font-size: .8rem; }
-.dot.active { border-left: 2px solid var(--ink); padding-left: 16px; }
+.dot { min-height: 44px; padding: 10px 16px 10px 24px; border-left-width: 2px; align-items: center; }
+.dot::after { font-size: .8125rem; }
+.dot.active { border-left: 2px solid var(--ink); padding-left: 24px; }
 
-/* sections: no band, strip or rule; the title and its sentence stack, the chart sits on the page */
+/* sections: no band, strip or rule; title above its sentence; 96 px between sections, 192 before a new
+   group, 32 px from the top of a section to its first line, 32 px from the header to what follows */
 .viz-section { border-bottom: 0; }
+.viz-section + .viz-section { margin-top: 96px; }
+.viz-section:is(:has(> .viz-group-label), :has(> .mr-col > .viz-group-label)):not(:first-of-type) { margin-top: 192px; }
+#sec-flow { margin-bottom: 128px; }
+@media (min-width: 1025px) {
+  #app:not(.panel-open) { padding-right: 48px; }          /* charts stop 48 px short of the window edge */
+  #sec-spectrum { overflow: visible; }
+  #sec-spectrum .graph-wrap-dark { margin-right: -48px; }  /* the one full-width image */
+}
 .viz-group-label {
   background: none;
   border-bottom: 0;
-  font-size: var(--mr-label);
-  font-weight: 500 !important;
-  color: var(--muted);
-  padding: var(--mr-section) 32px 0;
+  font-size: 1rem;
+  font-weight: 600 !important;
+  color: var(--ink);
+  padding: 32px 32px 0;
 }
 .sec-header {
   height: auto;
@@ -257,16 +327,55 @@
   border-bottom: 0;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
-  padding: var(--mr-section) 32px 18px;
+  gap: 16px;
+  padding: 32px 32px 32px;
 }
-.viz-group-label + .sec-header { padding-top: 6px; }
-.sec-header h2 { font-size: 2rem; padding-bottom: 0; white-space: normal; }
+.viz-group-label + .sec-header { padding-top: 8px; }
+.sec-header h2 { font-size: clamp(2rem, 2.8vw, 2.5rem); letter-spacing: .01em; padding-bottom: 0; white-space: normal; }
 .sec-header h2::after { content: none; }
-.sec-header p { font-size: .95rem; line-height: 1.5; max-width: 72ch; }
+.sec-header p { font-size: 1rem; line-height: 1.5; max-width: 72ch; }
 .graph-wrap { background: transparent; }
 .graph-wrap-dark { background: #121212; }    /* the colour field keeps its dark ground: it is the canvas */
-.viz-controls { background: none; border-bottom: 0; padding: 0 22px 10px; gap: 4px 6px; }
+.viz-controls { background: none; border-bottom: 0; padding: 0 22px 16px; gap: 4px 6px; }
+
+/* from 1100 px three sections split: text column (group, title, sentence, controls) beside a chart that
+   takes the full section height, alternating with the wide charts */
+@media (min-width: 1100px) {
+  :is(#sec-platform-time, #sec-family, #sec-walk) {
+    display: grid;
+    grid-template-columns: 360px minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr;
+    column-gap: 48px;
+    align-content: start;
+  }
+  :is(#sec-platform-time, #sec-family, #sec-walk) > :is(.viz-group-label, .sec-header, .viz-controls) { grid-column: 1; }
+  :is(#sec-platform-time, #sec-family, #sec-walk) > .sec-header { padding-right: 0; }
+  :is(#sec-platform-time, #sec-family, #sec-walk) > .graph-wrap { grid-column: 2; grid-row: 1 / -1; min-height: 0; }
+  :is(#sec-family, #sec-walk) > .viz-controls { flex-direction: column; align-items: flex-start; padding-left: 22px; }
+  :is(#sec-family, #sec-walk) > .viz-controls .walk-trail { margin-left: 10px; }
+}
+
+/* chart text, until the scripts set it: at least 12 px, axis ticks 13 px, greys that pass AA */
+.graph-wrap svg .tick text { font-size: 13px !important; }
+.graph-wrap svg text[style*="font-size: 9px"],
+.graph-wrap svg text[style*="font-size: 10px"],
+.graph-wrap svg text[style*="font-size: 11px"] { font-size: 12px !important; }
+.graph-wrap svg text[font-size="9"], .graph-wrap svg text[font-size="10"],
+.graph-wrap svg text[font-size="11"] { font-size: 12px; }
+.graph-wrap svg text[style*="187, 187, 187"] { fill: var(--muted) !important; }   /* size key, was #bbb */
+.graph-wrap svg text[fill="#888"], .graph-wrap svg text[fill="#bbb"], .graph-wrap svg text[fill="#aaa"] { fill: var(--muted); }
+.fam-sector-label, .fam-caption, .flow-node text, .story-axis text, .story-labels text, .walk-prop text { font-size: 12px; }
+.fam-ring-label, .flow-stage { font-size: 12px; letter-spacing: 0; }   /* sentence case: memo-refine.js */
+.fam-caption { letter-spacing: 0 !important; text-transform: none !important; }
+/* extent colours dark enough to read as text (4.6:1 and up on paper); the frames keep the bright ones */
+.fam-ring-label[fill="#4caf50"] { fill: #2e7d32; }
+.fam-ring-label[fill="#ff9800"] { fill: #b45309; }
+.fam-ring-label[fill="#f44336"] { fill: #c62828; }
+.fam-ring-label[fill="#9c27b0"] { fill: #7b1fa2; }
+.vg-ext-label[style*="#4caf50"] { color: #2e7d32 !important; }
+.vg-ext-label[style*="#ff9800"] { color: #b45309 !important; }
+.vg-ext-label[style*="#f44336"] { color: #c62828 !important; }
+.vg-ext-label[style*="#9c27b0"] { color: #7b1fa2 !important; }
 .viz-controls-label { font-size: var(--mr-label); font-weight: 500 !important; color: var(--muted); margin: 0 4px 0 10px; }
 .viz-note { font-size: .82rem; }
 
@@ -473,6 +582,7 @@
   text-underline-offset: 4px;
 }
 .clear-btn:hover { border-color: transparent; background: var(--mr-hover); }
+.query-status.ok { color: #24734a; }   /* was #2e8b57, 3.9:1; now 5.3:1 */
 .sparql-results { border: 0; background: transparent; }
 .results-empty { align-items: flex-start; justify-content: flex-start; padding-top: 6px; font-size: .9rem; }
 .results-count { border-bottom: 0; background: none; padding-left: 0; }
@@ -485,15 +595,21 @@
   .rm-btn { top: 2px; right: 4px; width: 44px; height: 44px; padding: 0; justify-content: center; }
   .topnav-link { min-height: 44px; }
   .topnav-link.active { text-underline-offset: 6px; }
-  .viz-section.home-hero { padding-top: calc(var(--nav-h) + 4px) !important; }
+  .viz-section.home-hero { padding-top: calc(var(--nav-h) + 32px) !important; }
+  .home-hero .hero-content { padding-bottom: 0; margin-bottom: 64px; }   /* button to Arrange: 64 */
+  .home-hero .hero-cta { margin-bottom: 0; }   /* a later site rule gave it 7vh on phones too */
+  .collage-sort-note { margin-bottom: 24px; }                              /* note to wall: 24 */
 
-  .viz-group-label { padding: 32px 0 0; font-size: .85rem; }
-  .sec-header { padding: 32px 0 12px; margin-bottom: 0; }
-  .viz-group-label + .sec-header { padding-top: 4px; }
-  .sec-header h2 { font-size: 1.6rem; }
-  .sec-header p { font-size: .9rem; }
-  .viz-controls { padding: 0 0 8px; }
+  .viz-section + .viz-section { margin-top: 64px; }
+  .viz-section:is(:has(> .viz-group-label), :has(> .mr-col > .viz-group-label)):not(:first-of-type) { margin-top: 96px; }
+  .viz-group-label { padding: 16px 0 0; font-size: .95rem; }
+  .sec-header { padding: 16px 0 24px; margin-bottom: 0; gap: 8px; }
+  .viz-group-label + .sec-header { padding-top: 8px; }
+  .sec-header h2 { font-size: 1.75rem; }
+  .sec-header p { font-size: .95rem; }
+  .viz-controls { padding: 0 0 16px; }
   .transform-legend { padding: 0; }
+  #graph-variant-gallery { padding-left: 0; padding-right: 0; }
   .story-step { background: var(--surface); padding: 14px 16px; box-shadow: 0 10px 28px rgba(0, 0, 0, .1); }
 
   .onto-doc-header { padding: 20px 32px 0; }
@@ -506,3 +622,76 @@
   .pipeline-step { border-bottom: 0; }
   .ds-overview-row { gap: 28px; margin-bottom: 48px; }
 }
+
+
+/* ══ MARKUP LAYER (elements added by memo-refine.js) ════════════════════════
+   Opener, one finding per chart, "How to read" lines, contents groups, phone scroll boxes.
+   Until the repository has the markup these rules style nothing. */
+
+/* opener: the site's caption banner, then one sentence */
+.mr-opener { padding: 64px 32px 0; margin-bottom: 96px; }
+.mr-opener .meme-banner { margin: 0 0 24px; }
+.mr-opener-text { margin: 0; max-width: 46ch; font-size: 1.25rem; line-height: 1.45; color: var(--ink); text-wrap: pretty; }
+
+/* one finding per chart: 24 px ink, about 30 characters a line, and the memes that show it */
+.mr-finding { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 16px 32px; margin-top: 8px; }
+.mr-finding-text, .sec-header .mr-finding-text {
+  margin: 0;
+  max-width: 30ch;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  font-weight: 500;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+.mr-finding-memes { display: flex; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.mr-finding-memes a { display: block; width: 64px; height: 64px; }
+.mr-finding-memes img { display: block; width: 64px; height: 64px; object-fit: cover; background: #ecebe6; }
+.mr-finding-memes a:hover img { opacity: .85; }
+/* the encoding sentence, now under the chart */
+.mr-howto { margin: 0; padding: 16px 32px 0; max-width: calc(72ch + 64px); font-size: .875rem; line-height: 1.5; color: var(--muted); }
+.mr-howto-label { font-weight: 600; color: var(--ink); }
+#sec-variant-gallery > .mr-howto { padding: 0 32px 24px; }
+
+/* contents: the four groups as grey headings, the names inside the links */
+.mr-dot-group { display: block; padding: 24px 16px 4px 26px; font-size: .8125rem; color: var(--muted); }
+.dot.mr-text { font-size: .8125rem; line-height: 1.3; }
+.dot.mr-text::after { content: none; }
+
+/* sections grow to their content; charts get one height that follows the window */
+@media (min-width: 769px) {
+  .viz-section:not(.story-section):not(#sec-variant-gallery) { height: auto; }
+  .viz-section > .graph-wrap:not(#graph-variant-gallery),
+  .viz-section > .mr-hscroll > .graph-wrap { flex: none; height: clamp(480px, calc(100vh - 220px), 760px); }
+  .mr-col { display: contents; }               /* below 1100 px the split sections stack */
+  .mr-col > .mr-howto { order: 1; }
+}
+/* split sections from 1100 px: text column beside a taller chart */
+@media (min-width: 1100px) {
+  .viz-section.mr-split {
+    display: grid;
+    grid-template-columns: 360px minmax(0, 1fr);
+    grid-template-rows: auto;
+    column-gap: 48px;
+    align-items: start;
+  }
+  .mr-split > .mr-col { display: block; grid-column: 1; grid-row: 1; }
+  .mr-split > .graph-wrap { grid-column: 2; grid-row: 1; height: clamp(560px, calc(100vh - 120px), 820px); }
+  .mr-split .sec-header { padding-right: 0; }
+  .mr-split .mr-finding { flex-direction: column; }
+  .mr-col > .mr-howto { padding: 0 0 0 32px; }
+  .mr-col > .viz-controls { flex-direction: column; align-items: flex-start; padding: 0 0 24px 22px; }
+}
+
+/* phone: three wide charts scroll sideways inside their own box, with a visible hint */
+@media (max-width: 768px) {
+  .mr-opener { padding: 32px 16px 0; margin-bottom: 64px; }
+  .mr-opener-text { font-size: 1.1rem; }
+  .mr-finding-text { font-size: 1.25rem; }
+  .mr-howto { padding: 12px 0 0; }
+  #sec-variant-gallery > .mr-howto { padding: 0 0 16px; }
+  .mr-hscroll { overflow-x: auto; overscroll-behavior-x: contain; }
+  .mr-hscroll > .graph-wrap { width: 640px; }
+  .mr-hscroll-hint { margin: 8px 0 0; font-size: .875rem; color: var(--muted); }
+}
+@media (min-width: 769px) { .mr-hscroll-hint { display: none; } }
