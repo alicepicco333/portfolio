@@ -108,6 +108,7 @@
       "rank": 3,
       "accentHC": "#75210c",
       "cardWebp": "/images/projects/0-card-v5-800.webp",
+      "homeCard": "/images/hero/card-0.webp",
       "decisions": [
         {
           "choice": "Give every object three positions, how it left, who claims it and who holds it, each with its sources.",
@@ -594,6 +595,7 @@
       "rank": 4,
       "accentHC": "#111111",
       "cardWebp": "/images/projects/11-card-v3-800.webp",
+      "homeCard": "/images/hero/card-11.webp",
       "decisions": [
         {
           "choice": "Keep the current collection and the archive of past pieces apart, each with its own filters.",
@@ -1150,6 +1152,7 @@
       "cardImage": "/images/projects/14-card-v3.jpg",
       "rank": 6,
       "cardWebp": "/images/projects/14-card-v3-800.webp",
+      "homeCard": "/images/hero/card-14.webp",
       "embed": "https://odysee.com/$/embed/@alicepicco:0/5pic3_livingFull:d",
       "embedAspect": "4 / 3",
       "embedTitle": "full set",
@@ -1512,6 +1515,7 @@
       "shows": "Multimodal input designed as relations between channels, with fixed limits on what a language model may decide, prototyped on a physical car and in a 3D world.",
       "cardImage": "/images/projects/18-card.jpg",
       "cardWebp": "/images/projects/18-card-800.webp",
+      "homeCard": "/images/hero/card-18.webp",
       "rank": 2,
       "decisions": [
         {

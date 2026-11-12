@@ -869,7 +869,7 @@ const SkillMap = ({ projects }) => {
               .map((w) => (
                 <li key={w.id}>
                   <Link href={`/projects/${w.id}`} className="flex flex-col gap-1.5 text-[14px] font-semibold leading-tight">
-                    <img src={withBase(w.cardWebp || w.cardImage)} alt="" className="aspect-[4/3] w-full border border-ink object-cover" loading="eager" draggable={false} />
+                    <img src={withBase(w.homeCard || w.cardWebp || w.cardImage)} alt="" className="aspect-[4/3] w-full border border-ink object-cover" loading="eager" draggable={false} />
                     <span>{mapTitle(w)}</span>
                   </Link>
                 </li>

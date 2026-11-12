@@ -59,7 +59,8 @@ function wheelLayout(projects, fs = 16) {
 const Media = ({ project, className = "", stillOnly = false, style }) => {
   const reduced = usePrefersReducedMotion() || !motionOn();
   const motion = project.tileMotion && !reduced && !stillOnly ? project.tileMotion : null;
-  const still = project.cardWebp || project.cardImage || project.imageSrc;
+  // homeCard: the homepage's graded copy of the card (design/grading); project pages keep true colour
+  const still = project.homeCard || project.cardWebp || project.cardImage || project.imageSrc;
   const src = motion || still;
   if (motion && motion.endsWith(".mp4")) {
     return <video src={withBase(motion)} poster={withBase(still)} className={className} style={style} autoPlay muted loop playsInline aria-label={project.title} />;
