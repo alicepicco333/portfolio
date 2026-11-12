@@ -1,0 +1,385 @@
+{
+  "note": "Draft facts computed from the site data by tools/findings.js. Numbers are exact; the sentences are drafts for writer-alice. The page shows the \"fact\" text until it is replaced.",
+  "generated": "2026-11-12",
+  "opener": {
+    "title": "Visualizations",
+    "text": "Eleven views of 5,000 Know Your Meme entries: when memes appear, where they come from, how they change and how sure the labels are.",
+    "draft": true,
+    "draftText": "Eleven ways into the corpus: 5,000 Know Your Meme entries, the 50-meme D0 sample and 50 annotated variants."
+  },
+  "findings": [
+    {
+      "sectionId": "sec-time",
+      "fact": "In 2019, the busiest year, Exploitable leads with 155 of the 665 entries.",
+      "draft": "2019 is the busiest year: 665 entries, led by Exploitable with 155.",
+      "numbers": {
+        "year": 2019,
+        "entries": 665,
+        "leadingFormat": "Exploitable",
+        "leadingFormatEntries": 155
+      },
+      "memes": [
+        {
+          "name": "Woman Yelling At A Cat",
+          "url": "/visualizations#meme/woman-yelling-at-a-cat",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/030/157/womanyellingcat.jpg"
+        },
+        {
+          "name": "Average Fan Vs Average Enjoyer",
+          "url": "/visualizations#meme/average-fan-vs-average-enjoyer",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/035/102/cover4.jpg"
+        },
+        {
+          "name": "Staring Hamster",
+          "url": "/visualizations#meme/staring-hamster",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/028/232/hamster.jpg"
+        },
+        {
+          "name": "Unbothered Moisturized Happy In My Lane Focused Flourishing",
+          "url": "/visualizations#meme/unbothered-moisturized-happy-in-my-lane-focused-flourishing",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/038/426/unboth.jpg"
+        }
+      ]
+    },
+    {
+      "sectionId": "sec-popularity",
+      "fact": "Creepypasta has only 22 entries but draws the most views per entry: 142,377.",
+      "draft": "Creepypasta draws the most views per entry, 142,377 on average, from only 22 entries.",
+      "numbers": {
+        "format": "Creepypasta",
+        "avgViews": 142377,
+        "entries": 22,
+        "biggestFormat": "Exploitable",
+        "biggestFormatEntries": 1212,
+        "biggestFormatAvgViews": 91986
+      },
+      "memes": [
+        {
+          "name": "The Backrooms",
+          "url": "/visualizations#meme/the-backrooms",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/029/775/cover4.jpg"
+        },
+        {
+          "name": "Typing Into Youtube Full Stop Punctuation",
+          "url": "/visualizations#meme/typing-into-youtube-full-stop-punctuation",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/038/880/Screen_Shot_2021-11-17_at_2.31.41_PM.png"
+        },
+        {
+          "name": "Siren Head",
+          "url": "/visualizations#meme/siren-head",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/032/223/cover3.jpg"
+        },
+        {
+          "name": "The Lamp Story Reddit Creepypasta",
+          "url": "/visualizations#meme/the-lamp-story-reddit-creepypasta",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/047/359/lamp_story.jpg"
+        }
+      ]
+    },
+    {
+      "sectionId": "sec-platform-time",
+      "fact": "Since 2021, TikTok is the source of 33% of attributed memes, YouTube of 10%.",
+      "draft": "TikTok goes from 0% of attributed memes before 2010 to 33% since 2021; YouTube falls from 44% to 10%.",
+      "numbers": {
+        "rising": "TikTok",
+        "risingFrom": 0,
+        "risingTo": 0.326,
+        "falling": "YouTube",
+        "fallingFrom": 0.438,
+        "fallingTo": 0.1,
+        "firstPeriod": "Pre2010",
+        "lastPeriod": "2021-present"
+      },
+      "memes": [
+        {
+          "name": "Super Idol %E7%9A%84%E7%AC%91%E5%AE%B9",
+          "url": "/visualizations#meme/super-idol-%25E7%259A%2584%25E7%25AC%2591%25E5%25AE%25B9",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/038/536/super_idol.jpg"
+        },
+        {
+          "name": "Italian Brainrot Ai Italian Animals",
+          "url": "/visualizations#meme/italian-brainrot-ai-italian-animals",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/053/526/Italian_Brainrot_memes_cover.jpg"
+        },
+        {
+          "name": "Shadow Wizard Money Gang",
+          "url": "/visualizations#meme/shadow-wizard-money-gang",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/043/391/cover8.jpg"
+        },
+        {
+          "name": "Tralalero Tralala",
+          "url": "/visualizations#meme/tralalero-tralala",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/053/192/tralalero_tral.jpg"
+        }
+      ]
+    },
+    {
+      "sectionId": "sec-variant-bubble",
+      "fact": "Me Gusta draws the most views, 9,259,700, from only 532 variant photos.",
+      "draft": "Karen has the most variant photos (13,429); Me Gusta has the most views (9,259,700) with 532 photos.",
+      "numbers": {
+        "mostVariants": "Karen",
+        "photos": 13429,
+        "itsViews": 1813061,
+        "mostViewed": "Me Gusta",
+        "views": 9259700,
+        "itsPhotos": 532
+      },
+      "memes": [
+        {
+          "name": "Karen",
+          "url": "/visualizations#d0/3370",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/027/963/karenimg.jpg"
+        },
+        {
+          "name": "Me Gusta",
+          "url": "/visualizations#d0/71",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/002/252/NoMeGusta.jpg"
+        },
+        {
+          "name": "Bowsette",
+          "url": "/visualizations#d0/796",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/027/222/Bowsette.png"
+        },
+        {
+          "name": "Big Chungus",
+          "url": "/visualizations#d0/2343",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/027/843/chungcover.jpg"
+        }
+      ]
+    },
+    {
+      "sectionId": "sec-variant-gallery",
+      "fact": "Moderate changes lead: 19 of the 50 annotated variants.",
+      "draft": "19 of the 50 annotated variants are moderate changes; none is parody.",
+      "numbers": {
+        "annotated": 50,
+        "Minimal": 16,
+        "Moderate": 19,
+        "Substantial": 15,
+        "Parody": 0
+      },
+      "memes": [
+        {
+          "name": "Giving thanks",
+          "url": "/visualizations#variant/3171622",
+          "thumb": "https://i.kym-cdn.com/photos/images/original/003/171/622/761.png"
+        },
+        {
+          "name": "We're going to the moon... eventually",
+          "url": "/visualizations#variant/2481174",
+          "thumb": "https://i.kym-cdn.com/photos/images/original/002/481/174/0f6"
+        },
+        {
+          "name": "Oh Stonks",
+          "url": "/visualizations#variant/3039073",
+          "thumb": "https://i.kym-cdn.com/photos/images/original/003/039/073/6b4.jpg"
+        }
+      ]
+    },
+    {
+      "sectionId": "sec-family",
+      "fact": "A new caption is the most common change, in 21 of the 50 variants.",
+      "draft": "CaptionChange is the most common change, in 21 of the 50 variants; 17 variants change more than one thing.",
+      "numbers": {
+        "dimension": "CaptionChange",
+        "variants": 21,
+        "multiDimension": 17,
+        "all": {
+          "CaptionChange": 21,
+          "CrossoverMerge": 15,
+          "StyleShift": 12,
+          "CompositionShift": 12,
+          "MediumShift": 9
+        }
+      },
+      "memes": [
+        {
+          "name": "Giving thanks",
+          "url": "/visualizations#variant/3171622",
+          "thumb": "https://i.kym-cdn.com/photos/images/original/003/171/622/761.png"
+        },
+        {
+          "name": "Oh Stonks",
+          "url": "/visualizations#variant/3039073",
+          "thumb": "https://i.kym-cdn.com/photos/images/original/003/039/073/6b4.jpg"
+        },
+        {
+          "name": "All the souls",
+          "url": "/visualizations#variant/2330119",
+          "thumb": "https://i.kym-cdn.com/photos/images/original/002/330/119/369.jpg"
+        },
+        {
+          "name": "Really Not Stonks",
+          "url": "/visualizations#variant/2130917",
+          "thumb": "https://i.kym-cdn.com/photos/images/original/002/130/917/d0f.png"
+        }
+      ]
+    },
+    {
+      "sectionId": "sec-spectrum",
+      "fact": "Memes lose colour: average saturation falls from 19.6% up to 2011 to 15.8% from 2018.",
+      "draft": "Memes lose colour: average saturation falls from 20% up to 2011 to 16% from 2018.",
+      "numbers": {
+        "saturationTo2011": 19.6,
+        "saturationFrom2018": 15.8
+      },
+      "memes": [
+        {
+          "name": "%F0%9F%91%89%F0%9F%91%88 Two Fingers Touching",
+          "url": "/visualizations#meme/%25F0%259F%2591%2589%25F0%259F%2591%2588-two-fingers-touching",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/033/188/tempsnip222.png"
+        },
+        {
+          "name": "Freddie Freaker",
+          "url": "/visualizations#meme/freddie-freaker",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/025/575/maxresdefault_(43).jpg"
+        },
+        {
+          "name": "Big Chungus",
+          "url": "/visualizations#meme/big-chungus",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/027/843/chungcover.jpg"
+        },
+        {
+          "name": "Crazy I Was Crazy Once They Locked Me In A Room A Rubber Room A Rubber Room With Rats And Rats Make Me Crazy",
+          "url": "/visualizations#meme/crazy-i-was-crazy-once-they-locked-me-in-a-room-a-rubber-room-a-rubber-room-with-rats-and-rats-make-me-crazy",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/045/323/crazy__i_was_crazy_once.jpg"
+        }
+      ]
+    },
+    {
+      "sectionId": "sec-walk",
+      "fact": "The image type Cartoon links the most memes: 2,265 of the 5,000.",
+      "draft": "Cartoon is the busiest crossing: one hop from it reaches 2,265 of the 5,000 memes.",
+      "numbers": {
+        "property": "image type",
+        "value": "Cartoon",
+        "memes": 2265,
+        "nextBusiest": [
+          "region UnitedStates (1357)",
+          "platform TwitterX (1241)"
+        ]
+      },
+      "memes": [
+        {
+          "name": "Big Chungus",
+          "url": "/visualizations#meme/big-chungus",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/027/843/chungcover.jpg"
+        },
+        {
+          "name": "Stonks",
+          "url": "/visualizations#meme/stonks",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/029/959/Screen_Shot_2019-06-05_at_1.26.32_PM.jpg"
+        },
+        {
+          "name": "Lord Marquaad E",
+          "url": "/visualizations#meme/lord-marquaad-e",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/026/008/Screen_Shot_2018-04-25_at_12.24.22_PM.png"
+        },
+        {
+          "name": "Ankha Zone",
+          "url": "/visualizations#meme/ankha-zone",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/038/299/images-2021-09-11T082939.336.jpeg"
+        }
+      ]
+    },
+    {
+      "sectionId": "sec-story",
+      "fact": "Of the 5,000 memes, 3,610 name the platform they came from.",
+      "draft": "3,610 of the 5,000 memes name the platform they came from; the count peaks in 2019, with 505.",
+      "numbers": {
+        "attributed": 3610,
+        "peakYear": 2019,
+        "peakCount": 505
+      },
+      "memes": [
+        {
+          "name": "Woman Yelling At A Cat",
+          "url": "/visualizations#meme/woman-yelling-at-a-cat",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/030/157/womanyellingcat.jpg"
+        },
+        {
+          "name": "Me And The Boys",
+          "url": "/visualizations#meme/me-and-the-boys",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/028/367/cover1.jpg"
+        },
+        {
+          "name": "I Aint Reading All That",
+          "url": "/visualizations#meme/i-aint-reading-all-that",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/034/711/Screen_Shot_2020-07-24_at_11.33.38_AM.jpg"
+        },
+        {
+          "name": "Mike Wazowski Sulley Face Swap",
+          "url": "/visualizations#meme/mike-wazowski-sulley-face-swap",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/031/003/cover3.jpg"
+        }
+      ]
+    },
+    {
+      "sectionId": "sec-confidence",
+      "fact": "Painting is the least certain image type, with a mean score of 0.47.",
+      "draft": "At a 0.5 threshold, 13% of the image-type labels would not survive; Painting is the least certain type.",
+      "numbers": {
+        "labelled": 4999,
+        "belowHalf": 663,
+        "leastCertainType": "Painting",
+        "itsMeanScore": 0.47
+      },
+      "memes": [
+        {
+          "name": "Cheems",
+          "url": "/visualizations#meme/cheems",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/031/994/Screen_Shot_2019-12-02_at_11.23.01_AM.png"
+        },
+        {
+          "name": "Would You Still Love Me If I Was A Worm",
+          "url": "/visualizations#meme/would-you-still-love-me-if-i-was-a-worm",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/040/612/would_you_still_love_me_if_i_was_a_worm.jpg"
+        },
+        {
+          "name": "James Barretts Wife",
+          "url": "/visualizations#meme/james-barretts-wife",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/027/042/Screen_Shot_2018-08-31_at_1.25.42_PM.jpg"
+        },
+        {
+          "name": "Best By 07 Sep 18 043 40",
+          "url": "/visualizations#meme/best-by-07-sep-18-043-40",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/025/714/Best_By_07_SEP_18_043_40.jpg"
+        }
+      ]
+    },
+    {
+      "sectionId": "sec-flow",
+      "fact": "The widest flow runs from Twitter/X to the Catchphrase format: 262 memes.",
+      "draft": "The thickest strand runs from TwitterX to Catchphrase: 262 memes. 1,346 memes have no platform at all.",
+      "numbers": {
+        "platform": "TwitterX",
+        "format": "Catchphrase",
+        "memes": 262,
+        "unattributed": 1346
+      },
+      "memes": [
+        {
+          "name": "Leopards Eating Peoples Faces Party",
+          "url": "/visualizations#meme/leopards-eating-peoples-faces-party",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/028/364/loisleopards-Thumb.jpg"
+        },
+        {
+          "name": "I Aint Reading All That",
+          "url": "/visualizations#meme/i-aint-reading-all-that",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/034/711/Screen_Shot_2020-07-24_at_11.33.38_AM.jpg"
+        },
+        {
+          "name": "Dont Kill Yourself Youre So Sexy Aha",
+          "url": "/visualizations#meme/dont-kill-yourself-youre-so-sexy-aha",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/030/316/Screen_Shot_2019-07-03_at_3.24.13_PM.png"
+        },
+        {
+          "name": "Sir This Is An Arbys",
+          "url": "/visualizations#meme/sir-this-is-an-arbys",
+          "thumb": "https://i.kym-cdn.com/entries/icons/original/000/027/606/3690_plate.jpg"
+        }
+      ]
+    }
+  ]
+}

@@ -318,3 +318,10 @@ Second pass, through the preview (`tools/check.js`), every page loaded fresh at 
 - **Spacing**: the review's targets measure as asked: hero 24 / 32, ground line to Arrange 64, note to wall 32,
   wall margins 48 and gutters 16 (phone 16 and 8), sections 96 apart and 192 before a group, charts 48 px from the
   right edge, the spectrum at 0, contents 208 px wide; no horizontal overflow at any width.
+
+## Findings copy (writer-alice, 12 Nov 2026)
+The final sentences are in `findings.json` (`fact`, with the earlier draft kept as `draft`; the
+opener's earlier text as `draftText`). Check before publishing: Platform Story says 3,610 of the
+5,000 memes name their platform (so 1,390 without), but the Sankey data counts 1,346 "unattributed";
+neither sentence uses the unattributed count, but `tools/findings.js` and the site's data should
+agree. The Sankey value "TwitterX" is written "Twitter/X" in the sentence.
