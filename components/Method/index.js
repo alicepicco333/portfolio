@@ -19,7 +19,9 @@ const MethodStrip = ({ used = [], current = null, arrows = true, className = "" 
   const named = METHOD.filter(([k]) => used.includes(k) || k === current).map(([, v]) => v);
   const label = current ? `Method step: ${verbOf(current)}` : `Method: ${named.join(", ")}`;
   return (
-    <p className={`flex flex-wrap items-center gap-y-1 font-mono text-[14px] ${arrows ? "gap-x-3" : "gap-x-2.5"} ${className}`} aria-label={label}>
+    <p className={`flex flex-wrap items-center gap-y-1 font-mono text-[14px] ${arrows ? "gap-x-3" : "gap-x-2.5"} ${className}`}>
+      {/* read out as one line; a paragraph may not carry aria-label, so the label is text only screen readers get */}
+      <span className="sr-only">{label}</span>
       {METHOD.map(([k, verb], i) => {
         const here = current === k;
         const on = here || (!current && used.includes(k));
@@ -30,7 +32,7 @@ const MethodStrip = ({ used = [], current = null, arrows = true, className = "" 
                 →
               </span>
             )}
-            <span aria-hidden="true" className={`flex items-center gap-1.5 ${here ? "font-semibold text-olive" : on ? "text-ink" : "text-graphite/70"}`}>
+            <span aria-hidden="true" className={`flex items-center gap-1.5 ${here ? "font-semibold text-olive" : on ? "text-ink" : "text-graphite"}`}>
               <span className={`inline-block h-2 w-2 ${on ? "bg-current" : "border border-current"}`} />
               {verb}
             </span>

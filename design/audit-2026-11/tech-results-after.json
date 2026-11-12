@@ -1,0 +1,1143 @@
+{
+ "base": "http://127.0.0.1:3001",
+ "date": "2026-11-12T19:46:06.594Z",
+ "results": [
+  {
+   "route": "/",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Alice Picco, HCI researcher & designer",
+   "lang": "en",
+   "h1": [
+    "Alice Picco, HCI researcher and designer"
+   ],
+   "overflowX": 0,
+   "wide": [
+    "div.absolute",
+    "div.absolute.left-0",
+    "svg",
+    "g",
+    "g"
+   ],
+   "mediaKB": 109,
+   "largest": [
+    "43 KB /images/hero/card-0.webp",
+    "33 KB /images/projects/20-card-v12-800.webp",
+    "33 KB /images/hero/card-18.webp"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/contact",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Contact | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Contact"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 0,
+   "largest": [],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/resume",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "CV | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "CV"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 0,
+   "largest": [],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/accessibility",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Accessibility statement | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Accessibility statement"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 0,
+   "largest": [],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/no-such-page",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ],
+   "pageErrors": [],
+   "media": [],
+   "status": 404,
+   "title": "Page not found | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "This page is not on the map."
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 0,
+   "largest": [],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/0",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "The Stolen Archive | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "The Stolen Archive↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 1074,
+   "largest": [
+    "192 KB /images/projects/0-g3-v5.jpg",
+    "183 KB /images/projects/0-hl-v5.jpg",
+    "178 KB /images/projects/0-g1-v5.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/1",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Digitalian Folktales | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Digitalian Folktales↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 784,
+   "largest": [
+    "238 KB /images/projects/1-g1-v3.jpg",
+    "183 KB /images/projects/1-g4-v3.jpg",
+    "176 KB /images/projects/1-g3-v3.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/2",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Cognitive Bias Ontology | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Cognitive Bias Ontology↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 1203,
+   "largest": [
+    "255 KB /images/projects/2-g2.jpg",
+    "194 KB /images/projects/2-g3.jpg",
+    "182 KB /images/projects/2-g1.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/3",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "wipEU | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "wipEU↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 1019,
+   "largest": [
+    "165 KB /images/projects/3-g7-v4.jpg",
+    "162 KB /images/projects/3-g1-v4.jpg",
+    "138 KB /images/projects/3-g2-v4.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/5",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [
+    "401 https://player.vimeo.com/video/980415428?dnt=1",
+    "401 https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/pat/a598077a3a7266ec/1794512644958/0d9b43d9d8f478da0f51d031a7e7ad0e3581eb18124756ffab7b9f90b0b89de4/CjeyhTCYo2QE11HQOxN1pvGwqp4-h9MK8Wwkrr7Scq7zu8EfY3febJxq9K9OF5T_-U5aXSESxeUuqzfy1Ry-oiNEZWqnjYy5A9Hb_ZJEqIfxVb2v-gkMDCfRS_PmVxQR61Tl3HZmPBo5rp-mm1fIXL4XuLtSY2c4QXk1P0lqq-i1tZUWez0inQDtu1Jp876ttJ_0CpXO5lzd_7xlFDfnHPkL2Pao1TmASM-xd_cvReptjgY8amVWA8i59GM0hIeGZhirBukXHqjpc30ICOPUfKJasnZxS1YmdjacJgfY3mXm8tQtN62sMgqSxm6aSMJwnEc67yLCnS2fo5sBgGz_pHsH-DQxmXPJ0RMIVea-n5glFcSJU1v4Ve9YhtvbmvdFo-DB10Of8dp9jBv-YzGcbG1gDJgWxxWohnsu7SRJ_iZ4h6V2Ulx8rmHL7YVtAUE7joB9uPU8UCXiUWNZNugHtk8Oyy1i5Y6QRFYy51GQDxqSgww1vvS4uEYadEWaEGFY-5yMLlTfQrblO-WziPZg69OdygYEjEW56HWjN5n_gKRNfu1BZGdCneKhJ6oFmrf4e737VKWrx8BW-6qEIdybN2xTCDyDnEtJC5rbgGtnPOtESHTIKrQeNkg-wdl2RrRnBl39JIwqSGLMBtpdKvFXHFQ",
+    "net::ERR_NAME_NOT_RESOLVED https://brunhild.challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/i/a598077a3a7266ec/CqCPbmIW525vDhi6Sf0WvG-E04eVxrec0adlRFZVCvDNiDFy81v89BIdopBRZJK0Xf4AOi6Ldo0ULpJqhQbiCJ87yCk0xj31tt83uikNSV6ptlnTfADkkWcA3_jVH7hvog"
+   ],
+   "console": [
+    "Failed to load resource: the server responded with a status of 401 ()",
+    "%c%d font-size:0;color:transparent NaN",
+    "%c%d font-size:0;color:transparent NaN",
+    "%c%o font-size:0;color:transparent {}",
+    "%c%o font-size:0;color:transparent {}",
+    "Refused to connect to 'data:,' because it violates the following Content Security Policy directive: \"connect-src 'self' https://hagen.challenges.cloudflare.com https://brunhild.challenges.cloudflare.com https://*.alg13.dnstest.challenges.cloudflare.com https://*.mldsa44.dnstest.challenges.cloudflare",
+    "Refused to connect to 'data:,' because it violates the following Content Security Policy directive: \"connect-src 'self' https://hagen.challenges.cloudflare.com https://brunhild.challenges.cloudflare.com https://*.alg13.dnstest.challenges.cloudflare.com https://*.mldsa44.dnstest.challenges.cloudflare",
+    "Refused to connect to 'data:,' because it violates the following Content Security Policy directive: \"connect-src 'self' https://hagen.challenges.cloudflare.com https://brunhild.challenges.cloudflare.com https://*.alg13.dnstest.challenges.cloudflare.com https://*.mldsa44.dnstest.challenges.cloudflare",
+    "Refused to connect to 'data:,' because it violates the document's Content Security Policy."
+   ],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Glitching Materiality - @THEVOID | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Glitching Materiality - @THEVOID↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 203,
+   "largest": [
+    "203 KB /images/projects/5-hl.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/10",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Collaboratory Creative Coding Jam | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Collaboratory Creative Coding Jam↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 553,
+   "largest": [
+    "336 KB /images/projects/10-g1.jpg",
+    "217 KB /images/projects/10.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/11",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Teigetje & Woelrat | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Teigetje & Woelrat↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 776,
+   "largest": [
+    "206 KB /images/projects/11-v2-g5.jpg",
+    "139 KB /images/projects/11-v2-g1.jpg",
+    "132 KB /images/projects/11-v2-g3.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/12",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "The Meme Ontology | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "The Meme Ontology↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 3969,
+   "largest": [
+    "383 KB /images/projects/memo/viz-variant-gallery.jpg",
+    "374 KB /images/projects/memo/viz-spectrum-wheel.jpg",
+    "326 KB /images/projects/memo/thesis-search.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/13",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Archivio Associazione Luki Massa | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Archivio Associazione Luki Massa"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 626,
+   "largest": [
+    "185 KB /images/projects/13-v3-structure.jpg",
+    "183 KB /images/projects/13-v3-code.jpg",
+    "150 KB /images/projects/13-v3-anatomy.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/14",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [
+    "net::ERR_FAILED https://sentry.odysee.tv/api/2/envelope/?sentry_version=7&sentry_key=1f3c88e2e4b341328a638e138a60fb73&sentry_client=sentry.javascript.react%2F10.45.0"
+   ],
+   "console": [
+    "Access to fetch at 'https://sentry.odysee.tv/api/2/envelope/?sentry_version=7&sentry_key=1f3c88e2e4b341328a638e138a60fb73&sentry_client=sentry.javascript.react%2F10.45.0' from origin 'https://odysee.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the reque",
+    "Failed to load resource: net::ERR_FAILED"
+   ],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "5PIC3 live at Fulfillment Music Center | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "5PIC3 live at Fulfillment Music Center↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 734,
+   "largest": [
+    "183 KB /images/projects/14-g4.jpg",
+    "179 KB /images/projects/14-g3.jpg",
+    "162 KB /images/projects/14-g2.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/15",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Culture4All | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Culture4All↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 1240,
+   "largest": [
+    "163 KB /images/projects/15-g5-v5.jpg",
+    "162 KB /images/projects/15-g3-v5.jpg",
+    "157 KB /images/projects/15-g2-v5.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/17",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Rijksmuseum Group Hunt | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Rijksmuseum Group Hunt"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 652,
+   "largest": [
+    "281 KB /images/projects/17-g3.jpg",
+    "146 KB /images/projects/17-g1.jpg",
+    "118 KB /images/projects/17-hl.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/22",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Collective Decisions in Shared Spaces | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Collective Decisions in Shared Spaces"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 0,
+   "largest": [],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/18",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Glove, Visor, Rover | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Glove, Visor, Rover"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 2156,
+   "largest": [
+    "636 KB /videos/18-voice-test-loop.webm",
+    "211 KB /images/projects/18-p01.jpg",
+    "208 KB /images/projects/18-hl.jpg"
+   ],
+   "videos": [
+    {
+     "src": "/videos/18-voice-test-loop.webm",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 1,
+     "controls": false
+    }
+   ],
+   "axe": []
+  },
+  {
+   "route": "/projects/20",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Unobravo Redesign | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Unobravo Redesign"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 2291,
+   "largest": [
+    "168 KB /images/projects/unobravo/hero.jpg",
+    "160 KB /images/projects/unobravo/flow-02-questionnaire.jpg",
+    "159 KB /images/projects/unobravo/flow-03-portal.jpg"
+   ],
+   "videos": [
+    {
+     "src": "/images/projects/unobravo/motion-splash.mp4",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 0,
+     "controls": false
+    },
+    {
+     "src": "/images/projects/unobravo/motion-breathe.mp4",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 0,
+     "controls": false
+    },
+    {
+     "src": "/images/projects/unobravo/motion-section.mp4",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 0,
+     "controls": false
+    },
+    {
+     "src": "/images/projects/unobravo/motion-medita.mp4",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 0,
+     "controls": false
+    },
+    {
+     "src": "/images/projects/unobravo/motion-booked.mp4",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 0,
+     "controls": false
+    },
+    {
+     "src": "/images/projects/unobravo/motion-call.mp4",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 0,
+     "controls": false
+    }
+   ],
+   "axe": []
+  },
+  {
+   "route": "/projects/21",
+   "view": "desktop",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Words of Gender | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Words of Gender↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 658,
+   "largest": [
+    "199 KB /images/projects/21-g2-v3.jpg",
+    "124 KB /images/projects/21-g3-v3.jpg",
+    "119 KB /images/projects/21-g4-v3.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/",
+   "view": "phone",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Alice Picco, HCI researcher & designer",
+   "lang": "en",
+   "h1": [
+    "Alice Picco, HCI researcher and designer"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 213,
+   "largest": [
+    "46 KB /images/projects/12-card-v4-800.webp",
+    "43 KB /images/hero/card-0.webp",
+    "39 KB /images/hero/card-14.webp"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/18",
+   "view": "phone",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Glove, Visor, Rover | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Glove, Visor, Rover"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 3689,
+   "largest": [
+    "636 KB /videos/18-voice-test-loop.webm",
+    "255 KB /images/projects/18-p17.jpg",
+    "211 KB /images/projects/18-p01.jpg"
+   ],
+   "videos": [
+    {
+     "src": "/videos/18-voice-test-loop.webm",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 1,
+     "controls": false
+    }
+   ],
+   "axe": []
+  },
+  {
+   "route": "/projects/20",
+   "view": "phone",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Unobravo Redesign | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Unobravo Redesign"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 2291,
+   "largest": [
+    "168 KB /images/projects/unobravo/hero.jpg",
+    "160 KB /images/projects/unobravo/flow-02-questionnaire.jpg",
+    "159 KB /images/projects/unobravo/flow-03-portal.jpg"
+   ],
+   "videos": [
+    {
+     "src": "/images/projects/unobravo/motion-splash.mp4",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 0,
+     "controls": false
+    },
+    {
+     "src": "/images/projects/unobravo/motion-breathe.mp4",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 0,
+     "controls": false
+    },
+    {
+     "src": "/images/projects/unobravo/motion-section.mp4",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 0,
+     "controls": false
+    },
+    {
+     "src": "/images/projects/unobravo/motion-medita.mp4",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 0,
+     "controls": false
+    },
+    {
+     "src": "/images/projects/unobravo/motion-booked.mp4",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 0,
+     "controls": false
+    },
+    {
+     "src": "/images/projects/unobravo/motion-call.mp4",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 0,
+     "controls": false
+    }
+   ],
+   "axe": []
+  },
+  {
+   "route": "/projects/12",
+   "view": "phone",
+   "mode": "light",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "The Meme Ontology | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "The Meme Ontology↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 3969,
+   "largest": [
+    "383 KB /images/projects/memo/viz-variant-gallery.jpg",
+    "374 KB /images/projects/memo/viz-spectrum-wheel.jpg",
+    "326 KB /images/projects/memo/thesis-search.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/",
+   "view": "desktop",
+   "mode": "dark",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Alice Picco, HCI researcher & designer",
+   "lang": "en",
+   "h1": [
+    "Alice Picco, HCI researcher and designer"
+   ],
+   "overflowX": 0,
+   "wide": [
+    "div.absolute",
+    "div.absolute.left-0",
+    "svg",
+    "g",
+    "g"
+   ],
+   "mediaKB": 109,
+   "largest": [
+    "43 KB /images/hero/card-0.webp",
+    "33 KB /images/projects/20-card-v12-800.webp",
+    "33 KB /images/hero/card-18.webp"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/18",
+   "view": "desktop",
+   "mode": "dark",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Glove, Visor, Rover | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "Glove, Visor, Rover"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 2156,
+   "largest": [
+    "636 KB /videos/18-voice-test-loop.webm",
+    "211 KB /images/projects/18-p01.jpg",
+    "208 KB /images/projects/18-hl.jpg"
+   ],
+   "videos": [
+    {
+     "src": "/videos/18-voice-test-loop.webm",
+     "muted": true,
+     "autoplay": true,
+     "tracks": 1,
+     "controls": false
+    }
+   ],
+   "axe": []
+  },
+  {
+   "route": "/",
+   "view": "desktop",
+   "mode": "contrast",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "Alice Picco, HCI researcher & designer",
+   "lang": "en",
+   "h1": [
+    "Alice Picco, HCI researcher and designer"
+   ],
+   "overflowX": 0,
+   "wide": [
+    "div.absolute",
+    "div.absolute.left-0",
+    "svg",
+    "g",
+    "g"
+   ],
+   "mediaKB": 109,
+   "largest": [
+    "43 KB /images/hero/card-0.webp",
+    "33 KB /images/projects/20-card-v12-800.webp",
+    "33 KB /images/hero/card-18.webp"
+   ],
+   "videos": [],
+   "axe": []
+  },
+  {
+   "route": "/projects/12",
+   "view": "desktop",
+   "mode": "contrast",
+   "failed": [],
+   "console": [],
+   "pageErrors": [],
+   "media": [],
+   "status": 200,
+   "title": "The Meme Ontology | Alice Picco",
+   "lang": "en",
+   "h1": [
+    "The Meme Ontology↗"
+   ],
+   "overflowX": 0,
+   "wide": [],
+   "mediaKB": 3969,
+   "largest": [
+    "383 KB /images/projects/memo/viz-variant-gallery.jpg",
+    "374 KB /images/projects/memo/viz-spectrum-wheel.jpg",
+    "326 KB /images/projects/memo/thesis-search.jpg"
+   ],
+   "videos": [],
+   "axe": []
+  }
+ ],
+ "keyboard": [
+  {
+   "el": "a",
+   "name": "Skip to main content",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "Alice Picco, home",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "work",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "about",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "timeline",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "contact",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "cv",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "button",
+   "name": "motion",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "button",
+   "name": "high contrast",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "button",
+   "name": "dark",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "g[button]",
+   "name": "Ethnography: Fieldwork, Critical theory; used in 1",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "g[button]",
+   "name": "User research: Interviews, Personas, Think-aloud t",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "g[button]",
+   "name": "Digital archives: Cataloging, METS and EAD3, Digit",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "g[button]",
+   "name": "Ontologies: OWL, RDF, SPARQL, Wikidata; used in 1 ",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "g[button]",
+   "name": "HCI: Usability testing, SUS, Critical data studies",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "g[button]",
+   "name": "UX design: Figma, Prototyping, Information archite",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "g[button]",
+   "name": "Interaction design: Multimodal interaction, Arduin",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "g[button]",
+   "name": "Data visualization: D3.js, Web scraping, CLIP; use",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "g[button]",
+   "name": "Visual design: Typography, Visual identity; used i",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "g[button]",
+   "name": "Speculative design: Worldbuilding, Personas, Desig",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "g[button]",
+   "name": "Live coding: Hydra, Audio-reactive visuals, Projec",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "span[button]",
+   "name": "HCI researcher and designer: show HCI in the map",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "span[button]",
+   "name": "design interactions, devices and interfaces: show ",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "span[button]",
+   "name": "test them with people: show User research in the m",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "button",
+   "name": "Index",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "button",
+   "name": "Wheel",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "Unobravo Redesign 2025 A research-led redesign of ",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "Glove, Visor, Rover 2026 A speculative probe rover",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "The Stolen Archive 2024 A virtual museum of 30 loo",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "Teigetje & Woelrat 2025 A bilingual collection web",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "The Meme Ontology 2026 An OWL 2 knowledge graph of",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "5PIC3 live at Fulfillment Music Center 2026 An aud",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "Collective Decisions in Shared Spaces Started 2026",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "Rijksmuseum Group Hunt Started 2026 write-up to co",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "a",
+   "name": "Archivio Associazione Luki Massa Started 2026 writ",
+   "ring": true,
+   "visible": true
+  },
+  {
+   "el": "input",
+   "name": "",
+   "ring": true,
+   "visible": false
+  },
+  {
+   "el": "button",
+   "name": "Show roles",
+   "ring": true,
+   "visible": false
+  },
+  {
+   "el": "button",
+   "name": "Show studies",
+   "ring": true,
+   "visible": false
+  },
+  {
+   "el": "a",
+   "name": "The Stolen Archive, 2024",
+   "ring": true,
+   "visible": false
+  },
+  {
+   "el": "a",
+   "name": "Teigetje & Woelrat, 2025",
+   "ring": true,
+   "visible": false
+  },
+  {
+   "el": "a",
+   "name": "Unobravo Redesign, 2025",
+   "ring": true,
+   "visible": false
+  },
+  {
+   "el": "a",
+   "name": "5PIC3 live, 2026",
+   "ring": true,
+   "visible": false
+  },
+  {
+   "el": "a",
+   "name": "The Meme Ontology, 2026",
+   "ring": true,
+   "visible": false
+  },
+  {
+   "el": "a",
+   "name": "Rijksmuseum group hunt, 2026, in progress",
+   "ring": true,
+   "visible": false
+  },
+  {
+   "el": "a",
+   "name": "Luki Massa archive, 2026, in progress",
+   "ring": true,
+   "visible": false
+  }
+ ],
+ "brokenLinks": [
+  {
+   "url": "http://127.0.0.1:3001/no-such-page",
+   "status": 404
+  },
+  {
+   "url": "https://www.linkedin.com/in/alice-picco-791157114/",
+   "status": 999
+  }
+ ],
+ "linksChecked": {
+  "internal": 114,
+  "external": 17
+ }
+}

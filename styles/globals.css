@@ -379,6 +379,11 @@ html[data-contrast="high"] .skill-screen img { filter: grayscale(1) contrast(1.1
 .jr-live .jr-item:not(.is-past) {
   opacity: 0.15;
 }
+/* a project reached by keyboard reads in full even ahead of "now" */
+.jr-live .jr-item:focus-visible,
+.jr-live .jr-item:focus-within {
+  opacity: 1;
+}
 .jr-live .jr-era {
   opacity: 0.4;
 }
