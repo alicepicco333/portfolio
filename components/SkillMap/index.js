@@ -150,37 +150,70 @@ const cost = (boxes, obstacles) => {
 // or over the skill's label, reaching right or left. It takes the corner that covers the fewest other skills
 // and labels, kept on the stage. The links are masked where they cross it, so it reads as a picture, not a
 // thumbnail under lines.
+// No text over a picture: no other skill's label or point may sit on it. Where the full size has no clear corner,
+// the picture steps down in size until one is clear; the largest clear one wins.
+const SCALES = [1, 0.85, 0.72, 0.6, 0.5];
 function cardOptions(id) {
   const [x, y] = pos(id);
-  const { w: W, h: H } = SCREEN;
   const dy = MAP.label[id][1];
   const r = nodeR(id);
-  // a skill's point under the picture costs more than its label (a covered label gets a chip and still reads)
-  const others = NODES.filter((n) => n.id !== id).flatMap((n) => [grow(labelBox(n.id), 8), grow(nodeBox(n.id), 8), grow(nodeBox(n.id), 8), grow(nodeBox(n.id), 8)]);
-  const under = y + dy + 14; // the label's foot is at y + dy + 7
-  const over = y + dy - 24 - H; // its top is at y + dy - 18
-  const options = [
-    { l: x - r - 4, t: under, bias: 0 }, // the skill on the picture's top-left corner
-    { l: x + r + 4 - W, t: under, bias: 30 }, // top-right: the picture to the left, the label outside it
-    { l: x - r - 4, t: over, bias: 60 }, // bottom-left
-    { l: x + r + 4 - W, t: over, bias: 90 }, // bottom-right
-  ];
-  // side: where the step tag goes, away from the picture (1 under the label, -1 over it)
-  return options.map(({ l: l0, t: t0, bias }) => {
-    const l = Math.min(Math.max(l0, 6), stageW() - W - 6);
-    const t = Math.min(Math.max(t0, 6), G.H - H - 6);
-    const b = [l, t, l + W, t + H];
-    let score = bias + others.reduce((sum, o) => sum + overlapArea(b, o), 0);
-    score += overlapArea(b, labelBox(id)) * 4; // its own label stays clear
-    score += (Math.abs(l - l0) + Math.abs(t - t0)) * 40; // pushed off the corner by the stage edge
-    return { score, x: l, y: t, w: W, h: H, side: t0 < y ? 1 : -1 };
+  // the margin covers the other skills' slow drift (DRIFT units at most)
+  const others = NODES.filter((n) => n.id !== id).flatMap((n) => [grow(labelBox(n.id), 6), grow(nodeBox(n.id), 6)]);
+  const out = [];
+  SCALES.forEach((k) => {
+    const W = Math.round(SCREEN.w * k);
+    const H = Math.round(SCREEN.h * k);
+    const under = y + dy + 14; // the label's foot is at y + dy + 7
+    const over = y + dy - 24 - H; // its top is at y + dy - 18
+    // sx, sy: which way the picture moves when it slides away from the skill to find a clear spot
+    const options = [
+      { l: x - r - 4, t: under, bias: 0, sx: 1, sy: 1 }, // the skill on the picture's top-left corner
+      { l: x + r + 4 - W, t: under, bias: 30, sx: -1, sy: 1 }, // top-right: the picture to the left, the label outside it
+      { l: x - r - 4, t: over, bias: 60, sx: 1, sy: -1 }, // bottom-left
+      { l: x + r + 4 - W, t: over, bias: 90, sx: -1, sy: -1 }, // bottom-right
+    ];
+    // side: where the step tag goes, away from the picture (1 under the label, -1 over it)
+    options.forEach(({ l: c0, t: r0, bias, sx, sy }) => {
+      [0, 30, 60, 90].forEach((ox) => {
+        [0, 30, 60, 90].forEach((oy) => {
+          const l0 = c0 + sx * ox;
+          const t0 = r0 + sy * oy;
+          const l = Math.min(Math.max(l0, 6), stageW() - W - 6);
+          const t = Math.min(Math.max(t0, 6), G.H - H - 6);
+          const b = [l, t, l + W, t + H];
+          const covered = others.reduce((sum, o) => sum + overlapArea(b, o), 0) + overlapArea(b, labelBox(id));
+          // slide a little before shrinking; shrink only when it must
+          let score = bias + (1 - k) * 3000 + (ox + oy) * 6;
+          if (covered > 0) score += 1e8 + covered; // text on the picture loses to anything else
+          score += (Math.abs(l - l0) + Math.abs(t - t0)) * 40; // pushed off by the stage edge
+          out.push({ score, x: l, y: t, w: W, h: H, side: t0 < y ? 1 : -1, group: `${k}:${sx}:${sy}` });
+        });
+      });
+    });
   });
+  return out;
+}
+
+// each skill's layout is worked out once per stage size and kept: the search takes a few hundred ms, so it runs
+// ahead of time, in idle moments after the map appears, and a hover opens at once
+const LAYOUTS = new Map();
+const stageKey = () => `${G.kx.toFixed(4)}:${G.ky.toFixed(4)}:${Math.round(G.W)}:${Math.round(G.H)}`;
+function cachedLayout(id, works) {
+  const key = `${id}@${stageKey()}`;
+  if (!LAYOUTS.has(key)) LAYOUTS.set(key, layoutFor(id, works));
+  return LAYOUTS.get(key);
 }
 
 // the picture's corner and the projects' places are chosen together: the pair that covers least
 function layoutFor(id, works) {
   let best = null;
-  cardOptions(id).forEach((card) => {
+  // the projects' places are worked out for a short list only (each try is a full search): the best place for each
+  // size and corner, so the list holds different places rather than near copies of one
+  const bestOf = new Map();
+  cardOptions(id).forEach((c) => {
+    if (!bestOf.has(c.group) || c.score < bestOf.get(c.group).score) bestOf.set(c.group, c);
+  });
+  [...bestOf.values()].sort((a, b) => a.score - b.score).slice(0, 8).forEach((card) => {
     const fan = fanLayout(id, works, [grow([card.x, card.y, card.x + card.w, card.y + card.h], 6), grow(verbBox(id, card.side), 4)]);
     const total = card.score + fan.score;
     if (!best || total < best.total) best = { total, card, fan };
@@ -193,8 +226,8 @@ function layoutFor(id, works) {
 function fanLayout(id, works, extra = []) {
   const [ox, oy] = pos(id);
   const boxes = [...staticBoxes(), ...extra];
-  // points along the links, so a project's name does not sit on a line
-  const linkPts = LINKS.flatMap((l) => samplesOf(l, 24));
+  // points along the links near the skill, so a project's name does not sit on a line
+  const linkPts = LINKS.flatMap((l) => samplesOf(l, 24)).filter(([px, py]) => Math.hypot(px - ox, py - oy) < 640);
   let leaves = null;
   for (let deg = 0; deg < 360; deg += 5) {
     const a = (deg * Math.PI) / 180;
@@ -212,10 +245,25 @@ function fanLayout(id, works, extra = []) {
           pts.map((o) => o.box),
           boxes
         );
+        // a project's name never sits on the picture or the step tag
+        pts.forEach(({ box: lb }) => {
+          extra.forEach((o) => {
+            score += overlapArea(lb, o) * 50;
+          });
+        });
         pts.forEach(({ box: lb }) => {
           linkPts.forEach(([px, py]) => {
             if (px > lb[0] && px < lb[2] && py > lb[1] && py < lb[3]) score += 1500;
           });
+        });
+        // nor across another skill's label
+        const labels = NODES.filter((n) => n.id !== id).map((n) => labelBox(n.id));
+        pts.forEach((pt) => {
+          for (let k = 2; k < 10; k += 1) {
+            const px = ox + ((pt.x - ox) * k) / 10;
+            const py = oy + ((pt.y - oy) * k) / 10;
+            if (labels.some((o) => px > o[0] && px < o[2] && py > o[1] && py < o[3])) score += 2000;
+          }
         });
         // a leaf's line must not run under the card
         extra.forEach((o) => {
@@ -363,7 +411,23 @@ const SkillMap = ({ projects }) => {
   const activeWork = activeNode ? workOf(active) : [];
   // the card in the clearest pocket beside the skill, then the leaves around both, their lines clear of it
   // the picture on a corner of the skill, and the projects fanned out around it and the step tag
-  const layout = useMemo(() => (activeNode && fit ? layoutFor(active, activeWork) : null), [active, sx, fit]); // eslint-disable-line react-hooks/exhaustive-deps
+  const layout = useMemo(() => (activeNode && fit ? cachedLayout(active, activeWork) : null), [active, sx, fit]); // eslint-disable-line react-hooks/exhaustive-deps
+  // work out every skill's layout ahead of time, one per idle moment, the default skill first
+  useEffect(() => {
+    if (!fit || !wide) return undefined;
+    const queue = [DEFAULT_SKILL, ...NODES.map((n) => n.id).filter((id) => id !== DEFAULT_SKILL)];
+    const idle = window.requestIdleCallback || ((f) => setTimeout(f, 60));
+    const cancel = window.cancelIdleCallback || clearTimeout;
+    let handle;
+    const next = () => {
+      const id = queue.shift();
+      if (!id) return;
+      cachedLayout(id, workOf(id));
+      handle = idle(next);
+    };
+    handle = idle(next);
+    return () => cancel(handle);
+  }, [fit, sx, wide]); // eslint-disable-line react-hooks/exhaustive-deps
   const card = layout ? layout.card : null;
   const fan = layout ? layout.fan : null;
   const lit = activeNode ? new Set(neighbours(active)) : new Set();
@@ -450,7 +514,8 @@ const SkillMap = ({ projects }) => {
         if (n.id !== act) {
           tx = Math.sin(t * ph.w1 + ph.p1) * DRIFT;
           ty = Math.cos(t * ph.w2 + ph.p2) * DRIFT * 0.8;
-          if (p) {
+          // the lean only while no skill is open: an open skill's picture keeps its neighbours' labels off it
+          if (p && !act) {
             const [x, y] = pos(n.id);
             const dx = p[0] - x;
             const dy = p[1] - y;

@@ -25,7 +25,18 @@ const BASE = "http://127.0.0.1:3001";
     await page.getByText(name, { exact: true }).first().hover();
     await page.waitForTimeout(1300);
     const tag = await page.evaluate(() => [...document.querySelectorAll(".map-cluster")].map((t) => t.textContent).join(","));
-    console.log(name, "-> tag", tag);
+    // any text that sits on the picture (labels, project names, the step tag)
+    const over = await page.evaluate(() => {
+      const s = document.querySelector('.skill-screen[data-on="true"]');
+      if (!s) return { size: "none", on: [] };
+      const p = s.getBoundingClientRect();
+      const on = [...document.querySelectorAll("#map svg text")].filter((t) => {
+        const b = t.getBoundingClientRect();
+        return b.width > 0 && b.left < p.right - 1 && b.right > p.left + 1 && b.top < p.bottom - 1 && b.bottom > p.top + 1;
+      }).map((t) => t.textContent);
+      return { size: Math.round(p.width) + "x" + Math.round(p.height), on };
+    });
+    console.log(name, "-> tag", tag, "| picture", over.size, "| text on it:", over.on.length ? over.on.join(", ") : "none");
     await page.screenshot({ path: path.join(OUT, `hero-1440-${name.replace(/ /g, "-")}.png`) });
   }
   await page.mouse.move(700, 880);
