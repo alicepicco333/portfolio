@@ -23,11 +23,12 @@ const SkillScreen = ({ skill, box, animate }) => {
     el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 360, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
   }, [skill, animate]);
 
+  // a hairline frame: light pictures (a plate, a chart) keep an edge on the grey page, and the links visibly stop at it
   return (
     <div
       ref={wrapRef}
       aria-hidden="true"
-      className="skill-screen pointer-events-none absolute z-0 overflow-hidden bg-ink"
+      className="skill-screen pointer-events-none absolute z-0 overflow-hidden border border-ink bg-ink"
       data-on={on ? "true" : "false"}
       style={box ? { left: box.x, top: box.y, width: SCREEN.w, height: SCREEN.h } : { left: 0, top: 0, width: SCREEN.w, height: SCREEN.h }}
     >
