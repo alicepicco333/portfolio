@@ -37,7 +37,8 @@ try {
 const { renderer, scene, junior, eye, eyeDetect, patches, blockers } = W;
 W.ready.then(() => {
   $('startbtn').disabled = false;
-  $('startbtn').textContent = 'Start';
+  $('startbtn').textContent = 'Start with camera and microphone';
+  $('startplain').hidden = false;
   $('progress').closest('.startrow').classList.add('done');
   render(0);  // one frame behind the start screen, so the first real frame has its shaders ready
 }).catch(err => {
@@ -46,11 +47,48 @@ W.ready.then(() => {
   $('loaderror').textContent = 'The 3D world did not load. Check the connection and reload the page.';
   console.error(err);
 });
-$('startbtn').addEventListener('click', () => {
+// two ways in: with your camera and microphone (the browser asks once, for both), or with keys and buttons only
+function begin(sensors) {
   audio.startAudio();
-  if (!started) { started = true; intro.dataset.started = '1'; S.hazardSaidAt = performance.now(); }
+  const first = !started;
+  if (first) { started = true; intro.dataset.started = '1'; S.hazardSaidAt = performance.now(); }
+  $('startplain').hidden = true;
   intro.close();
-});
+  if (first && sensors) askSensors();
+}
+$('startbtn').addEventListener('click', () => begin(true));
+$('startplain').addEventListener('click', () => begin(false));
+
+// One prompt for the camera and the microphone. The camera goes to your hand; the microphone is let go at once:
+// now that it is allowed, speech recognition opens it only while you hold Talk.
+async function askSensors() {
+  if (!navigator.mediaDevices?.getUserMedia) { heard('This browser gives no camera or microphone here. The keys and buttons drive Junior.'); return; }
+  const video = { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' };
+  let stream = null;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video, audio: true });
+  } catch (err) {
+    console.warn(err);
+    // only a missing device is worth a second try (a laptop with a camera and no microphone, or the other way round);
+    // a refusal, a dismissed prompt or a busy camera is left alone
+    if (err?.name !== 'NotFoundError' && err?.name !== 'OverconstrainedError') {
+      heard(err?.name === 'NotReadableError'
+        ? 'The camera or microphone is busy in another app. The keys and buttons drive Junior; Your hand and Hold to talk try again.'
+        : 'Camera and microphone are off. The keys and buttons drive Junior; Your hand and Hold to talk ask again.');
+      return;
+    }
+    let mic = false;
+    try { const m = await navigator.mediaDevices.getUserMedia({ audio: true }); m.getTracks().forEach(t => t.stop()); mic = true; } catch { /* no microphone */ }
+    try { stream = await navigator.mediaDevices.getUserMedia({ video }); } catch { /* no camera */ }
+    if (!stream) {
+      heard(mic ? 'No camera found. The keys and buttons drive Junior; hold Space or Hold to talk to speak.'
+        : 'No camera or microphone found. The keys and buttons drive Junior.');
+      return;
+    }
+  }
+  stream.getAudioTracks().forEach(t => t.stop());
+  handOn(stream);
+}
 intro.addEventListener('close', () => { $('startbtn').textContent = 'Back to Junior'; wake(); });
 $('helpbtn').addEventListener('click', () => { releaseAll(); intro.showModal(); });
 
@@ -340,16 +378,20 @@ stage.addEventListener('pointerdown', e => {
 
 // your own hand on camera (loaded only when you turn it on)
 let hand = null;
-$('handbtn').addEventListener('click', async () => {
+$('handbtn').addEventListener('click', () => {
+  if (hand?.handOn()) { hand.stopHand(); $('handbtn').setAttribute('aria-pressed', 'false'); $('handcam').hidden = true; return; }
+  handOn();
+});
+// stream: the camera already opened by the start prompt, if any
+async function handOn(stream) {
   const btn = $('handbtn');
-  if (hand?.handOn()) { hand.stopHand(); btn.setAttribute('aria-pressed', 'false'); $('handcam').hidden = true; return; }
   btn.setAttribute('aria-busy', 'true');
   $('handcam').hidden = false;
   try {
     hand = hand || await import('./hand.js');
-    await hand.startHand($('handvideo'), s => { $('handlabel').textContent = s || 'No hand'; });
+    await hand.startHand($('handvideo'), s => { $('handlabel').textContent = s || 'No hand'; }, stream);
     btn.setAttribute('aria-pressed', 'true');
-    heard('Your hand drives now: open hand to go, tilt to steer, fist to stop, thumb down to reverse. Point with your index finger.');
+    heard('Your hand drives now: open hand to go, tilt to steer, fist to stop, thumb down to reverse. Point with your index finger. Hold Space or Hold to talk to speak.');
   } catch (err) {
     hand?.stopHand?.();
     $('handcam').hidden = true;
@@ -359,7 +401,7 @@ $('handbtn').addEventListener('click', async () => {
       : 'The hand tracker did not load. The arrow keys and the pad still drive.');
     console.warn(err);
   } finally { btn.removeAttribute('aria-busy'); }
-});
+}
 
 // ---------------------------------------------------------------- cameras, sizes
 const chase = new THREE.PerspectiveCamera(50, 16 / 9, 0.02, 60);
