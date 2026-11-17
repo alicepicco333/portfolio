@@ -37,7 +37,10 @@ try {
 const { renderer, scene, junior, eye, eyeDetect, patches, blockers } = W;
 W.ready.then(() => {
   $('startbtn').disabled = false;
-  $('startbtn').textContent = 'Start with camera and microphone';
+  // ask only for what this browser can use: without speech recognition (Firefox) the microphone would sit unused
+  const what = voice.voiceSupported() ? 'camera and microphone' : 'camera';
+  $('startbtn').textContent = `Start with ${what}`;
+  $('startplain').textContent = `Start without ${what}`;
   $('startplain').hidden = false;
   $('progress').closest('.startrow').classList.add('done');
   render(0);  // one frame behind the start screen, so the first real frame has its shaders ready
@@ -64,25 +67,28 @@ $('startplain').addEventListener('click', () => begin(false));
 async function askSensors() {
   if (!navigator.mediaDevices?.getUserMedia) { heard('This browser gives no camera or microphone here. The keys and buttons drive Junior.'); return; }
   const video = { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' };
+  const audioToo = voice.voiceSupported();
   let stream = null;
   try {
-    stream = await navigator.mediaDevices.getUserMedia({ video, audio: true });
+    stream = await navigator.mediaDevices.getUserMedia({ video, audio: audioToo });
   } catch (err) {
     console.warn(err);
     // only a missing device is worth a second try (a laptop with a camera and no microphone, or the other way round);
     // a refusal, a dismissed prompt or a busy camera is left alone
     if (err?.name !== 'NotFoundError' && err?.name !== 'OverconstrainedError') {
+      const devices = audioToo ? 'camera or microphone is' : 'camera is';
+      const retry = audioToo ? 'Your hand and Hold to talk' : 'Your hand';
       heard(err?.name === 'NotReadableError'
-        ? 'The camera or microphone is busy in another app. The keys and buttons drive Junior; Your hand and Hold to talk try again.'
-        : 'Camera and microphone are off. The keys and buttons drive Junior; Your hand and Hold to talk ask again.');
+        ? `The ${devices} busy in another app. The keys and buttons drive Junior; ${retry} try again.`
+        : `${audioToo ? 'Camera and microphone are' : 'The camera is'} off. The keys and buttons drive Junior; ${retry} ${audioToo ? 'ask' : 'asks'} again.`);
       return;
     }
     let mic = false;
-    try { const m = await navigator.mediaDevices.getUserMedia({ audio: true }); m.getTracks().forEach(t => t.stop()); mic = true; } catch { /* no microphone */ }
+    if (audioToo) { try { const m = await navigator.mediaDevices.getUserMedia({ audio: true }); m.getTracks().forEach(t => t.stop()); mic = true; } catch { /* no microphone */ } }
     try { stream = await navigator.mediaDevices.getUserMedia({ video }); } catch { /* no camera */ }
     if (!stream) {
       heard(mic ? 'No camera found. The keys and buttons drive Junior; hold Space or Hold to talk to speak.'
-        : 'No camera or microphone found. The keys and buttons drive Junior.');
+        : audioToo ? 'No camera or microphone found. The keys and buttons drive Junior.' : 'No camera found. The keys and buttons drive Junior.');
       return;
     }
   }
@@ -391,7 +397,8 @@ async function handOn(stream) {
     hand = hand || await import('./hand.js');
     await hand.startHand($('handvideo'), s => { $('handlabel').textContent = s || 'No hand'; }, stream);
     btn.setAttribute('aria-pressed', 'true');
-    heard('Your hand drives now: open hand to go, tilt to steer, fist to stop, thumb down to reverse. Point with your index finger. Hold Space or Hold to talk to speak.');
+    heard('Your hand drives now: open hand to go, tilt to steer, fist to stop, thumb down to reverse. Point with your index finger.' +
+      (voice.voiceSupported() ? ' Hold Space or Hold to talk to speak.' : ''));
   } catch (err) {
     hand?.stopHand?.();
     $('handcam').hidden = true;
