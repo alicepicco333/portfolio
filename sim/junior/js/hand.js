@@ -16,10 +16,11 @@ let state = { mode: null, angle: 0, deg: null, seen: false, at: 0 };
 export const handState = () => state;
 export const handOn = () => on;
 
-export async function startHand(videoEl, onStatus) {
+// given: a camera stream already allowed at the start (one prompt for camera and microphone)
+export async function startHand(videoEl, onStatus, given) {
   video = videoEl;
-  onStatus('Asking for your camera…');
-  stream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' }, audio: false });
+  if (!given) onStatus('Asking for your camera…');
+  stream = given || await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' }, audio: false });
   video.srcObject = stream;
   await video.play();
   if (!landmarker) {
